@@ -22,6 +22,28 @@
 | data   | 必需，目前输入几组柱子配置（目前只支持三组、四组和五组），形式如下[ { percent: 0.3,name:'高端消费' }, { percent: 0.6,name:'普通消费'}, { percent: 0.4,name:'低端消费'}, ] | Array  |                                          |
 | colors | 非必需                                      | Array  | ['#29AAFF','#0DF29E','#00D1C6','#ff0000','#00ff00'] |
 
+### ScatterCurveMap 多样迁徙地图
+
+#### ScatterCurve
+
+| 参数              | 说明                                       | 类型     | 默认值     |
+| --------------- | ---------------------------------------- | ------ | ------- |
+| map             | 必需，定义地图类型、地图背景颜色，地图区域描边颜色，地图区域填充颜色       | Object |         |
+| fromPoint       | 必需，定义初始始发地坐标                             | Array  |         |
+| toPoints        | 必需，定义迁徙到的目的地坐标                           | Array  |         |
+| travelDirection | 非必需，定义迁徙方向;to-from为从目的地到始发地迁徙，fom-to为从事发地到目的地迁徙 | String | from-to |
+| travelType      | 非必需，定义迁徙样式，当样式为circle时没有迁徙线路，其他值时存在迁徙线条  | String | 非circle |
+
+#### map Object
+
+| 参数                  | 说明                     | 类型     | 默认值               |
+| ------------------- | ---------------------- | ------ | ----------------- |
+| type                | 必需，定义地图类型为世界地图还是中国地图   | String |                   |
+| name                | 非必需，定义当地图为中国地图时，要展示的区域 | String | 中国                |
+| mapBackgroundColor  | 非必需，地图背景颜色             | Color  | #020B22           |
+| areaBackgroundColor | 非必需，定义地图行政区域填充         | Color  | rgba(3,23,60,0.8) |
+| areaLineColor       | 非必需，定义行政区域描边颜色         | Color  | #2268A0           |
+
 ### CircleAnimate 气泡Canvas
 
 #### CircleAnimate
@@ -41,25 +63,7 @@
 | width  | 非必需，设置canvas的宽，一般格式 width= "宽度"  | Number | window.innerWidth  |
 | height | 非必需，设置canvas的高，一般格式 height= "高度" | Number | window.innerHeight |
 
-### LineCircle
-
-#### LineCircle
-
-| 参数     | 说明                           | 类型     | 默认值                |
-| ------ | ---------------------------- | ------ | ------------------ |
-| height | 非必需，设置组件的高，一般格式 height= {高度} | Number | window.innerHeight |
-
-### Abstract 抽象图 Canvas
-
-#### AbstractBasic
-
-| 参数     | 说明               | 类型     | 默认值                     |
-| ------ | ---------------- | ------ | ----------------------- |
-| width  | 非必需，自定义canvas的宽  | String | 400                     |
-| height | 非必需，自定义canvas的高  | String | 400                     |
-| color  | 非必需，自定义canvas的颜色 | String | hsla(284, 100%, 68%, 1) |
-
-### 刮奖卡
+### ScratchOffScratchOff
 
 #### ScratchOff
 
