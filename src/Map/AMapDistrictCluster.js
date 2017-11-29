@@ -13,6 +13,7 @@ class AMapDistrictCluster extends React.Component {
     } else {
       this.mapRender();
     }
+    // if (!window.AMapUI) {
     const script2 = document.createElement('script');
     script2.async = true;
     script2.type = 'text/javascript';
@@ -30,19 +31,22 @@ class AMapDistrictCluster extends React.Component {
         }
       });
     };
+    // }
   }
 
   mapRender() {
     this.amap = new window.AMap.Map('ampClusterContainer', {
-      zoom: 4,
-      center: [139.1, 234.5],
+      zoom: 1,
+      center: [116.39, 39.9],
     });
     this.amap.addControl(new window.AMap.ToolBar());
   }
 
   initPage1(DistrictCluster, $) {
     const distCluster = new DistrictCluster({
+      zIndex: 0,
       map: this.amap,
+      autoSetFitView: false,
       getPosition(item) {
         if (!item) {
           return null;
@@ -64,6 +68,7 @@ class AMapDistrictCluster extends React.Component {
   initPage(DistrictCluster, $, utils) {
     const map = this.amap;
     const that = this;
+    const { renderOptions } = this.props;
     function MyRender(ctx, polygons, styleOptions, feature, dataItems) {
       MyRender.__super__.constructor.call(this, ctx, polygons, styleOptions, feature, dataItems);
     }
@@ -122,8 +127,9 @@ class AMapDistrictCluster extends React.Component {
     });
 
     const distCluster = new DistrictCluster({
-      zIndex: 200,
+      zIndex: 10,
       map: this.amap,
+      autoSetFitView: false,
       getPosition(item) {
         if (!item) {
           return null;
@@ -136,16 +142,16 @@ class AMapDistrictCluster extends React.Component {
       renderOptions: {
         getClusterMarker: null,
         featureClickToShowSub: true,
-        // featureStyle: {
-        //   fillStyle: 'black',
-        //   lineWidth: 5,
-        //   strokeStyle:'red',
-        //   hoverOptions: {
-        //     fillStyle:'pink',
-        //     lineWidth: 1,
-        //     strokeStyle:'red',
-        //   },
-        // },
+        featureStyle: {
+          fillStyle: '#9cd49b',
+          lineWidth: renderOptions ? renderOptions.lineWidth : 1,
+          strokeStyle: renderOptions ? renderOptions.strokeStyle : '#1f77b4',
+          hoverOptions: {
+            fillStyle: renderOptions ? renderOptions.hoverColor : '#b0ddaf',
+            lineWidth: renderOptions ? renderOptions.hoverLineWidth : 1,
+            strokeStyle: renderOptions ? renderOptions.hoverStrokeStyle : '#1f77b4',
+          },
+        },
       },
     });
     window.distCluster = distCluster;

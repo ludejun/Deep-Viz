@@ -258,6 +258,66 @@
 | value | 非必需，值                | Number | null |
 | color | 非必需，颜色值，默认按照系统初始颜色分配 | String | null |
 
+
+
+### BaiduMapCrossCurve 百度地图Echarts模拟迁徙
+
+#### BaiduMapCrossCurve
+
+| 参数              | 说明                                       | 类型           | 默认值  |
+| --------------- | ---------------------------------------- | ------------ | ---- |
+| style           | 非必需，定义地图组件外层样式                           | Object       | null |
+| point           | 必需。定义中心迁徙点的坐标；lng：经度，lat：纬度，name：名称      | Object       | null |
+| datas           | 必需，定义地图上迁徙流入或流出的其他数据点，参考下表中datas配置       | Array        | null |
+| radiusGradients | 非必需，迁徙半径标示，整型数组，如[2000, 5000, 10000]，单位：米。不设置表示不展示半径标示 | Array        | []   |
+| direction       | 必需，枚举值：in, out，分别标示流入流出                  | Enum(String) |      |
+| tooltipFormat   | 非必需，流出终点或流入起点位置的鼠标停留后展示的信息的format函数。     | Function     | null |
+| labelFormat     | 非必需，迁徙路径上的鼠标停留后展示的信息的format函数。           | Function     | null |
+
+#### datas
+
+| 参数    | 说明                   | 类型     | 默认值  |
+| ----- | -------------------- | ------ | ---- |
+| lng   | 必需，经度                | Number | null |
+| lat   | 必需，纬度                | Number | null |
+| name  | 非必需，名称               | String | null |
+| value | 非必需，值                | Number | null |
+| color | 非必需，颜色值，默认按照系统初始颜色分配 | String | null |
+
+#### BaiduMap组件通用配置
+
+| 参数                | 说明                                       | 类型      | 默认值      |
+| ----------------- | ---------------------------------------- | ------- | -------- |
+| disableDragging   | 非必需，定义是否允许地图拖拽。默认允许拖拽                    | Boolean | false    |
+| disableMapRule    | 非必需，定义禁止显示左下角比例尺。默认显示                    | Boolean | false    |
+| mapStyle          | 非必需，百度地图整体背景，默认midnight，可参考 http://developer.baidu.com/map/custom/list.htm | String  | midnight |
+| navigationControl | 非必需，是否展示左上的缩放                            | Boolean | true     |
+| showMapType       | 非必需，是否展示右上的地图类型切换，默认展示                   | Boolean | true     |
+
+### AMapCluster 高德地图点聚合
+
+#### AMapCluster
+
+| 参数           | 说明                 | 类型      | 默认值                          |
+| ------------ | ------------------ | ------- | ---------------------------- |
+| style        | 非必需，定义地图组件外层样式     | Object  | {width: "100%", height: 500} |
+| points       | 必需,定义数据源，详见下面Table | Object  | null                         |
+| dragEnable   | 非必需。是否允许拖拽         | Boolean | true                         |
+| zoomEnable   | 非必需。是否允许缩放         | Boolean | true                         |
+| bgColor      | 非必需，定义Marker的背景色   | String  | null                         |
+| fontColor    | 非必需，定义Marker的背字体颜色 | String  | null                         |
+| borderColor  | 非必需，定义Marker的边框颜色  | String  | true                         |
+| width        | 非必需，定义Marker的大小    | String  | null                         |
+| borderRadius | 非必需，定义Marker的圆角边框  | String  | 50%                          |
+| boxShadow    | 非必需，定义Marker阴影样式   | String  | null                         |
+| innerHTML    | 非必需，定义Marker的内容    | String  | null                         |
+
+#### points [{"lnglat":["经度坐标","纬度坐标"]}]
+
+| 参数     | 说明       | 类型     | 默认值  |
+| ------ | -------- | ------ | ---- |
+| lnglat | 必需，经度和纬度 | Arrary | null |
+
 ### AMapIndoor 高德地图室内图
 
 #### AMapIndoor
@@ -275,4 +335,22 @@
 | ---- | ----- | ------ | ---- |
 | lng  | 必需，经度 | Number | null |
 | lat  | 必需，纬度 | Number | null |
+
+### AMapDistrictCluster 高德地图行政聚合图
+
+#### AMapDistrictCluster
+
+| 参数          | 说明                                       | 类型     | 默认值                        |
+| ----------- | ---------------------------------------- | ------ | -------------------------- |
+| style       | 非必需，定义地图组件外层样式                           | Object | width: "100%"， height: 630 |
+| lableConfig | 非必需，label的相关样式，详见下面table                 | Object | null                       |
+| point       | 必需，定义地图组件的数据源（地区的经纬度例如["121.8,32.5","231.1,562.6"]） | Array  | null                       |
+
+#### labelConfig
+
+| 参数        | 说明                             | 类型     | 默认值     |
+| --------- | ------------------------------ | ------ | ------- |
+| type      | 非必需，定义组件label的类型，可选rect,circle | String | rect    |
+| fillStyle | 非必需，定义组件label的填充颜色             | String | #108EE9 |
+| color     | 非必需，定义组件label的字体颜色             | String | #fff    |
 
