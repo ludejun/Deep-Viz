@@ -1,6 +1,6 @@
 # Deep-Viz of React
 
-主要专注于数据可视化，提供统一、简洁、漂亮、多样并糅合数据可视化经验、商业数据展示惯例的React组件库
+主要专注于数据可视化，提供统一、简洁、漂亮、多样图表并糅合数据可视化经验、商业数据展示惯例的React组件库
 
 ~~~
 1.特性
@@ -15,7 +15,7 @@
 
 6.感谢
 
-7.展现网络技术栈介绍
+7.展示网站技术栈介绍
 ~~~
 
 ### 特性
@@ -60,7 +60,7 @@
 
 - WebGL/3D 组件
 
-  参考示例网站：
+  参考示例网站：https://ludejun.github.io/Deep-Viz-Website/
 
 ### 安装使用
 
@@ -68,6 +68,19 @@
 
 ```shell
 npm install deep-viz --save
+```
+
+👇为一个简单LineChart例子，详情可见[https://ludejun.github.io/Deep-Viz-Website/#/main/components/basic/line-chart](https://ludejun.github.io/Deep-Viz-Website/#/main/components/basic/line-chart)
+
+```javascript
+import { LineChart } from 'deep-viz';
+
+ReactDOM.render(
+  <LineChart config={{
+    x: { data: lineData.date },
+    y: [{data: [lineData.y1, lineData.y2], legend: ['legend1', 'legend2'], name: 'yAxisName/unit'}],
+  }}/>
+, mountNode);
 ```
 
 ### 如何贡献
