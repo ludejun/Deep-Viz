@@ -60,7 +60,7 @@
 
 - WebGL/3D 组件
 
-  参考示例网站：https://ludejun.github.io/Deep-Viz-Website/
+  参考示例网站：[https://ludejun.github.io/Deep-Viz-Website/](https://ludejun.github.io/Deep-Viz-Website/)
 
 ### 安装使用
 
@@ -85,7 +85,7 @@ ReactDOM.render(
 
 ### 如何贡献
 
-第一版开发人员主要基于万达大数据前端开发小组，感谢他们卓有成效的付出。
+第一版开发人员主要基于万达大数据前端开发和设计小组，感谢他们卓有成效的付出。在3D及2D组件方面还有不少提升空间，也希望得到大家的帮助。
 
 如您希望参与贡献，欢迎 [Pull Request](https://github.com/ludejun/Deep-Viz/pulls)，或给我们 [报告 Bug](https://github.com/ludejun/Deep-Viz/issues)。
 
