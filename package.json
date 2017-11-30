@@ -2,8 +2,16 @@
   "name": "deep-viz",
   "version": "0.10.0",
   "description": "A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice.",
-  "keywords": ["react-components", "data-visualization", "chart-component", "charting", "react"],
-  "bugs": {"url": "https://github.com/ludejun/Deep-Viz/issues"},
+  "keywords": [
+    "react-components",
+    "data-visualization",
+    "chart-component",
+    "charting",
+    "react"
+  ],
+  "bugs": {
+    "url": "https://github.com/ludejun/Deep-Viz/issues"
+  },
   "homepage": "https://ludejun.github.io/Deep-Viz-Website/",
   "repository": {
     "type": "git",
@@ -16,14 +24,23 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib"
+    "build": "babel src -d lib",
+    "gulp": "gulp clean && gulp"
   },
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "^6.26.0",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1"
+    "babel-preset-stage-0": "^6.24.1",
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.0",
+    "gulp-clean-css": "^3.9.0",
+    "gulp-less": "^3.3.2",
+    "gulp-replace-path": "^0.4.0",
+    "gulp-uglify": "^3.0.0",
+    "path": "^0.12.7"
   },
   "dependencies": {
     "echarts": "3.7.2",
