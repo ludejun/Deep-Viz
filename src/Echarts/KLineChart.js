@@ -230,7 +230,7 @@ KLineChart.propTypes = {
   config: PropTypes.shape({
     x: PropTypes.object.isRequired,
     y: PropTypes.array.isRequired,
-    bar: PropTypes.object.isRequired,
+    bar: PropTypes.object,
     title: PropTypes.string,
     subtitle: PropTypes.string,
     dataZoom: PropTypes.object,

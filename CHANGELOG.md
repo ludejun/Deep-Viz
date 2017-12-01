@@ -1,3 +1,7 @@
+## 1.0.2
+
+Fix KLineChart's propTypes warning
+
 ## 1.0.1
 
 Run gulp again & Add lib
