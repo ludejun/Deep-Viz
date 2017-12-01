@@ -13,3 +13,4 @@ npm-debug.log*
 *.zip
 
 yarn.lock
+package-lock.json
