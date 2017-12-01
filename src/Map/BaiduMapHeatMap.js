@@ -36,7 +36,7 @@ class BaiduMapHeatMap extends BaiduMapControlBase {
     }
     function loadScript() {
       const script = document.createElement('script');
-      script.src = `http://api.map.baidu.com/api?v=2.0&ak=C4f54f1b740bc62107184968edbb64fb&callback=mapload${random.toString().substr(2)}`;
+      script.src = `https://api.map.baidu.com/api?v=2.0&ak=C4f54f1b740bc62107184968edbb64fb&callback=mapload${random.toString().substr(2)}`;
       document.body.appendChild(script);
     }
 
@@ -79,7 +79,7 @@ class BaiduMapHeatMap extends BaiduMapControlBase {
       const script2 = document.createElement('script');
       script2.async = true;
       script2.type = 'text/javascript';
-      script2.src = 'http://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js';
+      script2.src = 'https://api.map.baidu.com/library/Heatmap/2.0/src/Heatmap_min.js';
       document.head.appendChild(script2);
       script2.onload = () => {
         const heatmapOverlay = new window.BMapLib.HeatmapOverlay({ radius, opacity, gradient });

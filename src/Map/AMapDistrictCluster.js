@@ -8,7 +8,7 @@ class AMapDistrictCluster extends React.Component {
     window.mapRender = this.mapRender.bind(this);
     if (!window.AMap) {
       const script = document.createElement('script');
-      script.src = 'http://webapi.amap.com/maps?v=1.3&key=5f47a71f72692f5e7160f7b577d72a82&callback=mapRender&plugin=AMap.ToolBar';
+      script.src = 'https://webapi.amap.com/maps?v=1.3&key=5f47a71f72692f5e7160f7b577d72a82&callback=mapRender&plugin=AMap.ToolBar';
       document.head.appendChild(script);
     } else {
       this.mapRender();
@@ -17,7 +17,7 @@ class AMapDistrictCluster extends React.Component {
     const script2 = document.createElement('script');
     script2.async = false;
     script2.type = 'text/javascript';
-    script2.src = 'http://webapi.amap.com/ui/1.0/main.js?v=1.0.11';
+    script2.src = 'https://webapi.amap.com/ui/1.0/main.js?v=1.0.11';
     document.head.appendChild(script2);
     script2.onload = () => {
       // 加载相关组件
