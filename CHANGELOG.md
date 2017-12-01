@@ -1,3 +1,7 @@
+## 1.0.1
+
+Run gulp again & Add lib
+
 ## 1.0.0
 
 Modify third-party map js lib from http protocol to https protocol
