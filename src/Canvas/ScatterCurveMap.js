@@ -58,7 +58,9 @@ export default class ScatterCurveMap extends React.Component {
     // 鼠标上次划过的连线
     this.lastLine = null;
     // 绘图环境缩放比例
-    this.scaleRatio = 3;
+
+    window.devicePixelRatio === 2 ? this.scaleRatio = 2 : this.scaleRatio = 1.5;
+
     // 最小经度
     this.minLng = 0;
     // 最大纬度
@@ -703,7 +705,7 @@ export default class ScatterCurveMap extends React.Component {
           travelDirection ? point : frompoint,
           this.context,
           col,
-          1,
+          0.5,
           this.offCanvas,
           this.CirclePoint,
           travelType,

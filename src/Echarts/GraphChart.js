@@ -111,7 +111,7 @@ GraphChart.propTypes = {
     data: PropTypes.array.isRequired,
     links: PropTypes.array.isRequired,
     categories: PropTypes.array.isRequired,
-    legend: PropTypes.array.isRequired,
+    legend: PropTypes.object.isRequired,
     title: PropTypes.string,
     subtitle: PropTypes.string,
     draggable: PropTypes.bool,
