@@ -69,7 +69,7 @@ export default class PillarList extends Component {
     const addLabel = (x, y, wx, wy, h, i, val) => {
       const fontBSize = Math.floor(wx * 0.5);
       const fontSSize = Math.floor(wx * 0.38);
-      const percent = `${val.percent * 100}%`;
+      const percent = `${(val.percent * 100).toFixed(2)}%`;
       const offset = val.name.length / 2 * fontSSize;
 
       let point1X = x - wx;
@@ -81,7 +81,17 @@ export default class PillarList extends Component {
       let labelX = x - 3 * wx - offset;
       let labelXTitleY = y - h * 0.8 - wx * 0.5 - fontBSize * 1.8;
       let labelXSubTitleY = y - h * 0.8 - wx * 0.5 - fontSSize;
-      if (i % 2 !== 0) {
+      if (i === 3) {
+        point1X = x + wy;
+        point1Y = y - wy - h * 0.5;
+        point2X = x + 2 * wy;
+        point2Y = y - wy - h * 0.5;
+        point3X = x + 3 * wy;
+        point3Y = y - wy - h * 0.3;
+        labelX = x + 4 * wy - offset;
+        labelXTitleY = y - wy - h * 0.4 + fontBSize * 1.8;
+        labelXSubTitleY = y - wy - h * 0.4 + fontSSize;
+      } else if (i % 2 !== 0) {
         // right
         point1X = x + wy;
         point1Y = y - wy - h * 0.5;

@@ -178,21 +178,13 @@ export default class KLineChart extends Basic {
       });
     });
 
-    if (config.bar) {
-      option.series[1].itemStyle = {
-        normal: {
-          color: '#00da3c',
-          color0: '#ec0000',
-        },
-      };
-    } else {
-      option.series[0].itemStyle = {
-        normal: {
-          color: '#00da3c',
-          color0: '#ec0000',
-        },
-      };
-    }
+
+    option.series[config.bar === undefined ? 0 : 1].itemStyle = {
+      normal: {
+        color: '#00da3c',
+        color0: '#ec0000',
+      },
+    };
 
     if (onTooltipFormat) {
       option.tooltip.formatter = params => onTooltipFormat(params);

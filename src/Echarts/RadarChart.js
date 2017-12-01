@@ -121,7 +121,7 @@ RadarChart.propTypes = {
     max: PropTypes.number.isRequired,
     name: PropTypes.string,
     position: PropTypes.string,
-    radius: PropTypes.number.isRequired,
+    radius: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
     formatter: PropTypes.bool,
     paddingColor: PropTypes.string,
     lineColor: PropTypes.string,
