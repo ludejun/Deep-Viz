@@ -22,7 +22,7 @@ class BaiduMapPoint extends BaiduMapControlBase {
 
   loadScript() {
     const script = document.createElement('script');
-    script.src = `http://api.map.baidu.com/api?v=2.0&ak=C4f54f1b740bc62107184968edbb64fb&callback=mapload${random
+    script.src = `https://api.map.baidu.com/api?v=2.0&ak=C4f54f1b740bc62107184968edbb64fb&callback=mapload${random
       .toString()
       .substr(2)}`;
     document.body.appendChild(script);
