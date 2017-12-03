@@ -475,7 +475,7 @@ export default class ScatterCurveMap extends React.Component {
     if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'world') {
       this.currentSource = this.sourceTomer;
       this.ratio = this.maxScreenDis / this.maxGeoDis;
-      this.fetchJson('https://ludejun.github.io/Deep-Viz-Website/dist/map/WorldMap.json', (WorldMapJson) => {
+      this.fetchJson('https://ludejun.github.io/deepviz/map/WorldMap.json', (WorldMapJson) => {
         JSON.parse(WorldMapJson).features.forEach((it) => {
           if (it.geometry.type === 'Polygon') {
             const points = [];
@@ -522,7 +522,7 @@ export default class ScatterCurveMap extends React.Component {
     // 渲染中国省份
     if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'province') {
       if (this.props.mapConfig.map.name) {
-        this.fetchJson(`https://ludejun.github.io/Deep-Viz-Website/dist/map/${this.props.mapConfig.map.name}.json`, (province) => {
+        this.fetchJson(`https://ludejun.github.io/deepviz/map/${this.props.mapConfig.map.name}.json`, (province) => {
           JSON.parse(province).features.forEach((it) => {
             if (it.geometry.type === 'Polygon') {
               const points = [];

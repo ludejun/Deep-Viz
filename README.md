@@ -1,6 +1,6 @@
 # Deep-Viz of React
 
-A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice. [https://ludejun.github.io/Deep-Viz-Website/](https://ludejun.github.io/Deep-Viz-Website/)
+A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice. [https://ludejun.github.io/deepviz/](https://ludejun.github.io/deepviz/)
 
 主要专注于数据可视化，提供统一、简洁、漂亮、多样图表并糅合数据可视化经验、商业数据展示惯例的React组件库
 
@@ -62,7 +62,7 @@ A React component library, provide concise and beautiful diversity charts with C
 
 - WebGL/3D 组件
 
-  参考示例网站：[https://ludejun.github.io/Deep-Viz-Website/](https://ludejun.github.io/Deep-Viz-Website/)
+  参考示例网站：[https://ludejun.github.io/deepviz/](https://ludejun.github.io/deepviz/)
 
 ### 安装使用
 
@@ -72,7 +72,7 @@ A React component library, provide concise and beautiful diversity charts with C
 npm install deep-viz --save
 ```
 
-👇为一个简单LineChart例子，详情可见[https://ludejun.github.io/Deep-Viz-Website/#/main/components/basic/line-chart](https://ludejun.github.io/Deep-Viz-Website/#/main/components/basic/line-chart)
+👇为一个简单LineChart例子，详情可见[https://ludejun.github.io/deepviz/#/main/components/basic/line-chart](https://ludejun.github.io/Deep-Viz-Website/#/main/components/basic/line-chart)
 
 ```javascript
 import { LineChart } from 'deep-viz';
