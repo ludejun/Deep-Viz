@@ -59,7 +59,7 @@ export default class ScatterCurveMap extends React.Component {
     this.lastLine = null;
     // 绘图环境缩放比例
 
-    window.devicePixelRatio === 2 ? this.scaleRatio = 2 : this.scaleRatio = 1.5;
+    this.scaleRatio = (window.devicePixelRatio && window.devicePixelRatio === 2) ? 2 : 1;
 
     // 最小经度
     this.minLng = 0;
@@ -157,23 +157,22 @@ export default class ScatterCurveMap extends React.Component {
     };
     this.CirclePoint.prototype.drawAnimate = function () {
       this.context.beginPath();
-      this.context.clearRect(
-        this.x - 8 / 3 * this.radius - this.context.lineWidth,
-        this.y - 8 / 3 * this.radius - this.context.lineWidth,
-        this.radius * 16 / 3 + this.context.lineWidth * 2,
-        this.radius * 16 / 3 + this.context.lineWidth * 2);
-      this.context.drawImage(
-        this.offCanvas,
-        (this.mapType !== 'province' && this.mapType !== 'district') ? this.x - 8 / 3 * this.radius - this.context.lineWidth :
-          this.x - 8 / 3 * this.radius - this.context.lineWidth + this.offCanvas.width / 2 + 0.5,
-        (this.mapType !== 'province' && this.mapType !== 'district') ? this.y - 8 / 3 * this.radius - this.context.lineWidth :
-          this.y - 8 / 3 * this.radius - this.context.lineWidth + this.offCanvas.height / 2 + 0.5,
-        this.radius * 16 / 3 + this.context.lineWidth * 2,
-        this.radius * 16 / 3 + this.context.lineWidth * 2,
-        this.x - 8 / 3 * this.radius - this.context.lineWidth,
-        this.y - 8 / 3 * this.radius - this.context.lineWidth,
-        this.radius * 16 / 3 + this.context.lineWidth * 2,
-        this.radius * 16 / 3 + this.context.lineWidth * 2);
+      this.context.save();
+      this.context.arc(this.x, this.y, this.radius * 2.6, 0, Math.PI * 2);
+      this.context.clip();
+      this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+      this.context.restore();
+      this.context.save();
+      this.context.arc(this.x, this.y, this.radius * 2.6 + 2, 0, Math.PI * 2);
+      this.context.clip();
+      if (this.mapType === 'world') {
+        this.context.drawImage(this.offCanvas, 0, 0);
+      } else {
+        this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
+           -this.offCanvas.height / 2);
+      }
+
+      this.context.restore();
       this.createCenterCirclePath();
       this.fillPath();
       this.createFlashCirclePath(this.tempRadius + this.radius / 3);
@@ -476,6 +475,7 @@ export default class ScatterCurveMap extends React.Component {
       this.currentSource = this.sourceTomer;
       this.ratio = this.maxScreenDis / this.maxGeoDis;
       this.fetchJson('https://ludejun.github.io/deepviz/map/WorldMap.json', (WorldMapJson) => {
+        this.context = this.canvas.getContext('2d');
         JSON.parse(WorldMapJson).features.forEach((it) => {
           if (it.geometry.type === 'Polygon') {
             const points = [];
@@ -523,6 +523,7 @@ export default class ScatterCurveMap extends React.Component {
     if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'province') {
       if (this.props.mapConfig.map.name) {
         this.fetchJson(`https://ludejun.github.io/deepviz/map/${this.props.mapConfig.map.name}.json`, (province) => {
+          this.context = this.canvas.getContext('2d');
           JSON.parse(province).features.forEach((it) => {
             if (it.geometry.type === 'Polygon') {
               const points = [];
@@ -657,6 +658,7 @@ export default class ScatterCurveMap extends React.Component {
         const x = (it[0] - this.centerPoint[0]) * this.ratio;
         screenPoints.push([x, y]);
       });
+      this.context = this.canvas.getContext('2d');
       this.context.fillStyle = this.props.mapConfig.map.mapBackgroundColor || '#020B22';
       this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
       this.context.translate(this.canvas.width / 2 + 0.5, this.canvas.height / 2 + 0.5);
