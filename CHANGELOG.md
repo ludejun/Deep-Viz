@@ -1,3 +1,13 @@
+## 1.0.4
+
+resolve AMapCluster window.AMap.MarkerClusterer is not a constructor
+
+Fix the map's rendering bug in ScatterCurveMap
+
+## 1.0.3
+
+use http to request json in ScatterCurveMap
+
 ## 1.0.2
 
 Fix KLineChart's propTypes warning

@@ -56,6 +56,7 @@ export default class ScratchOff extends React.Component {
     if (this.props.background) {
       this.img = new Image();
       this.img.onload = () => {
+        this.context = this.canvas.getContext('2d');
         this.offContext.drawImage(this.img, 0, 0, this.canvasWidth, this.canvasHeight);
         if (this.props.scratchPosition) {
           this.scratchWidth = this.props.scratchPosition.width || 200;
