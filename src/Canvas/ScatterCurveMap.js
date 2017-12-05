@@ -6,7 +6,7 @@ export default class ScatterCurveMap extends React.Component {
   constructor(props) {
     super(props);
     // [-85.05112877980659，85.05112877980659]。这个是墨卡托的维度范围
-     // 把大地坐标转化为web墨卡托坐标
+    // 把大地坐标转化为web墨卡托坐标
     this.lonlatTomercator = function (lonlats) {
       const lonlat = lonlats;
       const mercator = [];
@@ -38,7 +38,7 @@ export default class ScatterCurveMap extends React.Component {
     this.offContext = this.offCanvas.getContext('2d');
     // canvas画布对角线值
     this.maxScreenDis = 0;
-     // 世界地图中左上角的墨卡托坐标
+    // 世界地图中左上角的墨卡托坐标
     this.sourceTomer = this.lonlatTomercator([-180, 85.05112877980659]);
     // 大地坐标对角线值
     this.maxGeoDis = this.distancePoint(this.sourceTomer,
@@ -59,7 +59,7 @@ export default class ScatterCurveMap extends React.Component {
     this.lastLine = null;
     // 绘图环境缩放比例
 
-    window.devicePixelRatio === 2 ? this.scaleRatio = 2 : this.scaleRatio = 1.5;
+    this.scaleRatio = (window.devicePixelRatio && window.devicePixelRatio === 2) ? 2 : 1;
 
     // 最小经度
     this.minLng = 0;
@@ -118,9 +118,9 @@ export default class ScatterCurveMap extends React.Component {
     this.CirclePoint.prototype.createAreaPath = function () {
       this.context.beginPath();
       this.context.rect(this.x - 2 * this.radius - this.context.lineWidth,
-            this.y - 2 * this.radius - this.context.lineWidth,
-            this.radius * 4 + this.context.lineWidth,
-            this.radius * 4 + this.context.lineWidth);
+        this.y - 2 * this.radius - this.context.lineWidth,
+        this.radius * 4 + this.context.lineWidth,
+        this.radius * 4 + this.context.lineWidth);
     };
     this.CirclePoint.prototype.createCenterCirclePath = function () {
       this.context.beginPath();
@@ -157,23 +157,22 @@ export default class ScatterCurveMap extends React.Component {
     };
     this.CirclePoint.prototype.drawAnimate = function () {
       this.context.beginPath();
-      this.context.clearRect(
-            this.x - 8 / 3 * this.radius - this.context.lineWidth,
-            this.y - 8 / 3 * this.radius - this.context.lineWidth,
-            this.radius * 16 / 3 + this.context.lineWidth * 2,
-            this.radius * 16 / 3 + this.context.lineWidth * 2);
-      this.context.drawImage(
-            this.offCanvas,
-            (this.mapType !== 'province' && this.mapType !== 'district') ? this.x - 8 / 3 * this.radius - this.context.lineWidth :
-            this.x - 8 / 3 * this.radius - this.context.lineWidth + this.offCanvas.width / 2 + 0.5,
-            (this.mapType !== 'province' && this.mapType !== 'district') ? this.y - 8 / 3 * this.radius - this.context.lineWidth :
-            this.y - 8 / 3 * this.radius - this.context.lineWidth + this.offCanvas.height / 2 + 0.5,
-            this.radius * 16 / 3 + this.context.lineWidth * 2,
-            this.radius * 16 / 3 + this.context.lineWidth * 2,
-            this.x - 8 / 3 * this.radius - this.context.lineWidth,
-            this.y - 8 / 3 * this.radius - this.context.lineWidth,
-            this.radius * 16 / 3 + this.context.lineWidth * 2,
-            this.radius * 16 / 3 + this.context.lineWidth * 2);
+      this.context.save();
+      this.context.arc(this.x, this.y, this.radius * 2.6, 0, Math.PI * 2);
+      this.context.clip();
+      this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height);
+      this.context.restore();
+      this.context.save();
+      this.context.arc(this.x, this.y, this.radius * 2.6 + 2, 0, Math.PI * 2);
+      this.context.clip();
+      if (this.mapType === 'world') {
+        this.context.drawImage(this.offCanvas, 0, 0);
+      } else {
+        this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
+           -this.offCanvas.height / 2);
+      }
+
+      this.context.restore();
       this.createCenterCirclePath();
       this.fillPath();
       this.createFlashCirclePath(this.tempRadius + this.radius / 3);
@@ -200,8 +199,8 @@ export default class ScatterCurveMap extends React.Component {
       window.requestAnimationFrame(this.animate.bind(this));
     };
     // 运动的线对象
-    this.LineStroke = function (from, to, context, color,
-      width, offCanvas, CirclePoint, travelCircle, mapType) {
+    this.LineStroke = function (
+      from, to, context, color, width, offCanvas, CirclePoint, travelCircle, mapType) {
       this.from = from;
       this.to = to;
       this.context = context;
@@ -296,8 +295,8 @@ export default class ScatterCurveMap extends React.Component {
         this.fourthcircle.createCenterCircleClipPath();
         this.context.clip();
         (this.mapType !== 'province' && this.mapType !== 'district') ? this.context.drawImage(this.offCanvas, 0, 0) :
-        this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
-          -this.offCanvas.height / 2);
+          this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
+            -this.offCanvas.height / 2);
         this.context.restore();
       }
       // third尾巴
@@ -312,8 +311,8 @@ export default class ScatterCurveMap extends React.Component {
         this.thirdcircle.createCenterCircleClipPath();
         this.context.clip();
         (this.mapType !== 'province' && this.mapType !== 'district') ? this.context.drawImage(this.offCanvas, 0, 0) :
-        this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
-          -this.offCanvas.height / 2);
+          this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
+            -this.offCanvas.height / 2);
         this.context.restore();
       }
       // second尾巴
@@ -328,8 +327,8 @@ export default class ScatterCurveMap extends React.Component {
         this.secondcircle.createCenterCircleClipPath();
         this.context.clip();
         (this.mapType !== 'province' && this.mapType !== 'district') ? this.context.drawImage(this.offCanvas, 0, 0) :
-        this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
-          -this.offCanvas.height / 2);
+          this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
+            -this.offCanvas.height / 2);
         this.context.restore();
       }
       // first尾巴
@@ -343,8 +342,8 @@ export default class ScatterCurveMap extends React.Component {
       this.circle.createCenterCircleClipPath();
       this.context.clip();
       (this.mapType !== 'province' && this.mapType !== 'district') ? this.context.drawImage(this.offCanvas, 0, 0) :
-      this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
-        -this.offCanvas.height / 2);
+        this.context.drawImage(this.offCanvas, -this.offCanvas.width / 2,
+          -this.offCanvas.height / 2);
       this.context.restore();
       // 画线
       this.createCurvePath();
@@ -394,8 +393,8 @@ export default class ScatterCurveMap extends React.Component {
         this.context.beginPath();
         this.points.forEach((it, index) => {
           index === 0 ?
-          this.context.moveTo(it.x, it.y) :
-          this.context.lineTo(it.x, it.y);
+            this.context.moveTo(it.x, it.y) :
+            this.context.lineTo(it.x, it.y);
         });
         this.context.closePath();
       }
@@ -407,8 +406,8 @@ export default class ScatterCurveMap extends React.Component {
       this.context.fillStyle = 'rgba(3,23,60,0.8)';
       this.context.strokeStyle = '#2268A0';
       if (props.mapConfig &&
-          props.mapConfig.map &&
-          props.mapConfig.map.areaBackgroundColor) {
+        props.mapConfig.map &&
+        props.mapConfig.map.areaBackgroundColor) {
         this.context.fillStyle = props.mapConfig.map.areaBackgroundColor;
       }
       if (props.mapConfig &&
@@ -438,8 +437,8 @@ export default class ScatterCurveMap extends React.Component {
       this.context.fillStyle = 'rgba(3,23,60,0.8)';
       this.context.strokeStyle = '#2268A0';
       if (props.mapConfig &&
-          props.mapConfig.map &&
-          props.mapConfig.map.areaBackgroundColor) {
+        props.mapConfig.map &&
+        props.mapConfig.map.areaBackgroundColor) {
         this.context.fillStyle = props.mapConfig.map.areaBackgroundColor;
       }
       if (props.mapConfig &&
@@ -456,6 +455,7 @@ export default class ScatterCurveMap extends React.Component {
       this.context.stroke();
     };
   }
+
   componentDidMount() {
     this.canvas = document.getElementById(this.id);
     this.context = this.canvas.getContext('2d');
@@ -470,64 +470,19 @@ export default class ScatterCurveMap extends React.Component {
     this.offCanvas.height = height * this.scaleRatio;
     this.maxScreenDis = Math.sqrt(this.canvas.width * this.canvas.width +
       this.canvas.height * this.canvas.height);
-      // 渲染世界地图
+    // 渲染世界地图
     if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'world') {
       this.currentSource = this.sourceTomer;
       this.ratio = this.maxScreenDis / this.maxGeoDis;
-      const WorldMapJson = require('../assets/map/WorldMap.json');
-      WorldMapJson.features.forEach((it) => {
-        if (it.geometry.type === 'Polygon') {
-          const points = [];
-          it.geometry.coordinates[0].forEach((item) => {
-            const geo = this.lonlatTomercator(item);
-            const x = (geo[0] - this.sourceTomer[0]) * this.ratio;
-            const y = Math.abs((geo[1] - this.sourceTomer[1])) * this.ratio;
-            const point = new this.Point(x, y);
-            points.push(point);
-          });
-          const area = new this.Area(points, this.context);
-          this.areaArray.push(area);
-        } else if (it.geometry.type === 'MultiPolygon') {
-          it.geometry.coordinates.forEach((item) => {
-            const points = [];
-            item[0].forEach((tmp) => {
-              const geo = this.lonlatTomercator(tmp);
-              const x = (geo[0] - this.sourceTomer[0]) * this.ratio;
-              const y = -(geo[1] - this.sourceTomer[1]) * this.ratio;
-              const point = new this.Point(x, y);
-              points.push(point);
-            });
-            const area = new this.Area(points, this.context);
-            this.areaArray.push(area);
-          });
-        }
-      });
-      // this.context.save();
-      this.context.fillStyle = this.props.mapConfig.map.mapBackgroundColor || '#020B22';
-      this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-      this.context.translate(0.5, 0.5);
-      this.areaArray.forEach((it) => {
-        it.drawMap();
-      });
-      this.offContext.drawImage(this.canvas, 0, 0);
-      this.renderCircle();
-      // this.context.restore();
-    }
-    // 渲染中国省份
-    if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'province') {
-      if (this.props.mapConfig.map.name) {
-        const province = require(`../assets/map/${this.props.mapConfig.map.name}.json`);
-        province.features.forEach((it) => {
+      this.fetchJson('https://ludejun.github.io/deepviz/map/WorldMap.json', (WorldMapJson) => {
+        this.context = this.canvas.getContext('2d');
+        JSON.parse(WorldMapJson).features.forEach((it) => {
           if (it.geometry.type === 'Polygon') {
             const points = [];
             it.geometry.coordinates[0].forEach((item) => {
               const geo = this.lonlatTomercator(item);
-              const x = geo[0];
-              const y = geo[1];
-              this.maxLng === null ? this.maxLng = x : (this.maxLng = Math.max(this.maxLng, x));
-              this.minLng === null ? this.minLng = x : (this.minLng = Math.min(this.minLng, x));
-              this.maxLat === null ? this.maxLat = y : (this.maxLat = Math.max(this.maxLat, y));
-              this.minLat === null ? this.minLat = y : (this.minLat = Math.min(this.minLat, y));
+              const x = (geo[0] - this.sourceTomer[0]) * this.ratio;
+              const y = Math.abs((geo[1] - this.sourceTomer[1])) * this.ratio;
               const point = new this.Point(x, y);
               points.push(point);
             });
@@ -538,6 +493,42 @@ export default class ScatterCurveMap extends React.Component {
               const points = [];
               item[0].forEach((tmp) => {
                 const geo = this.lonlatTomercator(tmp);
+                const x = (geo[0] - this.sourceTomer[0]) * this.ratio;
+                const y = -(geo[1] - this.sourceTomer[1]) * this.ratio;
+                const point = new this.Point(x, y);
+                points.push(point);
+              });
+              const area = new this.Area(points, this.context);
+              this.areaArray.push(area);
+            });
+          }
+        });
+        // this.context.save();
+        this.context.fillStyle = this.props.mapConfig.map.mapBackgroundColor || '#020B22';
+        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.translate(0.5, 0.5);
+        this.areaArray.forEach((it) => {
+          it.drawMap();
+        });
+        this.offContext.drawImage(this.canvas, 0, 0);
+        this.renderCircle();
+        // this.context.restore();
+      });
+      // const WorldMapJson = require('../assets/map/WorldMap.json');
+      // WorldMapJson.features.forEach((it) => {
+      //
+      // });
+    }
+    // 渲染中国省份
+    if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'province') {
+      if (this.props.mapConfig.map.name) {
+        this.fetchJson(`https://ludejun.github.io/deepviz/map/${this.props.mapConfig.map.name}.json`, (province) => {
+          this.context = this.canvas.getContext('2d');
+          JSON.parse(province).features.forEach((it) => {
+            if (it.geometry.type === 'Polygon') {
+              const points = [];
+              it.geometry.coordinates[0].forEach((item) => {
+                const geo = this.lonlatTomercator(item);
                 const x = geo[0];
                 const y = geo[1];
                 this.maxLng === null ? this.maxLng = x : (this.maxLng = Math.max(this.maxLng, x));
@@ -549,34 +540,52 @@ export default class ScatterCurveMap extends React.Component {
               });
               const area = new this.Area(points, this.context);
               this.areaArray.push(area);
-            });
+            } else if (it.geometry.type === 'MultiPolygon') {
+              it.geometry.coordinates.forEach((item) => {
+                const points = [];
+                item[0].forEach((tmp) => {
+                  const geo = this.lonlatTomercator(tmp);
+                  const x = geo[0];
+                  const y = geo[1];
+                  this.maxLng === null ? this.maxLng = x : (this.maxLng = Math.max(this.maxLng, x));
+                  this.minLng === null ? this.minLng = x : (this.minLng = Math.min(this.minLng, x));
+                  this.maxLat === null ? this.maxLat = y : (this.maxLat = Math.max(this.maxLat, y));
+                  this.minLat === null ? this.minLat = y : (this.minLat = Math.min(this.minLat, y));
+                  const point = new this.Point(x, y);
+                  points.push(point);
+                });
+                const area = new this.Area(points, this.context);
+                this.areaArray.push(area);
+              });
+            }
+          });
+          this.centerPoint = [(this.minLng + this.maxLng) / 2, (this.maxLat + this.minLat) / 2];
+          this.currentSource = this.centerPoint;
+          this.ratio = 1.3 * Math.min(this.canvas.width, this.canvas.height) /
+            this.distancePoint([this.minLng, this.maxLat], [this.maxLng, this.minLat]);
+          for (let i = this.areaArray.length - 1; i >= 0; i--) {
+            const it = this.areaArray[i].points;
+            for (let j = it.length - 1; j >= 0; j--) {
+              const item = it[j];
+              const x = (item.x - this.centerPoint[0]) * this.ratio;
+              const y = -(item.y - this.centerPoint[1]) * this.ratio;
+              item.x = x;
+              item.y = y;
+            }
           }
+          this.context.fillStyle = this.props.mapConfig.map.mapBackgroundColor || '#020B22';
+          this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
+          // this.context.save();
+          this.context.translate(this.canvas.width / 2 + 0.5, this.canvas.height / 2 + 0.5);
+          this.areaArray.forEach((it) => {
+            it.drawMap();
+          });
+          this.offContext.drawImage(this.canvas, 0, 0);
+          this.renderCircle();
+          // this.context.drawImage(this.offCanvas, 0, 0);
+          // this.context.restore();
         });
-        this.centerPoint = [(this.minLng + this.maxLng) / 2, (this.maxLat + this.minLat) / 2];
-        this.currentSource = this.centerPoint;
-        this.ratio = 1.3 * Math.min(this.canvas.width, this.canvas.height) /
-        this.distancePoint([this.minLng, this.maxLat], [this.maxLng, this.minLat]);
-        for (let i = this.areaArray.length - 1; i >= 0; i--) {
-          const it = this.areaArray[i].points;
-          for (let j = it.length - 1; j >= 0; j--) {
-            const item = it[j];
-            const x = (item.x - this.centerPoint[0]) * this.ratio;
-            const y = -(item.y - this.centerPoint[1]) * this.ratio;
-            item.x = x;
-            item.y = y;
-          }
-        }
-        this.context.fillStyle = this.props.mapConfig.map.mapBackgroundColor || '#020B22';
-        this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
-        // this.context.save();
-        this.context.translate(this.canvas.width / 2 + 0.5, this.canvas.height / 2 + 0.5);
-        this.areaArray.forEach((it) => {
-          it.drawMap();
-        });
-        this.offContext.drawImage(this.canvas, 0, 0);
-        this.renderCircle();
-        // this.context.drawImage(this.offCanvas, 0, 0);
-        // this.context.restore();
+        // const province = require(`../assets/map/${this.props.mapConfig.map.name}.json`);
       }
     }
     if (this.props.mapConfig && this.props.mapConfig.map && this.props.mapConfig.map.type === 'district') {
@@ -588,6 +597,18 @@ export default class ScatterCurveMap extends React.Component {
       }
     }
   }
+
+  fetchJson(url, callback) {
+    const xmlHttp = new XMLHttpRequest();
+    xmlHttp.open('GET', url, true);
+    xmlHttp.send();
+    xmlHttp.onreadystatechange = function () {
+      if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+        callback(xmlHttp.responseText);
+      }
+    };
+  }
+
   mapLoad = () => {
     const bdary = new BMap.Boundary(); // eslint-disable-line
     bdary.get(this.props.mapConfig.map.name || '徐汇区', (rs) => {
@@ -606,7 +627,7 @@ export default class ScatterCurveMap extends React.Component {
   loadScript = () => {
     const script = document.createElement('script');
     script.src =
-      'http://api.map.baidu.com/api?v=2.0&ak=C4f54f1b740bc62107184968edbb64fb&callback=mapLoad';
+      'https://api.map.baidu.com/api?v=2.0&ak=C4f54f1b740bc62107184968edbb64fb&callback=mapLoad';
     document.body.appendChild(script);
   }
   renderMap = () => {
@@ -625,7 +646,7 @@ export default class ScatterCurveMap extends React.Component {
       this.centerPoint = [(this.minLng + this.maxLng) / 2, (this.maxLat + this.minLat) / 2];
       this.currentSource = this.centerPoint;
       this.ratio = 1.3 * Math.min(this.canvas.width, this.canvas.height) /
-      this.distancePoint([this.minLng, this.maxLat], [this.maxLng, this.minLat]);
+        this.distancePoint([this.minLng, this.maxLat], [this.maxLng, this.minLat]);
       this.chinaPoints.forEach((it) => {
         this.maxLength = Math.max(this.maxLength,
           this.distancePoint([this.minLng, this.maxLat], it));
@@ -637,6 +658,7 @@ export default class ScatterCurveMap extends React.Component {
         const x = (it[0] - this.centerPoint[0]) * this.ratio;
         screenPoints.push([x, y]);
       });
+      this.context = this.canvas.getContext('2d');
       this.context.fillStyle = this.props.mapConfig.map.mapBackgroundColor || '#020B22';
       this.context.fillRect(0, 0, this.canvas.width, this.canvas.height);
       this.context.translate(this.canvas.width / 2 + 0.5, this.canvas.height / 2 + 0.5);
@@ -681,9 +703,9 @@ export default class ScatterCurveMap extends React.Component {
       }
       const frompoint = [
         (this.lonlatTomercator(this.props.mapConfig.fromPoint)[0] -
-         this.currentSource[0]) * this.ratio,
+        this.currentSource[0]) * this.ratio,
         (this.currentSource[1] -
-          this.lonlatTomercator(this.props.mapConfig.fromPoint)[1]) * this.ratio,
+        this.lonlatTomercator(this.props.mapConfig.fromPoint)[1]) * this.ratio,
       ];
       this.props.mapConfig.toPoints.forEach((it) => {
         const Tpoint = this.lonlatTomercator(it);

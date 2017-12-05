@@ -37,7 +37,7 @@ class AMapDistrictCluster extends React.Component {
   mapRender() {
     this.amap = new window.AMap.Map('ampClusterContainer', {
       zoom: 1,
-      center: [116.39, 39.9],
+      // center: [116.39, 39.9],
     });
     this.amap.addControl(new window.AMap.ToolBar());
   }
@@ -88,8 +88,8 @@ class AMapDistrictCluster extends React.Component {
       },
       drawMyLabel(feature, dataItems) {
         const pixelRatio = this.getPixelRatio(); // 高清下存在比例放大
-        const pos = feature.properties.centroid || feature.properties.center;
-        const containerPos = map.lngLatToContainer(pos);
+        // const pos = feature.properties.centroid || feature.properties.center;
+        const containerPos = map.lngLatToContainer(feature.properties.centroid || feature.properties.center);
         const labelCtx = this._getCanvasCxt('mylabel');
 
         // 文字的中心点
@@ -97,37 +97,31 @@ class AMapDistrictCluster extends React.Component {
         const centerY = containerPos.getY() * pixelRatio;
         labelCtx.save();
 
-        labelCtx.font = `14 * ${pixelRatio}px 微软雅黑`;
+        labelCtx.font = `${14 * pixelRatio}px 微软雅黑`;
         const text = `${feature.properties.name}(${dataItems.length})`;
         const textMetrics = labelCtx.measureText(text);
         const halfTxtWidth = textMetrics.width / 2;
-
+        labelCtx.fillStyle = that.props.labelConfig.fillStyle || '#108EE9';
         if (that.props.labelConfig.type === 'rect') {
-          labelCtx.fillStyle = that.props.labelConfig.fillStyle || '#108EE9';
           labelCtx.fillRect(centerX - halfTxtWidth - 3 * pixelRatio,
             centerY - 11 * pixelRatio,
             textMetrics.width + 6 * pixelRatio,
             22 * pixelRatio);
-          labelCtx.fillStyle = that.props.labelConfig.color || '#fff';
-          labelCtx.textBaseline = 'middle';
-          labelCtx.fillText(text, centerX - halfTxtWidth, centerY);
         } else if (that.props.labelConfig.type === 'circle') {
           labelCtx.beginPath();
-          labelCtx.arc(centerX, centerY, halfTxtWidth * pixelRatio / 2, 0, 2 * Math.PI);
-          labelCtx.fillStyle = that.props.labelConfig.fillStyle || '#108EE9';
+          labelCtx.arc(centerX, centerY, halfTxtWidth * pixelRatio / 2 / 2, 0, 2 * Math.PI);
           labelCtx.fill();
           labelCtx.closePath();
-          labelCtx.fillStyle = that.props.labelConfig.color || '#fff';
-          labelCtx.textBaseline = 'middle';
-          labelCtx.fillText(text, centerX - halfTxtWidth, centerY);
-
-          labelCtx.restore();
         }
+        labelCtx.fillStyle = that.props.labelConfig.color || '#fff';
+        labelCtx.textBaseline = 'middle';
+        labelCtx.fillText(text, centerX - halfTxtWidth, centerY);
+        labelCtx.restore();
       },
     });
 
     const distCluster = new DistrictCluster({
-      zIndex: 10,
+      zIndex: 200,
       map: this.amap,
       autoSetFitView: false,
       getPosition(item) {

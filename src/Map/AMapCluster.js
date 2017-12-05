@@ -6,7 +6,7 @@ export default class AMapCluster extends React.Component {
     window.mapRender = this.mapRender.bind(this);
     if (!window.AMap) {
       const script = document.createElement('script');
-      script.src = 'https://webapi.amap.com/maps?v=1.3&key=5f47a71f72692f5e7160f7b577d72a82&callback=mapRender&plugin=AMap.MarkerClusterer,AMap.ToolBar';
+      script.src = 'https://webapi.amap.com/maps?v=1.3&key=5f47a71f72692f5e7160f7b577d72a82&callback=mapRender';
       document.head.appendChild(script);
     } else {
       this.mapRender(this.props);
@@ -27,7 +27,7 @@ export default class AMapCluster extends React.Component {
       point = this.props.point;
     }
 
-    const markers = [];
+    this.markers = [];
     const {
       dragEnable = true,
       zoomEnable = true,
@@ -49,15 +49,15 @@ export default class AMapCluster extends React.Component {
     });
 
     point.forEach((value) => {
-      markers.push(new window.AMap.Marker({
+      this.markers.push(new window.AMap.Marker({
         position: value.lnglat,
         content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
         offset: new window.AMap.Pixel(-15, -15),
       }));
     });
 
-    const count = markers.length;
-    const _renderCluserMarker = (context) => {
+    const count = this.markers.length;
+    this._renderCluserMarker = (context) => {
       const div = document.createElement('div');
       const Hue = 180 - (context.count / count) ** (1 / 18) * 180;
       const bgColors = bgColor || `hsla(${Hue}, 100%, 50%, 0.7)`;
@@ -79,11 +79,13 @@ export default class AMapCluster extends React.Component {
       context.marker.setContent(div);
     };
 
-    this.cluster = new window.AMap.MarkerClusterer(
-      this.amap, markers, { gridSize: 80, renderCluserMarker: _renderCluserMarker },
-    );
-
-    this.amap.addControl(new window.AMap.ToolBar());
+    const that = this;
+    window.AMap.plugin(['AMap.MarkerClusterer', 'AMap.ToolBar'], () => { // 异步
+      that.amap.addControl(new window.AMap.ToolBar());
+      that.cluster = new window.AMap.MarkerClusterer(
+        that.amap, that.markers, { gridSize: 80, renderCluserMarker: that._renderCluserMarker },
+      );
+    });
   }
   render() {
     const { style = {} } = this.props;
