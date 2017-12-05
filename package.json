@@ -1,13 +1,13 @@
 {
   "name": "deep-viz",
-  "version": "0.10.2",
+  "version": "1.0.4",
   "description":
     "A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice.",
   "keywords": ["react-components", "data-visualization", "chart-component", "charting", "react"],
   "bugs": {
     "url": "https://github.com/ludejun/Deep-Viz/issues"
   },
-  "homepage": "https://ludejun.github.io/Deep-Viz-Website/",
+  "homepage": "https://ludejun.github.io/deepviz/",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ludejun/Deep-Viz.git"

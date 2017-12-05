@@ -59,7 +59,11 @@ export default class ScatterCurveMap extends React.Component {
     this.lastLine = null;
     // 绘图环境缩放比例
 
+<<<<<<< HEAD
     this.scaleRatio = (window.devicePixelRatio && window.devicePixelRatio === 2) ? 2 : 1.2;
+=======
+    this.scaleRatio = (window.devicePixelRatio && window.devicePixelRatio === 2) ? 2 : 1;
+>>>>>>> upstream/master
 
     // 最小经度
     this.minLng = 0;
