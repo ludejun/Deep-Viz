@@ -1,4 +1,6 @@
-## 
+##
+
+add privilege when y axis is [0] in BarChart3D
 
 modify the map rendering scale in ScatterCurveMap
 
