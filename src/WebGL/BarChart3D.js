@@ -5,6 +5,18 @@ import PropTypes from 'prop-types';
 import 'echarts-gl';
 
 export default class BarChart3D extends Component {
+  genXList(config) {
+    if (config.y.data.length !== 1) {
+      return config.x.data;
+    } else {
+      const list = [];
+      for (let i = 0; i < config.x.data.length; i++) {
+        list.push({ value: '' }, { value: config.x.data[i] });
+      }
+      list.push({ value: '' });
+      return list;
+    }
+  }
   genOption(props) {
     const config = props.config;
     const option = {
@@ -14,6 +26,7 @@ export default class BarChart3D extends Component {
         name: '',
         type: 'category',
         ...('x' in config && config.x),
+        data: this.genXList(config),
       },
       yAxis3D: {
         name: '',
@@ -56,16 +69,30 @@ export default class BarChart3D extends Component {
               },
             }
             : {};
-        option.series.push({
-          type: 'bar3D',
-          shading: 'lambert',
-          data: item.map((i) => {
-            return {
-              value: [i[0], i[1], i[2]],
-            };
-          }),
-          ...color,
-        });
+        // y only one row
+        if (config.y.data.length === 1) {
+          option.series.push({
+            type: 'bar3D',
+            shading: 'lambert',
+            data: item.map((it, i) => {
+              return {
+                value: [2 * i + 1, 0, it],
+              };
+            }),
+            ...color,
+          });
+        } else {
+          option.series.push({
+            type: 'bar3D',
+            shading: 'lambert',
+            data: item.map((i) => {
+              return {
+                value: [i[0], i[1], i[2]],
+              };
+            }),
+            ...color,
+          });
+        }
       });
     }
 
