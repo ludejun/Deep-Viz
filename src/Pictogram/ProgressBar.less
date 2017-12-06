@@ -1,0 +1,47 @@
+.progress-wrap {
+  width: 100%;
+  color: #333333;
+  font-size: 0;
+}
+.bar-name {
+  font-size: 14px;
+  //padding-right: 10px;
+  //display: inline-block;
+  //vertical-align: text-bottom;
+  //width: 8%;
+}
+.outer-bar {
+  display: inline-block;
+  width: 88%;
+  //background-color: #d9d9d9;
+  border-radius: 15px;
+  position: relative;
+}
+.inner-bar {
+}
+.child-item {
+  background-color: #78A960;
+  border-radius: 30px;
+  height: 100%;
+  animation: transitionwidth 1s linear;
+}
+.bar-value {
+  display: inline-block;
+  vertical-align: bottom;
+  padding: 0 10px;
+  width: 9%;
+  font-size: 14px;
+  height: 25px;
+  line-height: 25px;
+}
+@keyframes transitionwidth {
+  0% {
+    width: 0%;
+  }
+  50% {
+    width: 50%;
+  }
+  100% {
+    width: 100%;
+  }
+}

@@ -1,3 +1,9 @@
+##
+
+add privilege when y axis is [0] in BarChart3D
+
+modify the map rendering scale in ScatterCurveMap
+
 ## 1.0.4
 
 resolve AMapCluster window.AMap.MarkerClusterer is not a constructor

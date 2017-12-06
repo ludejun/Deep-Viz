@@ -22,6 +22,9 @@ import GraphChart from './Echarts/GraphChart';
 import KLineChart from './Echarts/KLineChart';
 
 import ScatterNet from './Echarts/ScatterNet';
+// WordCloud
+import WordCloud from './Echarts/WordCloud';
+
 // map
 // import MapBasic from './Echarts/MapBasic';
 import BaiduMapPoint from './Map/BaiduMapPoint';
@@ -42,6 +45,7 @@ import ScatterCartesian from './Echarts/ScatterCartesian';
 // Pictogram start
 import ImageBar from './Pictogram/ImageBar';
 import ImagePercent from './Pictogram/ImagePercent';
+import ProgressBar from './Pictogram/ProgressBar';
 
 // canvas
 
@@ -52,6 +56,7 @@ import ScatterCurveMap from './Canvas/ScatterCurveMap';
 import CircleAnimate from './Canvas/CircleAnimate';
 import PillarList from './Canvas/PillarList';
 import ScratchOff from './Canvas/ScratchOff';
+import RadarSpan from './Canvas/RadarSpan';
 
 // import AbstractCanvasVisualization from './Canvas/AbstractCanvasVisualization';
 // import LineCircle from './Canvas/LineCircle';
@@ -91,8 +96,10 @@ module.exports = {
   MapScatter,
   ShadeMapScatter,
   ScatterCartesian,
+  WordCloud,
   ImageBar,
   ImagePercent,
+  ProgressBar,
   RainbowRain,
   Gauge,
   GaugePan,
@@ -106,4 +113,5 @@ module.exports = {
   BarChart3D,
   ThreeModel,
   GlobePointLine,
+  RadarSpan,
 };
