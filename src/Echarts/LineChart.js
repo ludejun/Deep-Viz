@@ -80,7 +80,7 @@ export default class LineChart extends Basic {
           stack: yItem.stack || null,
           areaStyle: yItem.areaStyle ? yItem.areaStyle[index] : null,
           lineStyle: yItem.lineStyle ? yItem.lineStyle[index] : null,
-          symbol: yItem.symbol ? yItem.symbol : 'emptyCircle',
+          showSymbol: yItem.showSymbol ? yItem.showSymbol : true,
         });
       });
       option.yAxis.push({
