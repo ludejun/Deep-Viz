@@ -44,7 +44,7 @@ export default class RadarChart extends Basic {
         type: 'radar',
         areaStyle: {
           normal: {
-            opacity: config.opacity || 0.7,
+            opacity: config.opacity || 0.8,
             color: config.paddingColor || '#0080ff',
           },
         },

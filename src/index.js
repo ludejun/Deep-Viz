@@ -56,6 +56,7 @@ import ScatterCurveMap from './Canvas/ScatterCurveMap';
 import CircleAnimate from './Canvas/CircleAnimate';
 import PillarList from './Canvas/PillarList';
 import ScratchOff from './Canvas/ScratchOff';
+import RadarSpan from './Canvas/RadarSpan';
 
 // import AbstractCanvasVisualization from './Canvas/AbstractCanvasVisualization';
 // import LineCircle from './Canvas/LineCircle';
@@ -112,4 +113,5 @@ module.exports = {
   BarChart3D,
   ThreeModel,
   GlobePointLine,
+  RadarSpan,
 };
