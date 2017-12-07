@@ -697,6 +697,11 @@ export default class ScatterCurveMap extends React.Component {
         travelDirection = false;
       }
       if (this.props.mapConfig &&
+        this.props.mapConfig.travelDirection &&
+        this.props.mapConfig.travelDirection === 'none') {
+        travelDirection = null;
+      }
+      if (this.props.mapConfig &&
         this.props.mapConfig.travelType &&
         this.props.mapConfig.travelType === 'circle') {
         travelType = true;
@@ -723,18 +728,20 @@ export default class ScatterCurveMap extends React.Component {
           this.props.mapConfig.map.type);
         circle.start();
         this.circles.push(point);
-        const line = new this.LineStroke(travelDirection ? frompoint : point,
-          travelDirection ? point : frompoint,
-          this.context,
-          col,
-          0.5,
-          this.offCanvas,
-          this.CirclePoint,
-          travelType,
-          this.props.mapConfig.map.type,
-        );
-        line.start();
-        this.lines.push(line);
+        if (travelDirection !== null) {
+          const line = new this.LineStroke(travelDirection ? frompoint : point,
+            travelDirection ? point : frompoint,
+            this.context,
+            col,
+            0.5,
+            this.offCanvas,
+            this.CirclePoint,
+            travelType,
+            this.props.mapConfig.map.type,
+          );
+          line.start();
+          this.lines.push(line);
+        }
       });
       this.circle = new this.CirclePoint(frompoint[0],
         frompoint[1],

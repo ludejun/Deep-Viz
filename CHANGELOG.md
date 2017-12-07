@@ -1,4 +1,5 @@
 ##
+add canvas component RadarSpan
 
 add privilege when y axis is [0] in BarChart3D
 
