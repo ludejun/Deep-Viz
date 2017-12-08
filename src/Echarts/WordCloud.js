@@ -12,41 +12,42 @@ export default class WordCloud extends Basic {
         trigger: 'axis',
         enterable: true,
       },
-      series: [{
-        type: 'wordCloud',
-        sizeRange: config.sizeRange || [6, 66], // 字的大小区间范围
-        rotationRange: config.rotationRange || [-90, 90], // 字的旋转角度区间范围
-        shape: 'circle',
-        left: config.left || 'center',
-        top: config.top || 'center',
-        width: config.width || '70%',
-        height: config.height || '80%',
-        right: config.right || null,
-        bottom: config.bottom || null,
-        rotationStep: config.rotationStep || 45,
-        gridSize: config.gridSize || 10, // 字间距
-        drawOutOfBound: false,
-        textStyle: {
-          normal: {
-            fontFamily: config.fontFamily || 'sans-serif',
-            fontWeight: config.fontWeight || 'bold',
-            color: () => {
-              return `rgb(${[
-                Math.round(Math.random() * 160),
-                Math.round(Math.random() * 160),
-                Math.round(Math.random() * 160),
-              ].join(',')})`;
+      series: [
+        {
+          type: 'wordCloud',
+          sizeRange: config.sizeRange || [6, 66], // 字的大小区间范围
+          rotationRange: config.rotationRange || [-90, 90], // 字的旋转角度区间范围
+          shape: 'circle',
+          left: config.left || 'center',
+          top: config.top || 'center',
+          width: config.width || '70%',
+          height: config.height || '80%',
+          right: config.right || null,
+          bottom: config.bottom || null,
+          rotationStep: config.rotationStep || 45,
+          gridSize: config.gridSize || 10, // 字间距
+          drawOutOfBound: false,
+          textStyle: {
+            normal: {
+              fontFamily: config.fontFamily || 'sans-serif',
+              fontWeight: config.fontWeight || 'bold',
+              color: () => {
+                return `rgb(${[
+                  Math.round(Math.random() * 160),
+                  Math.round(Math.random() * 160),
+                  Math.round(Math.random() * 160),
+                ].join(',')})`;
+              },
+            },
+            emphasis: {
+              shadowBlur: config.shadowBlur || 10, // 阴影的模糊级数
+              shadowColor: config.shadowColor || '#333', // 阴影的颜色
             },
           },
-          emphasis: {
-            shadowBlur: config.shadowBlur || 10, // 阴影的模糊级数
-            shadowColor: config.shadowColor || '#333', // 阴影的颜色
-          },
+          data: config.data,
         },
-        data: config.data,
-      }],
+      ],
     };
-
 
     if (config.title) {
       option.title = {
@@ -97,4 +98,3 @@ WordCloud.propTypes = {
   onTooltipFormat: PropTypes.func,
   onEvents: PropTypes.object,
 };
-
