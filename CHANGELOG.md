@@ -1,5 +1,7 @@
 ##
 
+fix isLegendShow bug, add showTooltip and showSymbol two attribute to LineChart
+
 add Basic component WorldCloud
 
 Add Pictogram component ProgressBar
