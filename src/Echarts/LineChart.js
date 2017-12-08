@@ -9,7 +9,7 @@ export default class LineChart extends Basic {
     const option = {
       color: color || this.color,
       tooltip: {
-        show: config.tooltipShow !== false,
+        show: config.showTooltip !== false,
         trigger: 'axis',
         enterable: true,
       },
