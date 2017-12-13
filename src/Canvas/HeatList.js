@@ -1,10 +1,15 @@
 import React from 'react';
 
+<<<<<<< HEAD
 class HotWords extends React.Component {
+=======
+class HeatList extends React.Component {
+>>>>>>> origin/beta1.1
   constructor() {
     super();
     this.id = `${Math.random()}-canvas`;
     this.scaleRatio = 2;
+<<<<<<< HEAD
     this.colors = [
       '#FDB933',
       '#D64F44',
@@ -36,6 +41,37 @@ class HotWords extends React.Component {
       this.context.fillText(this.text, this.x, this.y);
       this.context.restore();
     };
+=======
+    this.circleArray = [];
+    this.Circle = function (x, y, radius, vx, vy, mass, color, text, set, context) {
+      this.x = x;
+      this.y = y;
+      this.radius = radius;
+      this.vx = vx;
+      this.vy = vy;
+      this.ax = 0;
+      this.ay = 0;
+      this.mass = mass;
+      this.color = color;
+      this.text = text;
+      this.set = set;
+      this.context = context;
+    };
+    this.Circle.prototype.createCirclePath = function () {
+      this.context.beginPath();
+      this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    };
+    this.Circle.prototype.createClipCirclePath = function () {
+      this.context.beginPath();
+      this.context.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+    };
+    this.list = [
+        { name: '百度', percent: 30 },
+        { name: '腾讯', percent: 20 },
+        { name: '360', percent: 10 },
+        { name: '阿里巴巴', percent: 40 },
+    ];
+>>>>>>> origin/beta1.1
   }
   componentDidMount() {
     this.canvas = document.getElementById(this.id);
@@ -45,6 +81,7 @@ class HotWords extends React.Component {
     const height = Math.floor(window.parseInt(styleDom.height));
     this.canvas.style.width = `${width}px`;
     this.canvas.style.height = `${height}px`;
+<<<<<<< HEAD
     this.props.circleOutline && (this.canvas.style.borderRadius = '50%');
     this.canvas.width = width * this.scaleRatio;
     this.canvas.height = height * this.scaleRatio;
@@ -92,6 +129,10 @@ class HotWords extends React.Component {
       window.requestAnimationFrame(animation);
     };
     animation();
+=======
+    this.canvas.width = width * this.scaleRatio;
+    this.canvas.height = height * this.scaleRatio;
+>>>>>>> origin/beta1.1
   }
   render() {
     return (<div style={{ position: 'relative', width: '100%', height: '100%' }}>
@@ -99,4 +140,8 @@ class HotWords extends React.Component {
     </div>);
   }
 }
+<<<<<<< HEAD
 export default HotWords;
+=======
+export default HeatList;
+>>>>>>> origin/beta1.1
