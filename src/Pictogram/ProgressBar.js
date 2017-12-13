@@ -1,8 +1,7 @@
-/**
- * Created by Administrator on 2017/9/29.
- */
+/* eslint no-param-reassign: "off" */
 import React from 'react';
 import PropTypes from 'prop-types';
+import { comdify } from '../utils';
 import './ProgressBar.less';
 
 export default class ProgressBar extends React.Component {
@@ -12,22 +11,7 @@ export default class ProgressBar extends React.Component {
       dataList: this.props.data,
     };
   }
-  transformValue(number) {
-    if (number.length <= 3) {
-      return number === '' ? '0' : number;
-    } else {
-      const mod = number.length % 3;
-      let output = (mod === 0 ? '' : (number.substring(0, mod)));
-      for (let i = 0; i < Math.floor(number.length / 3); i++) {
-        if (mod === 0 && i === 0) {
-          output += number.substring(mod + 3 * i, mod + 3 * i + 3);
-        } else {
-          output += `,${number.substring(mod + 3 * i, mod + 3 * i + 3)}`;
-        }
-      }
-      return (output);
-    }
-  }
+
   render() {
     const { data, config } = this.props;
     let allV = 0;
@@ -49,7 +33,7 @@ export default class ProgressBar extends React.Component {
     // };
     const center = {
       position: 'absolute',
-      left: 0,
+      left: '5px',
       height: config && config.height ? config.height : '25px',
       lineHeight: config && config.height ? config.height : '25px',
       fontSize: config.fontSize || '14px',
@@ -77,7 +61,7 @@ export default class ProgressBar extends React.Component {
     const { namePosition } = this.props.config;
     return (
       <div>
-        {data.map((item, i) =>
+        {data.map((item, i) => (
           <div key={i} style={marginStyle} className="progress-wrap">
             <div className="outer-bar" style={{ backgroundColor: config && config.backgroundColor ? config.backgroundColor : '#d9d9d9' }}>
               <div className="bar-name" style={namePosition && namePosition === 'center' ? center : namePosition === 'bottom' ? bottom : namePosition === 'top' ? defaultPosition : defaultPosition}>{item.name}</div>
@@ -85,8 +69,9 @@ export default class ProgressBar extends React.Component {
                 <div className="child-item" style={{ background: item.backgroundColor ? item.backgroundColor : '#2CA51A' }} />
               </div>
             </div>
-            <div className="bar-value" style={barValue}>{this.transformValue(item.value.toString())}{this.props.config.unit}</div>
-          </div>,
+            <div className="bar-value" style={barValue}>{comdify(item.value)}{this.props.config.unit}</div>
+          </div>
+          ),
         )}
       </div>
     );

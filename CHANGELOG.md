@@ -1,5 +1,11 @@
 ##
 
+add componnets HotWords, DataScatter in Canvas
+
+modify KLineChart, more official
+
+fix isLegendShow bug, add showTooltip and showSymbol two attribute to LineChart
+
 add Basic component WorldCloud
 
 Add Pictogram component ProgressBar
