@@ -1,4 +1,4 @@
-##
+## 1.1.0
 
 add componnets HotWords, DataScatter in Canvas
 
