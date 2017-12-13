@@ -1,3 +1,25 @@
+## 1.1.1
+
+fix HeatList conflict
+
+## 1.1.0
+
+add componnets HotWords, DataScatter in Canvas
+
+modify KLineChart, more official
+
+fix isLegendShow bug, add showTooltip and showSymbol two attribute to LineChart
+
+add Basic component WorldCloud
+
+Add Pictogram component ProgressBar
+
+add canvas component RadarSpan
+
+add privilege when y axis is [0] in BarChart3D
+
+modify the map rendering scale in ScatterCurveMap
+
 ## 1.0.4
 
 resolve AMapCluster window.AMap.MarkerClusterer is not a constructor

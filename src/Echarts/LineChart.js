@@ -9,6 +9,7 @@ export default class LineChart extends Basic {
     const option = {
       color: color || this.color,
       tooltip: {
+        show: config.showTooltip !== false,
         trigger: 'axis',
         enterable: true,
       },
@@ -70,9 +71,9 @@ export default class LineChart extends Basic {
 
     config.y.forEach((yItem, yIndex) => {
       yItem.data.forEach((item, index) => {
-        option.legend.data.push(yItem.legend[index]);
+        config.isLegendShow !== false && option.legend.data.push(yItem.legend[index]);
         option.series.push({
-          name: yItem.legend[index],
+          name: config.isLegendShow !== false ? yItem.legend[index] : undefined,
           type: 'line',
           smooth: !!yItem.smooth,
           yAxisIndex: yIndex < 1 ? 0 : 1,
@@ -80,6 +81,7 @@ export default class LineChart extends Basic {
           stack: yItem.stack || null,
           areaStyle: yItem.areaStyle ? yItem.areaStyle[index] : null,
           lineStyle: yItem.lineStyle ? yItem.lineStyle[index] : null,
+          showSymbol: yItem.showSymbol !== false,
         });
       });
       option.yAxis.push({
