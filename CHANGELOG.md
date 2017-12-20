@@ -1,3 +1,9 @@
+## 1.1.2
+
+Add xLabelCallback in KLineChart
+
+modify HeatList
+
 ## 1.1.1
 
 fix HeatList conflict

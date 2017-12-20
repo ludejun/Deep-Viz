@@ -141,6 +141,7 @@ export default class KLineChart extends Basic {
         max: 'dataMax',
         boundaryGap: false,
         axisLine: { onZero: false, lineStyle: { color: this.fontColor } },
+        axisLabel: { showMaxLabel: null },
       }, {
         type: 'category',
         data: config.x.data,
@@ -206,6 +207,7 @@ export default class KLineChart extends Basic {
         min: 'dataMin',
         max: 'dataMax',
         axisLine: { lineStyle: { color: this.fontColor } },
+        axisLabel: { showMaxLabel: null },
       };
       option.yAxis = {
         name: config.y.name || null,
@@ -228,6 +230,14 @@ export default class KLineChart extends Basic {
 
     if (onTooltipFormat) {
       option.tooltip.formatter = params => onTooltipFormat(params);
+    }
+    if (config.x.xLabelCallback && typeof config.x.xLabelCallback === 'function') {
+      if (Array.isArray(option.xAxis)) {
+        option.xAxis[0].axisLabel.formatter =
+          (value, index) => config.x.xLabelCallback(value, index);
+      } else {
+        option.xAxis.axisLabel.formatter = (value, index) => config.x.xLabelCallback(value, index);
+      }
     }
 
     return option;
