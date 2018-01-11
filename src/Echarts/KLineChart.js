@@ -5,6 +5,16 @@ import Basic from './Basic';
 import { comdify } from '../utils';
 
 export default class KLineChart extends Basic {
+  componentWillReceiveProps(nextProps) {
+    if (this.chart) {
+      const chartInstance = this.chart.getEchartsInstance();
+      chartInstance.clear();
+      if (nextProps) {
+        chartInstance.setOption(this.getOption(nextProps));
+      }
+    }
+  }
+
   getOption(props) {
     const { color, config, onTooltipFormat } = props;
     const option = {
@@ -246,6 +256,9 @@ export default class KLineChart extends Basic {
   render() {
     return (
       <ReactEcharts
+        ref={(ref) => {
+          this.chart = ref;
+        }}
         option={this.getOption(this.props)}
         style={this.props.style || { height: 450, width: '100%' }}
         notMerge
