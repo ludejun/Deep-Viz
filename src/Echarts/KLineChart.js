@@ -184,19 +184,20 @@ export default class KLineChart extends Basic {
       }];
 
       if (config.dataZoom) {
+        const { start, end } = config.dataZoom;
         option.dataZoom = [
           {
             xAxisIndex: [0, 1],
-            start: config.dataZoom.start || 30,
-            end: config.dataZoom.end || 100,
+            start: (start === null || start === undefined) ? 30 : start,
+            end: end || 100,
             type: 'inside',
           },
           {
             type: 'slider',
             xAxisIndex: [0, 1],
             show: true,
-            start: config.dataZoom.start || 30,
-            end: config.dataZoom.end || 100,
+            start: (start === null || start === undefined) ? 30 : start,
+            end: end || 100,
           },
         ];
       }

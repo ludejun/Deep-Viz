@@ -1,6 +1,8 @@
-##
+## 1.1.5
 
 clear chartInstance when componentWillReceiveProps in LineChart
+
+fix bug when dataZoom.start === 0 in LineChart/BarChartBasic/KLineChart/LineBarChart
 
 ## 1.1.4
 
