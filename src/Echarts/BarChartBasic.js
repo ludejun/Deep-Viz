@@ -189,11 +189,12 @@ export default class BarChartBasic extends Basic {
       });
     }
     if (config.dataZoom) {
+      const { start } = config.dataZoom;
       option.dataZoom = [
         {
           show: true,
           realtime: true,
-          start: config.dataZoom.start || 30,
+          start: (start === null || start === undefined) ? 30 : start,
           end: config.dataZoom.end || 100,
         },
       ];

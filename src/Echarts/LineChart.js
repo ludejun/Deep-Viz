@@ -113,11 +113,12 @@ export default class LineChart extends Basic {
       option.tooltip.formatter = params => onTooltipFormat(params);
     }
     if (config.dataZoom) {
+      const { start } = config.dataZoom;
       option.dataZoom = [
         {
           show: true,
           realtime: true,
-          start: config.dataZoom.start || 30,
+          start: (start === null || start === undefined) ? 30 : start,
           end: config.dataZoom.end || 100,
         },
       ];
