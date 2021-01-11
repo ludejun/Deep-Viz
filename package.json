@@ -1,6 +1,10 @@
 {
   "name": "deep-viz",
+<<<<<<< HEAD
   "version": "1.2.0",
+=======
+  "version": "1.1.5",
+>>>>>>> 780c898e600c7896bf1aefda3336f8aaaee1352b
   "description": "A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice.",
   "keywords": [
     "react-components",
@@ -22,11 +26,15 @@
   "directories": {
     "lib": "lib"
   },
+<<<<<<< HEAD
   "files": [
     "src",
     "lib",
     "gulpfile"
   ],
+=======
+  "files": ["src", "lib", "gulpfile"],
+>>>>>>> 780c898e600c7896bf1aefda3336f8aaaee1352b
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "babel src -d lib",
@@ -48,9 +56,15 @@
     "path": "^0.12.7"
   },
   "dependencies": {
+<<<<<<< HEAD
     "echarts": "^4.9.0",
     "echarts-for-react": "^2.0.16",
     "echarts-gl": "^1.1.2",
+=======
+    "echarts": "^3.7.2",
+    "echarts-for-react": "^2.0.0",
+    "echarts-gl": "^1.0.0-beta.6",
+>>>>>>> 780c898e600c7896bf1aefda3336f8aaaee1352b
     "echarts-wordcloud": "^1.1.3",
     "immutable": "^3.8.2",
     "react": "^16.1.1",
