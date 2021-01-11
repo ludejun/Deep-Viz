@@ -1,4 +1,4 @@
-/* eslint max-len: ["error", 180] */
+/* eslint-disable */
 import React from 'react';
 import PropTypes from 'prop-types';
 import './amp.less';
@@ -7,33 +7,33 @@ class AMapDistrictCluster extends React.Component {
   componentDidMount() {
     window.mapRender = this.mapRender.bind(this);
     if (!window.AMap) {
-      const script = document.createElement("script");
+      const script = document.createElement('script');
       script.src =
-        "https://webapi.amap.com/maps?v=1.4.15&key=5f47a71f72692f5e7160f7b577d72a82&callback=mapRender";
+        'https://webapi.amap.com/maps?v=1.4.15&key=5f47a71f72692f5e7160f7b577d72a82&callback=mapRender';
       document.head.appendChild(script);
     } else {
       this.mapRender();
     }
     // if (!window.AMapUI) {
-    const script2 = document.createElement("script");
+    const script2 = document.createElement('script');
     script2.async = false;
-    script2.type = "text/javascript";
-    script2.src = "https://webapi.amap.com/ui/1.1/main-async.js";
+    script2.type = 'text/javascript';
+    script2.src = 'https://webapi.amap.com/ui/1.1/main-async.js';
     document.head.appendChild(script2);
   }
 
   mapRender() {
-    this.amap = new window.AMap.Map("ampClusterContainer", {
+    this.amap = new window.AMap.Map('ampClusterContainer', {
       zoom: 4,
       center: [116.0, 37.6],
     });
-    AMap.plugin("AMap.ToolBar", () =>
+    AMap.plugin('AMap.ToolBar', () =>
       this.amap.addControl(new new AMap.ToolBar()())
     );
     window.initAMapUI(); // 异步调用高德API：https://lbs.amap.com/api/amap-ui/intro#import
 
     AMapUI.load(
-      ["ui/geo/DistrictCluster", "lib/$", "lib/utils"],
+      ['ui/geo/DistrictCluster', 'lib/$', 'lib/utils'],
       (DistrictCluster, $, utils) => {
         window.DistrictCluster = DistrictCluster;
         // 启动页面
@@ -55,7 +55,7 @@ class AMapDistrictCluster extends React.Component {
         if (!item) {
           return null;
         }
-        const parts = item.split(",");
+        const parts = item.split(',');
         // 返回经纬度
         return [parseFloat(parts[0]), parseFloat(parts[1])];
       },
@@ -64,7 +64,7 @@ class AMapDistrictCluster extends React.Component {
 
     $('<div id="loadingTip">加载数据，请稍候...</div>').appendTo(document.body);
     // $.get('http://a.amap.com/amap-ui/static/data/10w.txt', (csv) => {
-    $("#loadingTip").remove();
+    $('#loadingTip').remove();
     distCluster.setData(this.props.point);
     // });
   }
@@ -109,7 +109,7 @@ class AMapDistrictCluster extends React.Component {
           feature,
           dataItems
         );
-        this._createCanvas("mylabel", this._container);
+        this._createCanvas('mylabel', this._container);
       },
       drawMyLabel(feature, dataItems) {
         const pixelRatio = this.getPixelRatio(); // 高清下存在比例放大
@@ -117,7 +117,7 @@ class AMapDistrictCluster extends React.Component {
         const containerPos = map.lngLatToContainer(
           feature.properties.centroid || feature.properties.center
         );
-        const labelCtx = this._getCanvasCxt("mylabel");
+        const labelCtx = this._getCanvasCxt('mylabel');
 
         // 文字的中心点
         const centerX = containerPos.getX() * pixelRatio;
@@ -128,15 +128,15 @@ class AMapDistrictCluster extends React.Component {
         const text = `${feature.properties.name}(${dataItems.length})`;
         const textMetrics = labelCtx.measureText(text);
         const halfTxtWidth = textMetrics.width / 2;
-        labelCtx.fillStyle = that.props.labelConfig.fillStyle || "#108EE9";
-        if (that.props.labelConfig.type === "rect") {
+        labelCtx.fillStyle = that.props.labelConfig.fillStyle || '#108EE9';
+        if (that.props.labelConfig.type === 'rect') {
           labelCtx.fillRect(
             centerX - halfTxtWidth - 3 * pixelRatio,
             centerY - 11 * pixelRatio,
             textMetrics.width + 6 * pixelRatio,
             22 * pixelRatio
           );
-        } else if (that.props.labelConfig.type === "circle") {
+        } else if (that.props.labelConfig.type === 'circle') {
           labelCtx.beginPath();
           labelCtx.arc(
             centerX,
@@ -148,8 +148,8 @@ class AMapDistrictCluster extends React.Component {
           labelCtx.fill();
           labelCtx.closePath();
         }
-        labelCtx.fillStyle = that.props.labelConfig.color || "#fff";
-        labelCtx.textBaseline = "middle";
+        labelCtx.fillStyle = that.props.labelConfig.color || '#fff';
+        labelCtx.textBaseline = 'middle';
         labelCtx.fillText(text, centerX - halfTxtWidth, centerY);
         labelCtx.restore();
       },
@@ -163,7 +163,7 @@ class AMapDistrictCluster extends React.Component {
         if (!item) {
           return null;
         }
-        const parts = item.split(",");
+        const parts = item.split(',');
         // 返回经纬度
         return [parseFloat(parts[0]), parseFloat(parts[1])];
       },
@@ -172,15 +172,15 @@ class AMapDistrictCluster extends React.Component {
         getClusterMarker: null,
         featureClickToShowSub: true,
         featureStyle: {
-          fillStyle: "#9cd49b",
+          fillStyle: '#9cd49b',
           lineWidth: renderOptions ? renderOptions.lineWidth : 1,
-          strokeStyle: renderOptions ? renderOptions.strokeStyle : "#1f77b4",
+          strokeStyle: renderOptions ? renderOptions.strokeStyle : '#1f77b4',
           hoverOptions: {
-            fillStyle: renderOptions ? renderOptions.hoverColor : "#b0ddaf",
+            fillStyle: renderOptions ? renderOptions.hoverColor : '#b0ddaf',
             lineWidth: renderOptions ? renderOptions.hoverLineWidth : 1,
             strokeStyle: renderOptions
               ? renderOptions.hoverStrokeStyle
-              : "#1f77b4",
+              : '#1f77b4',
           },
         },
       },
@@ -189,7 +189,7 @@ class AMapDistrictCluster extends React.Component {
 
     $('<div id="loadingTip">加载数据，请稍候...</div>').appendTo(document.body);
     // $.get('http://a.amap.com/amap-ui/static/data/10w.txt', (csv) => {
-    $("#loadingTip").remove();
+    $('#loadingTip').remove();
     // const data = csv.split('\n');
     distCluster.setData(this.props.point);
     // });

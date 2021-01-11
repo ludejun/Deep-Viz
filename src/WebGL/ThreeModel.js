@@ -24,6 +24,7 @@ export default class ThreeModel extends Component {
     let mouseY = 0;
     const windowHalfX = width / 2;
     const windowHalfY = height / 2;
+    modelType && console.log('modelType已不再支持');
     // const modelConfig = {
     //   male: require('../assets/model/male02.obj'),
     //   female: require('../assets/model/female02.obj'),
