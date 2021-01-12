@@ -1,6 +1,6 @@
 {
   "name": "deep-viz",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice.",
   "keywords": [
     "react-components",
