@@ -32,6 +32,7 @@
 | rotate      | 非必需，定义x轴label旋转角度，[-90, 90]取值      | Int     | 0     |
 | showAll     | 非必需，定义x轴label是否全显示，默认会在不遮挡的情况下间隔显示 | Boolean | false |
 | isXAxisShow | 非必需，定义x轴是否显示                       | Boolean | true  |
+| custom | 非必需，其他自定义x轴属性                       | Object | null  |
 
 ####y: [{data: [], legend: []...}...]
 
@@ -50,6 +51,7 @@ config.y是一个长度等于y轴数量的数组，每个数组元素是一个Ob
 | max         | 非必需，设置此y轴的最大值，一般Chart会自己适应               | Int            | null  |
 | splitLine   | 非必需，此y轴上是否有分割线                           | Boolean        | false |
 | isYAxisShow | 非必需，定义y轴是否显示                             | Boolean        | true  |
+| custom | 非必需，其他自定义y轴属性                       | Object | null  |
 
 ### LineBarChart 折线柱状图
 
@@ -83,6 +85,7 @@ config.y是一个长度等于y轴数量的数组，每个数组元素是一个Ob
 | name    | 非必需，定义x轴名称，放于坐标轴右侧              | String  | null  |
 | rotate  | 非必需，定义x轴名称旋转角度，[-90, 90]取值      | Int     | 0     |
 | showAll | 非必需，定义x轴名称是否全显示，默认会在不遮挡的情况下间隔显示 | Boolean | false |
+| custom | 非必需，其他自定义x轴属性                       | Object | null  |
 
 #### y: [{data: [], legend: []...}...]
 
@@ -101,7 +104,7 @@ config.y是一个长度等于y轴数量的数组，每个数组元素是一个Ob
 | min       | 非必需，设置此y轴的最小值，一般是0                       | Int            | null  |
 | max       | 非必需，设置此y轴的最大值，一般Chart会自己适应；当要完全区分折线和柱状图时可以调整 | Int            | null  |
 | splitLine | 非必需，此y轴上是否有分割线；不推荐使用，两个坐标轴刻度很难对齐         | Boolean        | false |
-
+| custom | 非必需，其他自定义y轴属性                       | Object | null  |
 
 
 ### BarChartBasic 基础柱状图
@@ -139,6 +142,7 @@ config.y是一个长度等于y轴数量的数组，每个数组元素是一个Ob
 | showAll      | 非必需，定义x轴名称是否全显示，默认会在不遮挡的情况下间隔显示 | Boolean | false |
 | isXAxisShow  | 非必需，是否显示x轴，在某些情况下也不显示x轴；默认显示    | Boolean | true  |
 | axisTickShow | 非必需，是否显示x轴上的小刻度线；默认显示           | Boolean | true  |
+| custom | 非必需，其他自定义x轴属性                       | Object | null  |
 
 #### y: {data: [], legend: []...}
 
@@ -157,7 +161,7 @@ config.y是一个长度等于y轴数量的数组，每个数组元素是一个Ob
 | barGap       | 非必需，不同柱子间非堆积情况的间隙；可为整数或百分比字符串；不推荐使用      | Int/String | 0     |
 | barWidth     | 非必需，柱子的宽度，默认会自适应                         | Int        | null  |
 | color        | 非必需，每个柱子类型的颜色，color.length=data.length；每个元素可以是颜色字符串，也可以是一个数组，当每个元素是数组时，会从第1个颜色渐变到第2个颜色 | Array      | null  |
-
+| custom | 非必需，其他自定义y轴属性                       | Object | null  |
 
 
 ### BarHorizontal 横向柱状图

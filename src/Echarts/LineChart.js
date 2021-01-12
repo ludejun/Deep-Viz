@@ -65,6 +65,7 @@ export default class LineChart extends Basic {
           rotate: config.x.rotate || 0,
           interval: config.x.showAll ? 0 : 'auto',
         },
+        ...config.x.custom,
       },
       yAxis: [],
       series: [],
@@ -107,6 +108,7 @@ export default class LineChart extends Basic {
           formatter: '{value}',
           textStyle: { color: this.fontColor, fontSize: this.fontSize },
         },
+        ...config.y.custom,
       });
     });
     if (onTooltipFormat) {

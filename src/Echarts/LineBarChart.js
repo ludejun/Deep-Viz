@@ -52,6 +52,7 @@ export default class LineBarChart extends Basic {
           rotate: config.x.rotate || 0,
           interval: config.x.showAll ? 0 : 'auto',
         },
+        ...config.x.custom,
       },
       yAxis: [],
       series: [],
@@ -114,6 +115,7 @@ export default class LineBarChart extends Basic {
           textStyle: { color: this.fontColor, fontSize: this.fontSize },
         },
         position: yIndex < 1 ? 'left' : 'right',
+        ...config.y.custom,
       });
     });
 

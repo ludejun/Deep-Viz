@@ -73,6 +73,7 @@ export default class BarChartBasic extends Basic {
           },
           // nameLocation: config.x.nameLocation || 'middle',
           axisLine: { lineStyle: { color: '#333' } },
+          ...config.x.custom,
         },
       ],
       yAxis: [
@@ -94,6 +95,7 @@ export default class BarChartBasic extends Basic {
             show: config.y.labelShow !== false,
             textStyle: { color: this.fontColor, fontSize: this.fontSize },
           },
+          ...config.y.custom,
         },
       ],
       series: [],
