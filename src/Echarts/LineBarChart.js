@@ -115,7 +115,7 @@ export default class LineBarChart extends Basic {
           textStyle: { color: this.fontColor, fontSize: this.fontSize },
         },
         position: yIndex < 1 ? 'left' : 'right',
-        ...config.y.custom,
+        ...yItem.custom,
       });
     });
 

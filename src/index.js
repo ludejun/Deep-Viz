@@ -1,121 +1,121 @@
 // Echarts start
 // line
-import LineChart from './Echarts/LineChart';
+export { default as LineChart } from './Echarts/LineChart';
 
 // bar
-import BarChartBasic from './Echarts/BarChartBasic';
-import BarHorizontal from './Echarts/BarHorizontal';
+export { default as BarChartBasic } from './Echarts/BarChartBasic';
+export { default as BarHorizontal } from './Echarts/BarHorizontal';
 
 // heatMap
-import HeatmapCartesian from './Echarts/HeatmapCartesian';
+export { default as HeatmapCartesian } from './Echarts/HeatmapCartesian';
 // pie
-import PieChart from './Echarts/PieChart';
+export { default as PieChart } from './Echarts/PieChart';
 // radar
-import RadarChart from './Echarts/RadarChart';
+export { default as RadarChart } from './Echarts/RadarChart';
 // funnel
-import FunnelChart from './Echarts/FunnelChart';
+export { default as FunnelChart } from './Echarts/FunnelChart';
 
-import ShadeMap from './Echarts/ShadeMap';
+export { default as ShadeMap } from './Echarts/ShadeMap';
 // graph
-import GraphChart from './Echarts/GraphChart';
+export { default as GraphChart } from './Echarts/GraphChart';
 // Kline
-import KLineChart from './Echarts/KLineChart';
+export { default as KLineChart } from './Echarts/KLineChart';
 
-import ScatterNet from './Echarts/ScatterNet';
+export { default as ScatterNet } from './Echarts/ScatterNet';
 // WordCloud
-import WordCloud from './Echarts/WordCloud';
+export { default as WordCloud } from './Echarts/WordCloud';
 
 // map
-// import MapBasic from './Echarts/MapBasic';
-import BaiduMapPoint from './Map/BaiduMapPoint';
-import BaiduMapPolygon from './Map/BaiduMapPolygon';
-import BaiduMapHeatMap from './Map/BaiduMapHeatMap';
-import BaiduMapCrossCurve from './Map/BaiduMapCrossCurve';
-import AMapIndoor from './Map/AMapIndoor';
-import BaiduMapPolygonWithPoint from './Map/BaiduMapPolygonWithPoint';
-import BaiduMapHeatMapWithPoint from './Map/BaiduMapHeatMapWithPoint';
-import AMapDistrictCluster from './Map/AMapDistrictCluster';
-import AMapCluster from './Map/AMapCluster';
+// export MapBasic from './Echarts/MapBasic';
+export { default as BaiduMapPoint } from './Map/BaiduMapPoint';
+export { default as BaiduMapPolygon } from './Map/BaiduMapPolygon';
+export { default as BaiduMapHeatMap } from './Map/BaiduMapHeatMap';
+export { default as BaiduMapCrossCurve } from './Map/BaiduMapCrossCurve';
+export { default as AMapIndoor } from './Map/AMapIndoor';
+export { default as BaiduMapPolygonWithPoint } from './Map/BaiduMapPolygonWithPoint';
+export { default as BaiduMapHeatMapWithPoint } from './Map/BaiduMapHeatMapWithPoint';
+export { default as AMapDistrictCluster } from './Map/AMapDistrictCluster';
+export { default as AMapCluster } from './Map/AMapCluster';
 // mixed
-import LineBarChart from './Echarts/LineBarChart';
-import MapScatter from './Echarts/MapScatter';
-import ShadeMapScatter from './Echarts/ShadeMapScatter';
-import ScatterCartesian from './Echarts/ScatterCartesian';
+export { default as LineBarChart } from './Echarts/LineBarChart';
+export { default as MapScatter } from './Echarts/MapScatter';
+export { default as ShadeMapScatter } from './Echarts/ShadeMapScatter';
+export { default as ScatterCartesian } from './Echarts/ScatterCartesian';
 
 // Pictogram start
-import ImageBar from './Pictogram/ImageBar';
-import ImagePercent from './Pictogram/ImagePercent';
-import ProgressBar from './Pictogram/ProgressBar';
+export { default as ImageBar } from './Pictogram/ImageBar';
+export { default as ImagePercent } from './Pictogram/ImagePercent';
+export { default as ProgressBar } from './Pictogram/ProgressBar';
 
 // canvas
 
-import RainbowRain from './Canvas/RainbowRain';
-import Gauge from './Canvas/Gauge';
-import GaugePan from './Canvas/GaugePan';
-import ScatterCurveMap from './Canvas/ScatterCurveMap';
-import CircleAnimate from './Canvas/CircleAnimate';
-import PillarList from './Canvas/PillarList';
-import ScratchOff from './Canvas/ScratchOff';
-import RadarSpan from './Canvas/RadarSpan';
-import HotWords from './Canvas/HeatList';
-import DataScatter from './Canvas/DataScatter';
+export { default as RainbowRain } from './Canvas/RainbowRain';
+export { default as Gauge } from './Canvas/Gauge';
+export { default as GaugePan } from './Canvas/GaugePan';
+export { default as ScatterCurveMap } from './Canvas/ScatterCurveMap';
+export { default as CircleAnimate } from './Canvas/CircleAnimate';
+export { default as PillarList } from './Canvas/PillarList';
+export { default as ScratchOff } from './Canvas/ScratchOff';
+export { default as RadarSpan } from './Canvas/RadarSpan';
+export { default as HotWords } from './Canvas/HeatList';
+export { default as DataScatter } from './Canvas/DataScatter';
 
-// import AbstractCanvasVisualization from './Canvas/AbstractCanvasVisualization';
-// import LineCircle from './Canvas/LineCircle';
-// import Clock from './Canvas/Clock';
+// export AbstractCanvasVisualization from './Canvas/AbstractCanvasVisualization';
+// export LineCircle from './Canvas/LineCircle';
+// export Clock from './Canvas/Clock';
 
 // svg
-import BallMove from './SVG/BallMove';
-import PieChartSvg from './SVG/PieChartSvg';
-import CirclePan from './SVG/CirclePan';
+export { default as BallMove } from './SVG/BallMove';
+export { default as PieChartSvg } from './SVG/PieChartSvg';
+export { default as CirclePan } from './SVG/CirclePan';
 // WebGL
-import BarChart3D from './WebGL/BarChart3D';
-import ThreeModel from './WebGL/ThreeModel';
-import GlobePointLine from './WebGL/GlobePointLine';
+export { default as BarChart3D } from './WebGL/BarChart3D';
+export { default as ThreeModel } from './WebGL/ThreeModel';
+export { default as GlobePointLine } from './WebGL/GlobePointLine';
 
-module.exports = {
-  LineChart,
-  BarChartBasic,
-  BarHorizontal,
-  HeatmapCartesian,
-  PieChart,
-  RadarChart,
-  FunnelChart,
-  ShadeMap,
-  GraphChart,
-  KLineChart,
-  ScatterNet,
-  BaiduMapPoint,
-  BaiduMapPolygon,
-  BaiduMapHeatMap,
-  BaiduMapCrossCurve,
-  AMapIndoor,
-  BaiduMapPolygonWithPoint,
-  BaiduMapHeatMapWithPoint,
-  AMapDistrictCluster,
-  AMapCluster,
-  LineBarChart,
-  MapScatter,
-  ShadeMapScatter,
-  ScatterCartesian,
-  WordCloud,
-  ImageBar,
-  ImagePercent,
-  ProgressBar,
-  RainbowRain,
-  Gauge,
-  GaugePan,
-  ScatterCurveMap,
-  CircleAnimate,
-  PillarList,
-  ScratchOff,
-  BallMove,
-  PieChartSvg,
-  CirclePan,
-  BarChart3D,
-  ThreeModel,
-  GlobePointLine,
-  RadarSpan,
-  HotWords,
-  DataScatter,
-};
+// module.exports = {
+//   LineChart,
+//   BarChartBasic,
+//   BarHorizontal,
+//   HeatmapCartesian,
+//   PieChart,
+//   RadarChart,
+//   FunnelChart,
+//   ShadeMap,
+//   GraphChart,
+//   KLineChart,
+//   ScatterNet,
+//   BaiduMapPoint,
+//   BaiduMapPolygon,
+//   BaiduMapHeatMap,
+//   BaiduMapCrossCurve,
+//   AMapIndoor,
+//   BaiduMapPolygonWithPoint,
+//   BaiduMapHeatMapWithPoint,
+//   AMapDistrictCluster,
+//   AMapCluster,
+//   LineBarChart,
+//   MapScatter,
+//   ShadeMapScatter,
+//   ScatterCartesian,
+//   WordCloud,
+//   ImageBar,
+//   ImagePercent,
+//   ProgressBar,
+//   RainbowRain,
+//   Gauge,
+//   GaugePan,
+//   ScatterCurveMap,
+//   CircleAnimate,
+//   PillarList,
+//   ScratchOff,
+//   BallMove,
+//   PieChartSvg,
+//   CirclePan,
+//   BarChart3D,
+//   ThreeModel,
+//   GlobePointLine,
+//   RadarSpan,
+//   HotWords,
+//   DataScatter,
+// };

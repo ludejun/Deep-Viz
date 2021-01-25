@@ -1,3 +1,7 @@
+## 1.2.3
+
+- 自定义配置的属性Bugfix
+
 ## 1.2.2
 
 - 给BarChartBasic、LineBarChart、LineChart的X、Y轴添加自定义配置的属性

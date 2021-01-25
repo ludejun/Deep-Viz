@@ -108,7 +108,7 @@ export default class LineChart extends Basic {
           formatter: '{value}',
           textStyle: { color: this.fontColor, fontSize: this.fontSize },
         },
-        ...config.y.custom,
+        ...yItem.custom,
       });
     });
     if (onTooltipFormat) {
