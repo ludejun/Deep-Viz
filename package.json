@@ -1,6 +1,6 @@
 {
   "name": "deep-viz",
-  "version": "1.2.4-beta2",
+  "version": "2.0.0",
   "description": "A React chart library: concise, consistent and good-looking charts built on ECharts, Canvas, SVG, WebGL and Chinese e-maps (Baidu / AMap), distilled from years of commercial data-visualisation practice.",
   "keywords": [
     "react",
@@ -42,6 +42,7 @@
   ],
   "files": [
     "lib",
+    "!lib/assets/map",
     "README.md",
     "README_CN.md",
     "CHANGELOG.md",

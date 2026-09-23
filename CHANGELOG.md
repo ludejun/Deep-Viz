@@ -3,7 +3,25 @@
 All notable changes to this project are documented here. Versions follow
 [Semantic Versioning](https://semver.org/).
 
-## Unreleased
+## 2.0.0 — 2026-09-23
+
+### Breaking
+
+- **ECharts 4 → 5.** Every chart component renders through ECharts 5 now. A
+  project pinned to ECharts 4 has to move with it. ECharts stays on 5 rather
+  than 6 because echarts-wordcloud 2.1 still declares a peer of `^5.0.1`.
+- **three 0.88 → 0.186**, and `three-obj-loader` is dropped for the `OBJLoader`
+  three itself ships. Only `ThreeModel` is affected.
+- **immutable 3 → 5**, **echarts-for-react 2 → 3**, **echarts-gl 1 → 2**,
+  **echarts-wordcloud 1 → 2**.
+- **The tarball no longer ships `src/`.** Anything importing from
+  `deep-viz/src/...` has to use `deep-viz/lib/...` instead.
+- **`ThreeModel` no longer logs to the console.** Load progress and failures are
+  reported through the new `onProgress` and `onError` props; an unhandled
+  failure goes to `console.error` rather than being printed unconditionally.
+- **Node >= 18** is declared in `engines`.
+- This is the first stable release since 1.2.3; `1.2.4-beta2` had been the
+  `latest` tag since 2022.
 
 ### Fixed
 
@@ -16,6 +34,15 @@ All notable changes to this project are documented here. Versions follow
   files. It only resolved because another package happened to hoist it.
 - **ECharts 5 compatibility.** `GlobePointLine` and `BaiduMapCrossCurve` used
   `import echarts from 'echarts'`; ECharts 5 removed the default export.
+- **The bundled China map threw on import.** `src/assets/echarts/map/china.js`
+  was an ECharts 4-era UMD bundle that read `root.echarts` at module top level.
+  Under ESM the top-level `this` is `undefined`, so importing it threw
+  `Cannot read properties of undefined (reading 'echarts')` and took
+  `ShadeMap`, `ShadeMapScatter`, `ScatterCartesian` and `MapScatter` down with
+  it. It now imports `echarts` directly; the map data is unchanged, and ECharts
+  5 accepts it as-is.
+- **`ScatterCurveMap` had the map JSON URL hard-coded** to a GitHub Pages host.
+  `mapConfig.map.baseUrl` now overrides it; the old URL stays the default.
 - `PieChartSvg` had a `` `hsl(…)` || '#000' `` fallback that could never be
   reached, because a template literal is always truthy. The fallback now
   triggers on a missing colour, as intended.
