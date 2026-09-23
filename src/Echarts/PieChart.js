@@ -41,7 +41,9 @@ export default class PieChart extends Basic {
       series: [
         {
           type: 'pie',
-          radius: config.concentric ? [config.concentric.innerRadius || '50%', config.concentric.outerRadius || '70%'] : '70%',
+          radius: config.concentric
+            ? [config.concentric.innerRadius || '50%', config.concentric.outerRadius || '70%']
+            : '70%',
           center: ['50%', '50%'],
           data: config.data,
           label: {
@@ -91,11 +93,11 @@ export default class PieChart extends Basic {
         top: position.y || (orient === 'vertical' ? 'top' : 'bottom'),
         left: position.x || (orient === 'vertical' ? 'right' : 'center'),
         orient: orient || 'horizontal',
-        data: config.data ? config.data.map(v => v.name) : null,
+        data: config.data ? config.data.map((v) => v.name) : null,
       };
     }
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
 
     return option;

@@ -4,7 +4,16 @@ import { is } from 'immutable';
 export default class Basic extends Component {
   constructor(props) {
     super(props);
-    this.color = ['#2CA51A', '#0BBEFE', '#EA6C6B', '#F8B853', '#8AAAF6', '#4F76D1', '#C1DFFF', '#F7F7F7'];
+    this.color = [
+      '#2CA51A',
+      '#0BBEFE',
+      '#EA6C6B',
+      '#F8B853',
+      '#8AAAF6',
+      '#4F76D1',
+      '#C1DFFF',
+      '#F7F7F7',
+    ];
     this.fontSize = 12;
     this.fontColor = '#999999';
     this.gridColor = '#E9E9E9';
@@ -17,8 +26,10 @@ export default class Basic extends Component {
     const thisProps = this.props || {};
     const thisState = this.state || {};
 
-    if (Object.keys(thisProps).length !== Object.keys(nextProps === null ? {} : nextProps).length ||
-      Object.keys(thisState).length !== Object.keys(nextState === null ? {} : nextState).length) {
+    if (
+      Object.keys(thisProps).length !== Object.keys(nextProps === null ? {} : nextProps).length ||
+      Object.keys(thisState).length !== Object.keys(nextState === null ? {} : nextState).length
+    ) {
       return true;
     }
 

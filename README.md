@@ -1,119 +1,160 @@
-# Deep-Viz of React
+<p align="center">
+  <img src="https://cdn.jsdelivr.net/gh/ludejun/Deep-Viz@master/assets/logo.svg" width="96" height="96" alt="Deep-Viz" />
+</p>
 
-A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice. [https://ludejun.github.io/deepviz/](https://ludejun.github.io/deepviz/)
+<h1 align="center">Deep-Viz</h1>
 
-主要专注于数据可视化，提供统一、简洁、漂亮、多样图表并糅合数据可视化经验、商业数据展示惯例的React组件库
+<p align="center">
+  A React chart library: concise, consistent and good-looking charts built on
+  ECharts, Canvas, SVG, WebGL and Chinese e-maps — distilled from years of
+  commercial data-visualisation practice.
+</p>
 
-~~~
-1.特性
+<p align="center">
+  <a href="https://www.npmjs.com/package/deep-viz"><img src="https://img.shields.io/npm/v/deep-viz.svg?logo=npm&color=cb3837" alt="npm version" /></a>
+  <a href="https://www.npmjs.com/package/deep-viz"><img src="https://img.shields.io/npm/dm/deep-viz.svg?color=cb3837" alt="npm downloads" /></a>
+  <a href="https://bundlephobia.com/package/deep-viz"><img src="https://img.shields.io/bundlephobia/minzip/deep-viz?label=minzipped" alt="bundle size" /></a>
+  <a href="https://www.npmjs.com/package/deep-viz"><img src="https://img.shields.io/npm/types/deep-viz.svg?logo=typescript&logoColor=white" alt="types included" /></a>
+  <br />
+  <a href="https://github.com/ludejun/Deep-Viz/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/deep-viz.svg?color=blue" alt="license" /></a>
+  <a href="https://github.com/ludejun/Deep-Viz/stargazers"><img src="https://img.shields.io/github/stars/ludejun/Deep-Viz?logo=github&color=yellow" alt="GitHub stars" /></a>
+  <a href="https://github.com/ludejun/Deep-Viz/blob/master/CONTRIBUTING.md"><img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg" alt="PRs welcome" /></a>
+  <img src="https://img.shields.io/badge/react-%3E%3D16.8-61dafb?logo=react&logoColor=white" alt="react >= 16.8" />
+  <img src="https://img.shields.io/badge/echarts-5.x-ba160c" alt="echarts 5" />
+</p>
 
-2.支持环境
+<p align="center">
+  <b><a href="https://ludejun.github.io/deepviz/">Component gallery</a></b>
+  ·
+  <a href="https://www.npmjs.com/package/deep-viz">npm</a>
+  ·
+  <a href="./CHANGELOG.md">Changelog</a>
+  ·
+  <a href="./CONTRIBUTING.md">Contributing</a>
+  ·
+  <a href="./README_CN.md">中文文档</a>
+</p>
 
-3.组件范围
+---
 
-4.安装使用
+Most chart libraries hand you the whole configuration surface of the engine
+underneath and leave the design decisions to you. Deep-Viz takes the opposite
+position: 44 components, each with the options that actually vary in practice,
+already styled to one visual system. Where you do need the engine's full power,
+every ECharts-backed component still takes raw option fragments.
 
-5.如何贡献
+## Features
 
-6.感谢
+- **44 components** across six rendering backends: ECharts, Baidu / AMap e-maps,
+  Canvas, SVG, WebGL and plain DOM pictograms.
+- **Short configuration.** A handful of lines produces a complete, consistent
+  chart; roughly 90% of the remaining cases are covered by passing option
+  fragments straight through.
+- **One visual system.** Colours, type scale, grid and tooltip styling are
+  shared across every component, so a dashboard looks designed rather than
+  assembled.
+- **TypeScript declarations** for the whole public API, hand-written to match
+  the runtime propTypes.
+- **Tree-shakeable** — import a single component and nothing else comes with it.
 
-7.展示网站技术栈介绍
-~~~
+## Requirements
 
-### 特性
+|          |                                                                |
+| -------- | -------------------------------------------------------------- |
+| React    | `>= 16.8`                                                      |
+| ECharts  | 5.x (bundled as a dependency)                                  |
+| Browsers | Anything with Canvas; WebGL components additionally need WebGL |
+| Node     | `>= 22` for development                                        |
 
-- 提供丰富数据可视化组件，基础图表、电子地图、3D制图等，能满足绝大部分可视化需求
-
-
-- 组件配置简洁化，很少的代码即可画出复杂、统一、漂亮图表；同时可通过特殊配置兼容90%其他需求
-
-
-- 糅合多年数据可视化经验、商业数据展示惯例，将不必要的配置去掉
-
-
-- 高质量React组件库，ES2015编写，PropsType完善，严格Eslint规则，统一设计规范
-
-
-- 支持npm + webpack安装使用
-
-### 支持环境
-
-- 现代浏览器和 IE9 及以上
-
-
-- 大部分组件在支持Canvas的浏览器上即可使用
-
-### 组件范围
-
-- Basic/Echarts 基础图表组件
-
-
-- Map 地图组件
-
-
-- Pictogram/Dom 象形图组件
-
-
-- SVG 组件
-
-
-- Canvas 组件
-
-
-- WebGL/3D 组件
-
-  参考示例网站：[https://ludejun.github.io/deepviz/](https://ludejun.github.io/deepviz/)
-
-### 安装使用
-
-推荐使用npm安装使用
+## Install
 
 ```shell
+pnpm add deep-viz
+# or
 npm install deep-viz --save
 ```
 
-👇为一个简单LineChart例子，详情可见[https://ludejun.github.io/deepviz/#/main/components/basic/line-chart](https://ludejun.github.io/Deep-Viz-Website/#/main/components/basic/line-chart)
+## Quick start
 
-```javascript
+```jsx
 import { LineChart } from 'deep-viz';
 
 const config = {
   x: { data: lineData.date },
-  y: [{data: [lineData.y1, lineData.y2], legend: ['legend1', 'legend2'], name: 'yAxisName/unit'}]
-}
+  y: [
+    {
+      data: [lineData.y1, lineData.y2],
+      legend: ['legend1', 'legend2'],
+      name: 'yAxisName/unit',
+    },
+  ],
+};
 
-ReactDOM.render(
-<LineChart config={ config }/>
-, mountNode);
+<LineChart config={config} />;
 ```
 
-**按需加载组件：**
+Import a single component when you do not want the rest of the library:
+
 ```javascript
-import LineChart from 'deep-viz/Echarts/LineChart';
+import LineChart from 'deep-viz/lib/Echarts/LineChart';
 ```
 
-### 如何贡献
+Every component and its options are shown in the
+[gallery](https://ludejun.github.io/deepviz/).
 
-第一版开发人员主要基于大数据前端开发和设计小组，感谢他们卓有成效的付出。在3D及2D组件方面还有不少提升空间，也希望得到大家的帮助。
+## Components
 
-如您希望参与贡献，欢迎 [Pull Request](https://github.com/ludejun/Deep-Viz/pulls)，或给我们 [报告 Bug](https://github.com/ludejun/Deep-Viz/issues)。
+| Backend                 | Components                                                                                                                        |
+| ----------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| **ECharts — cartesian** | `LineChart` `LineBarChart` `BarChartBasic` `BarHorizontal` `KLineChart` `HeatmapCartesian` `ScatterCartesian` `ScatterNet`        |
+| **ECharts — other**     | `PieChart` `RadarChart` `FunnelChart` `GraphChart` `WordCloud`                                                                    |
+| **ECharts — geo**       | `ShadeMap` `MapScatter` `ShadeMapScatter`                                                                                         |
+| **Baidu maps**          | `BaiduMapPoint` `BaiduMapPolygon` `BaiduMapPolygonWithPoint` `BaiduMapHeatMap` `BaiduMapHeatMapWithPoint` `BaiduMapCrossCurve`    |
+| **AMap**                | `AMapCluster` `AMapIndoor` `AMapDistrictCluster`                                                                                  |
+| **Canvas**              | `Gauge` `GaugePan` `CircleAnimate` `RainbowRain` `PillarList` `ScatterCurveMap` `ScratchOff` `RadarSpan` `HotWords` `DataScatter` |
+| **SVG**                 | `PieChartSvg` `BallMove` `CirclePan`                                                                                              |
+| **WebGL**               | `BarChart3D` `GlobePointLine` `ThreeModel`                                                                                        |
+| **Pictogram**           | `ImageBar` `ImagePercent` `ProgressBar`                                                                                           |
 
-### 感谢
+The map components expect the Baidu or AMap JavaScript SDK to be loaded by the
+host page; they read it off `window`.
 
-秉持不重复造轮子的初衷，组件库开发过程中，大量使用或借鉴其他开源社区图表方案，这里一并表示感谢。有些组件想了解更深入，也可以去相应源头去了解。
+## TypeScript
 
-- [Echarts](http://echarts.baidu.com/)
-- [Baidu Map Javascript API](http://lbsyun.baidu.com/index.php?title=jspopular)
-- [Three](https://threejs.org/)
-- [Heatmap](https://github.com/pa7/heatmap.js)
-- [Gaode Map Javascript API](http://lbs.amap.com/api/javascript-api/summary/)
-- [Echarts-X](http://echarts.baidu.com/echarts2/x/doc/index.html)
-- [Anime](http://anime-js.com/)
+Types ship with the package — no `@types/deep-viz` needed.
 
-### 展示网站技术栈介绍
+```tsx
+import { LineChart, type LineChartProps } from 'deep-viz';
+```
 
-展示网站技术栈主要为 React + dva + Ant-Design，对此中使用的开源产品一并表示深深的感谢，希望本组件库能像这些产品一样大大提高前端开发效率。
+## Development
 
-[dva](https://github.com/dvajs/dva)是一个基于 react 和 redux、sagas、roadhog 的轻量应用框架，概念来自 elm， 支持 side effects、热替换、动态加载、react-native、SSR 等，已在生产环境广泛应用。
+```shell
+pnpm install
+pnpm build       # compiles src/ to lib/, including LESS and the declarations
+pnpm test        # vitest
+pnpm lint        # eslint
+pnpm typecheck   # tsc --noEmit
+```
 
-[Ant-Design](https://github.com/ant-design/ant-design)是蚂蚁金服出品的一套丰富 React UI 组件库，适合开发和服务于企业级后台产品。
+Contributions are welcome — see [CONTRIBUTING.md](./CONTRIBUTING.md) for the
+fork → pull request flow.
+
+## Credits
+
+The library deliberately builds on existing work rather than reinventing it.
+Thanks to:
+
+- [ECharts](https://echarts.apache.org/)
+- [Baidu Map JavaScript API](https://lbsyun.baidu.com/index.php?title=jspopular)
+- [AMap JavaScript API](https://lbs.amap.com/api/javascript-api/summary/)
+- [three.js](https://threejs.org/)
+- [heatmap.js](https://github.com/pa7/heatmap.js)
+- [anime.js](https://animejs.com/)
+
+The first version was built by the big-data front-end and design team, whose
+work this library still rests on.
+
+## License
+
+[MIT](./LICENSE)

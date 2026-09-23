@@ -19,9 +19,9 @@ export default class CircleAnimate extends React.Component {
       constructor: Circle,
       init() {
         this.pos.x = Math.random() * this._width;
-        this.pos.y = this._height + (Math.random() * 100);
-        this.alpha = 0.1 + (Math.random() * 0.3);
-        this.scale = 0.1 + (Math.random() * 0.3);
+        this.pos.y = this._height + Math.random() * 100;
+        this.alpha = 0.1 + Math.random() * 0.3;
+        this.scale = 0.1 + Math.random() * 0.3;
         this.velocity = Math.random();
       },
       draw() {

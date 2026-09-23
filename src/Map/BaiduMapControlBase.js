@@ -4,7 +4,13 @@ import PropTypes from 'prop-types';
 class BaiduMapControlBase extends React.Component {
   initMapControl(map, props) {
     const BMap = window.BMap;
-    const { disableDragging = false, mapStyle = 'midnight', navigationControl = true, disableMapRuler = false, showMapType = true } = props;
+    const {
+      disableDragging = false,
+      mapStyle = 'midnight',
+      navigationControl = true,
+      disableMapRuler = false,
+      showMapType = true,
+    } = props;
     if (navigationControl) {
       map.addControl(new BMap.NavigationControl());
     }
@@ -26,7 +32,17 @@ class BaiduMapControlBase extends React.Component {
 }
 
 BaiduMapControlBase.propTypes = {
-  mapStyle: PropTypes.oneOf(['light', 'dark', 'redalert', 'googlelite', 'grassgreen', 'midnight', 'pink', 'darkgreen', 'grayscale']),
+  mapStyle: PropTypes.oneOf([
+    'light',
+    'dark',
+    'redalert',
+    'googlelite',
+    'grassgreen',
+    'midnight',
+    'pink',
+    'darkgreen',
+    'grayscale',
+  ]),
   disableDragging: PropTypes.bool,
   navigationControl: PropTypes.bool,
   disableMapRuler: PropTypes.bool,

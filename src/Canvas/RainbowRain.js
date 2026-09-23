@@ -12,8 +12,8 @@ export default class RainbowRain extends React.Component {
     const dotsVel = [];
     const canvasEle = document.getElementById('_rainbowrain');
     const ctx = canvasEle.getContext('2d');
-    const w = canvasEle.width = this.props.width ? this.props.width : window.innerWidth;
-    const h = canvasEle.height = this.props.height ? this.props.height : window.innerHeight;
+    const w = (canvasEle.width = this.props.width ? this.props.width : window.innerWidth);
+    const h = (canvasEle.height = this.props.height ? this.props.height : window.innerHeight);
     // parameters
     const total = w;
     const accelleration = 0.05;

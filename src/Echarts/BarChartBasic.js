@@ -110,7 +110,7 @@ export default class BarChartBasic extends Basic {
       option.legend.right = 10;
     }
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     // // For shadow 柱子背后的阴影
     // if (config.shadowBar) {
@@ -163,29 +163,29 @@ export default class BarChartBasic extends Basic {
           data: barData,
           itemStyle: config.y.color
             ? {
-              normal: {
-                color: Array.isArray(config.y.color[index])
+                normal: {
+                  color: Array.isArray(config.y.color[index])
                     ? {
-                      type: 'linear',
-                      x: 0,
-                      y: 0,
-                      x2: 0,
-                      y2: 1,
-                      colorStops: [
-                        {
-                          offset: 0,
-                          color: config.y.color[index][0],
-                        },
-                        {
-                          offset: 1,
-                          color: config.y.color[index][1],
-                        },
-                      ],
-                      globalCoord: false,
-                    }
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 0,
+                        y2: 1,
+                        colorStops: [
+                          {
+                            offset: 0,
+                            color: config.y.color[index][0],
+                          },
+                          {
+                            offset: 1,
+                            color: config.y.color[index][1],
+                          },
+                        ],
+                        globalCoord: false,
+                      }
                     : config.y.color[index],
-              },
-            }
+                },
+              }
             : null,
         });
       });
@@ -196,7 +196,7 @@ export default class BarChartBasic extends Basic {
         {
           show: true,
           realtime: true,
-          start: (start === null || start === undefined) ? 30 : start,
+          start: start === null || start === undefined ? 30 : start,
           end: config.dataZoom.end || 100,
         },
       ];

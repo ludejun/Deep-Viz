@@ -1,13 +1,28 @@
 {
   "name": "deep-viz",
   "version": "1.2.4-beta2",
-  "description": "A React component library, provide concise and beautiful diversity charts with Canvas, SVG, E-map, WebGL, Dom, based on data visualization experience and commercial data display practice.",
+  "description": "A React chart library: concise, consistent and good-looking charts built on ECharts, Canvas, SVG, WebGL and Chinese e-maps (Baidu / AMap), distilled from years of commercial data-visualisation practice.",
   "keywords": [
+    "react",
     "react-components",
     "data-visualization",
+    "dataviz",
+    "chart",
+    "charts",
     "chart-component",
     "charting",
-    "react"
+    "echarts",
+    "echarts-react",
+    "webgl",
+    "threejs",
+    "canvas",
+    "svg",
+    "map",
+    "baidu-map",
+    "amap",
+    "wordcloud",
+    "数据可视化",
+    "图表组件"
   ],
   "bugs": {
     "url": "https://github.com/ludejun/Deep-Viz/issues"
@@ -18,48 +33,71 @@
     "url": "git+https://github.com/ludejun/Deep-Viz.git"
   },
   "author": "wanda-bigdata",
-  "main": "lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "src",
-    "lib",
-    "gulpfile"
-  ],
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "babel src -d lib",
-    "gulp": "gulp clean && gulp"
-  },
   "license": "MIT",
-  "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "babel-preset-stage-0": "^6.24.1",
-    "del": "^3.0.0",
-    "gulp": "^3.9.1",
-    "gulp-babel": "^7.0.0",
-    "gulp-clean-css": "^3.9.0",
-    "gulp-less": "^3.3.2",
-    "gulp-replace-path": "^0.4.0",
-    "gulp-uglify": "^3.0.0",
-    "path": "^0.12.7",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "sideEffects": [
+    "*.css",
+    "*.less"
+  ],
+  "files": [
+    "lib",
+    "README.md",
+    "README_CN.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "packageManager": "pnpm@10.19.0",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "clean": "rimraf lib",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write \"**/*.{js,jsx,json,md,less,css}\"",
+    "format:check": "prettier --check \"**/*.{js,jsx,json,md,less,css}\"",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "echarts": "^4.9.0",
-    "echarts-for-react": "^2.0.16",
-    "echarts-gl": "^1.1.2",
-    "echarts-wordcloud": "^1.1.3",
-    "immutable": "^3.8.2",
-    "three": "^0.88.0",
-    "three-obj-loader": "^1.1.3"
+    "echarts": "^5.6.0",
+    "echarts-for-react": "^3.0.6",
+    "echarts-gl": "^2.1.0",
+    "echarts-wordcloud": "^2.1.0",
+    "immutable": "^5.1.9",
+    "prop-types": "^15.8.1",
+    "three": "^0.186.0"
   },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^8.0.0",
+    "@babel/core": "^8.0.0",
+    "@babel/preset-env": "^8.0.0",
+    "@babel/preset-react": "^8.0.0",
+    "@eslint/js": "^9.39.5",
+    "@testing-library/jest-dom": "^7.0.1",
+    "@testing-library/react": "^16.3.3",
+    "@types/react": "^19.2.2",
+    "@types/three": "^0.186.0",
+    "eslint": "^9.39.5",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react": "^7.37.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.12.0",
+    "jsdom": "^30.1.1",
+    "less": "^4.4.2",
+    "prettier": "^3.6.2",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "rimraf": "^6.0.1",
+    "typescript": "^5.9.3",
+    "vitest": "^5.0.1"
   }
 }

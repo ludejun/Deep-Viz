@@ -67,40 +67,48 @@ export default class LineBarChart extends Basic {
       option.legend.right = 10;
     }
     config.y.forEach((yItem, yIndex) => {
-      yItem.data && yItem.data.forEach((item, index) => {
-        // legend
-        option.legend.data.push(yItem.legend[index]);
-        // series
-        option.series.push({
-          name: yItem.legend[index],
-          type: yItem.type || (yIndex === 0 ? 'bar' : 'line'),
-          smooth: !!yItem.smooth,
-          yAxisIndex: yIndex === 0 ? 0 : 1,
-          areaStyle: yItem.areaStyle ? yItem.areaStyle[index] : null,
-          data: item,
-          stack: yItem.stack || null,
-          barGap: yItem.barGap || 0,
-          itemStyle: yItem.color ? {
-            normal: {
-              color: Array.isArray(yItem.color[index]) ? {
-                type: 'linear',
-                x: 0,
-                y: 0,
-                x2: 0,
-                y2: 1,
-                colorStops: [{
-                  offset: 0,
-                  color: yItem.color[index][0],
-                }, {
-                  offset: 1,
-                  color: config.y.color[index][1],
-                }],
-                globalCoord: false,
-              } : yItem.color[index],
-            },
-          } : null,
+      yItem.data &&
+        yItem.data.forEach((item, index) => {
+          // legend
+          option.legend.data.push(yItem.legend[index]);
+          // series
+          option.series.push({
+            name: yItem.legend[index],
+            type: yItem.type || (yIndex === 0 ? 'bar' : 'line'),
+            smooth: !!yItem.smooth,
+            yAxisIndex: yIndex === 0 ? 0 : 1,
+            areaStyle: yItem.areaStyle ? yItem.areaStyle[index] : null,
+            data: item,
+            stack: yItem.stack || null,
+            barGap: yItem.barGap || 0,
+            itemStyle: yItem.color
+              ? {
+                  normal: {
+                    color: Array.isArray(yItem.color[index])
+                      ? {
+                          type: 'linear',
+                          x: 0,
+                          y: 0,
+                          x2: 0,
+                          y2: 1,
+                          colorStops: [
+                            {
+                              offset: 0,
+                              color: yItem.color[index][0],
+                            },
+                            {
+                              offset: 1,
+                              color: config.y.color[index][1],
+                            },
+                          ],
+                          globalCoord: false,
+                        }
+                      : yItem.color[index],
+                  },
+                }
+              : null,
+          });
         });
-      });
       // yAxis
       option.yAxis.push({
         type: 'value',
@@ -120,7 +128,7 @@ export default class LineBarChart extends Basic {
     });
 
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
 
     if (config.dataZoom) {
@@ -129,7 +137,7 @@ export default class LineBarChart extends Basic {
         {
           show: true,
           realtime: true,
-          start: (start === null || start === undefined) ? 30 : start,
+          start: start === null || start === undefined ? 30 : start,
           end: config.dataZoom.end || 100,
         },
       ];

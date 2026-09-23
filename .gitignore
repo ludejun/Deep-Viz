@@ -17,3 +17,7 @@ yarn.lock
 package-lock.json
 
 lib
+
+# build output (rebuilt by prepublishOnly)
+/lib
+/coverage

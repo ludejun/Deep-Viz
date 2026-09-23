@@ -23,7 +23,7 @@ export default class ImagePercent extends Component {
             (v && (
               <div
                 key={i}
-                style={{ display: 'inline-block', width: `${1 / dataList.length * 100}%` }}
+                style={{ display: 'inline-block', width: `${(1 / dataList.length) * 100}%` }}
               >
                 <div style={styles.center}>
                   {!!v.itemImage &&

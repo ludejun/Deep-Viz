@@ -58,7 +58,7 @@ export default class WordCloud extends Basic {
       };
     }
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
 
     return option;

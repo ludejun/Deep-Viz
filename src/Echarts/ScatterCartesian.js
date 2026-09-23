@@ -13,7 +13,7 @@ export default class ScatterCartesian extends Basic {
       return 20;
     }
     if (minTar <= maxTar && min <= now <= max) {
-      return (now - min) * (maxTar - minTar) / (max - min) + minTar;
+      return ((now - min) * (maxTar - minTar)) / (max - min) + minTar;
     }
     return now || 0;
   }
@@ -123,7 +123,7 @@ export default class ScatterCartesian extends Basic {
       series: [],
     };
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     if (config.title) {
       option.title = {
@@ -159,25 +159,34 @@ export default class ScatterCartesian extends Basic {
             },
           },
         },
-        itemStyle: config.color ? {
-          normal: {
-            shadowBlur: 5,
-            shadowColor: config.color[i][1],
-            shadowOffsetY: 2,
-            color: Array.isArray(config.color[i]) ? {
-              type: 'radial',
-              x: 0.4,
-              y: 0.4,
-              r: 0.6,
-              colorStops: [{
-                offset: 0, color: config.color[i][0],
-              }, {
-                offset: 1, color: config.color[i][1],
-              }],
-              globalCoord: false, // 缺省为 false
-            } : config.color[i],
-          },
-        } : null,
+        itemStyle: config.color
+          ? {
+              normal: {
+                shadowBlur: 5,
+                shadowColor: config.color[i][1],
+                shadowOffsetY: 2,
+                color: Array.isArray(config.color[i])
+                  ? {
+                      type: 'radial',
+                      x: 0.4,
+                      y: 0.4,
+                      r: 0.6,
+                      colorStops: [
+                        {
+                          offset: 0,
+                          color: config.color[i][0],
+                        },
+                        {
+                          offset: 1,
+                          color: config.color[i][1],
+                        },
+                      ],
+                      globalCoord: false, // 缺省为 false
+                    }
+                  : config.color[i],
+              },
+            }
+          : null,
       });
     });
     return option;

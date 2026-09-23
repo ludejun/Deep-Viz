@@ -38,7 +38,7 @@ class BaiduMapPoint extends BaiduMapControlBase {
       this.map = map;
     }
     MsgShow.prototype = new BMap.Overlay();
-    MsgShow.prototype.initialize = function() {
+    MsgShow.prototype.initialize = function () {
       const div = (this._div = document.createElement('div'));
       div.style.position = 'absolute';
       const divID = 'map_tooltip_' + Math.random();
@@ -52,7 +52,7 @@ class BaiduMapPoint extends BaiduMapControlBase {
       this.map.getPanes().labelPane.appendChild(div);
       return div;
     };
-    MsgShow.prototype.draw = function() {
+    MsgShow.prototype.draw = function () {
       const pixel = this.map.pointToOverlayPixel(this._point);
       this._div.style.left = `${pixel.x}px`;
       this._div.style.top = `${pixel.y}px`;
@@ -106,7 +106,7 @@ class BaiduMapPoint extends BaiduMapControlBase {
 
     Array.isArray(points) &&
       points.length > 0 &&
-      points.forEach(val => {
+      points.forEach((val) => {
         const point = new BMap.Point(val.location.lng, val.location.lat);
         if (!val.icon) {
           function Circle(point, color, radius, map) {
@@ -116,7 +116,7 @@ class BaiduMapPoint extends BaiduMapControlBase {
             this._radius = radius;
           }
           Circle.prototype = new BMap.Overlay();
-          Circle.prototype.initialize = function() {
+          Circle.prototype.initialize = function () {
             const div = (this._div = document.createElement('div'));
             div.style.position = 'absolute';
             div.style.borderRadius = '50%';
@@ -127,7 +127,7 @@ class BaiduMapPoint extends BaiduMapControlBase {
             this.map.getPanes().labelPane.appendChild(div);
             return div;
           };
-          Circle.prototype.draw = function() {
+          Circle.prototype.draw = function () {
             const pixel = this.map.pointToOverlayPixel(this._point);
             this._div.style.left = `${pixel.x - this._radius / 2}px`;
             this._div.style.top = `${pixel.y - this._radius / 2}px`;

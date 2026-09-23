@@ -64,10 +64,10 @@ export default class BarChart3D extends Component {
         const color =
           props.color && Array.isArray(props.color)
             ? {
-              itemStyle: {
-                color: props.color[index],
-              },
-            }
+                itemStyle: {
+                  color: props.color[index],
+                },
+              }
             : {};
         // y only one row
         if (config.y.data.length === 1) {
@@ -112,7 +112,5 @@ export default class BarChart3D extends Component {
 }
 
 BarChart3D.propTypes = {
-  /* eslint-disable react/no-unused-prop-types */
   config: PropTypes.shape({ data: PropTypes.array.isRequired }).isRequired,
-  /* eslint-enable react/no-unused-prop-types */
 };

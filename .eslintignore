@@ -1,4 +1,0 @@
-dist/*.js
-config/*.js
-node_modules
-src/components/lib

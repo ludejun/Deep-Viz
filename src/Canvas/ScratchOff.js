@@ -61,14 +61,16 @@ export default class ScratchOff extends React.Component {
         if (this.props.scratchPosition) {
           this.scratchWidth = this.props.scratchPosition.width || 200;
           this.scratchHeight = this.props.scratchPosition.height || 100;
-          this.offsetX = this.props.scratchPosition.offserX ||
-          (this.canvasWidth - this.scratchWidth - 10);
-          this.offsetY = this.props.scratchPosition.offsetY ||
-          (this.canvasHeight - this.scratchHeight - 10);
+          this.offsetX =
+            this.props.scratchPosition.offserX || this.canvasWidth - this.scratchWidth - 10;
+          this.offsetY =
+            this.props.scratchPosition.offsetY || this.canvasHeight - this.scratchHeight - 10;
         }
         const fontSize = this.scratchHeight * 0.5;
         this.offContext.font = `${fontSize}px serial`;
-        this.props.textContent && typeof this.props.textContent === 'string' && (this.text = this.props.textContent);
+        this.props.textContent &&
+          typeof this.props.textContent === 'string' &&
+          (this.text = this.props.textContent);
         this.offContext.fillStyle = 'black';
         const tx = this.canvasWidth - this.scratchWidth / 2 - 10;
         const ty = this.canvasHeight - this.scratchHeight / 2 - 10;
@@ -102,17 +104,19 @@ export default class ScratchOff extends React.Component {
         this.earser.x = x;
         this.earser.y = y;
       } else {
-        this.earser = new this.Earser(x,
-            y,
-            this.earserOpt.radius,
-             this.earserOpt.color,
-             1,
-             this.context);
+        this.earser = new this.Earser(
+          x,
+          y,
+          this.earserOpt.radius,
+          this.earserOpt.color,
+          1,
+          this.context,
+        );
       }
     } else {
       this.scratch = false;
     }
-  }
+  };
   mouseMove = (e) => {
     const x = e.clientX - this.Rect.left;
     const y = e.clientY - this.Rect.top;
@@ -133,11 +137,26 @@ export default class ScratchOff extends React.Component {
       this.context.drawImage(this.offScreen, 0, 0);
       this.context.restore();
     }
-  }
+  };
   mouseUp = () => {
     this.scratch = false;
-  }
+  };
   render() {
-    return <div><canvas id="canvas" style={{ cursor: 'pointer' }} onMouseMove={this.mouseMove} onMouseDown={this.mouseDown} onMouseUp={this.mouseUp} ref={(ref) => { this.scratchOffCanvas = ref; }}>对不起，您的浏览器不支持刮奖！请升级浏览器</canvas></div>;
+    return (
+      <div>
+        <canvas
+          id="canvas"
+          style={{ cursor: 'pointer' }}
+          onMouseMove={this.mouseMove}
+          onMouseDown={this.mouseDown}
+          onMouseUp={this.mouseUp}
+          ref={(ref) => {
+            this.scratchOffCanvas = ref;
+          }}
+        >
+          对不起，您的浏览器不支持刮奖！请升级浏览器
+        </canvas>
+      </div>
+    );
   }
 }

@@ -7,15 +7,14 @@ import REcharts from 'echarts-for-react';
 import Basic from './Basic';
 
 export default class RadarChart extends Basic {
-
   getOption(props) {
     const { config, onTooltipFormat } = props;
     const indicator = [];
     const data = [];
     !!config.values.length &&
-    config.indicator.forEach((val) => {
-      indicator.push({ text: val, max: config.max });
-    });
+      config.indicator.forEach((val) => {
+        indicator.push({ text: val, max: config.max });
+      });
     config.values.forEach((val) => {
       data.push({ value: val, name: config.indicator });
     });
@@ -24,7 +23,6 @@ export default class RadarChart extends Basic {
       trigger: 'item',
       [config.position ? 'position' : '']: config.position || '',
       [config.formatter ? 'formatter' : '']: onTooltipFormat || '',
-
     };
     const legend = {
       x: 'right',
@@ -98,7 +96,6 @@ export default class RadarChart extends Basic {
 
     return option;
   }
-
 
   render() {
     return (
