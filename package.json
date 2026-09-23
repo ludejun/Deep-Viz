@@ -65,7 +65,7 @@
     "prepublishOnly": "pnpm run build"
   },
   "dependencies": {
-    "echarts": "^5.6.0",
+    "echarts": "^6.1.0",
     "echarts-for-react": "^3.0.6",
     "echarts-gl": "^2.1.0",
     "echarts-wordcloud": "^2.1.0",
