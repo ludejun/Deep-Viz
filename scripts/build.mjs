@@ -12,7 +12,7 @@
  */
 import { spawnSync } from 'node:child_process';
 import { cp, mkdir, readdir, readFile, rm, stat, writeFile } from 'node:fs/promises';
-import { dirname, extname, join, relative, resolve } from 'node:path';
+import { dirname, extname, join, relative, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import less from 'less';
 
@@ -41,7 +41,10 @@ async function exists(path) {
 function compileJs() {
   const result = spawnSync(
     'babel',
-    ['src', '--out-dir', 'lib', '--extensions', '.js,.jsx', '--ignore', 'src/assets'],
+    // src/assets/echarts holds the map registration module, which is real JS
+    // and has to be compiled like the rest; the images and GeoJSON under
+    // src/assets are copied verbatim below.
+    ['src', '--out-dir', 'lib', '--extensions', '.js,.jsx', '--ignore', 'src/assets/imgs,src/assets/map'],
     { cwd: root, stdio: 'inherit', shell: true },
   );
   if (result.status !== 0) {
@@ -91,11 +94,16 @@ async function copyTypes() {
   await cp(join(root, 'types', 'index.d.ts'), join(libDir, 'index.d.ts'));
 }
 
-/** Images, fonts and models are copied verbatim. */
+/** Images, fonts, models and GeoJSON are copied verbatim. */
 async function copyAssets() {
   const from = join(srcDir, 'assets');
   if (!(await exists(from))) return false;
-  await cp(from, join(libDir, 'assets'), { recursive: true });
+  await cp(from, join(libDir, 'assets'), {
+    recursive: true,
+    // The echarts map module is compiled by Babel above; copying it over the
+    // compiled output would put ESM back into an otherwise CommonJS build.
+    filter: (source) => !source.includes(`${sep}assets${sep}echarts`),
+  });
   return true;
 }
 

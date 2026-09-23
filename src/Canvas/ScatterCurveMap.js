@@ -574,8 +574,12 @@ export default class ScatterCurveMap extends React.Component {
       this.props.mapConfig.map.type === 'province'
     ) {
       if (this.props.mapConfig.map.name) {
+        // 省份 GeoJSON 通过 HTTP 拉取，不随 npm 包发布。默认取展示站点上的那份，
+        // 可以用 mapConfig.map.baseUrl 指向自己的托管地址。
         this.fetchJson(
-          `https://ludejun.github.io/deepviz/map/${this.props.mapConfig.map.name}.json`,
+          `${this.props.mapConfig.map.baseUrl || 'https://ludejun.github.io/deepviz/map'}/${
+            this.props.mapConfig.map.name
+          }.json`,
           (province) => {
             this.context = this.canvas.getContext('2d');
             JSON.parse(province).features.forEach((it) => {
