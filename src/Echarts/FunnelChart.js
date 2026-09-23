@@ -7,7 +7,6 @@ import REcharts from 'echarts-for-react';
 import Basic from './Basic';
 
 export default class FunnelChart extends Basic {
-
   getOption(props) {
     const { config, onTooltipFormat } = props;
 
@@ -94,7 +93,7 @@ export default class FunnelChart extends Basic {
     const option = { tooltip, legend, series, textStyle, grid, toolbox };
 
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
 
     return option;
@@ -112,9 +111,7 @@ export default class FunnelChart extends Basic {
       />
     );
   }
-
 }
-
 
 FunnelChart.propTypes = {
   config: PropTypes.shape({

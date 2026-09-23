@@ -70,8 +70,8 @@ class BaiduMapPolygon extends BaiduMapControlBase {
       }
       i = i - 1 < 0 ? 0 : i - 1;
       map.centerAndZoom(center, 18 - i);
-      map.setMinZoom(18 - zoomBias - i < 3 ? 3 : (18 - zoomBias - i));
-      map.setMaxZoom((18 + zoomBias) - i > 18 ? 18 : ((18 + zoomBias) - i));
+      map.setMinZoom(18 - zoomBias - i < 3 ? 3 : 18 - zoomBias - i);
+      map.setMaxZoom(18 + zoomBias - i > 18 ? 18 : 18 + zoomBias - i);
 
       const circleOverlapList = datas.map((data) => {
         const tempCircle = new BMap.Circle(center, data.radius * 1000, circleStyle);
@@ -93,17 +93,20 @@ class BaiduMapPolygon extends BaiduMapControlBase {
           // 计算外部圆正东北点坐标((currLng-centerLng) * Math.sqrt(2) / 2)
           // centerLng 和 内部圆正东北点坐标((prevLng-centerLng) * Math.sqrt(2) / 2) +centerLat 的中心位置。
           startPoint = new BMap.Point(
-            (((currNorthEast.lng - prevNorthEast.lng) * Math.sqrt(2)) / 4)
-            + (((prevNorthEast.lng - center.lng) * Math.sqrt(2)) / 2) + center.lng,
-            (((currNorthEast.lat - prevNorthEast.lat) * Math.sqrt(2)) / 4)
-            + (((prevNorthEast.lat - center.lat) * Math.sqrt(2)) / 2) + center.lat,
+            ((currNorthEast.lng - prevNorthEast.lng) * Math.sqrt(2)) / 4 +
+              ((prevNorthEast.lng - center.lng) * Math.sqrt(2)) / 2 +
+              center.lng,
+            ((currNorthEast.lat - prevNorthEast.lat) * Math.sqrt(2)) / 4 +
+              ((prevNorthEast.lat - center.lat) * Math.sqrt(2)) / 2 +
+              center.lat,
           );
           midPoint = new BMap.Point(startPoint.lng + 0.005, startPoint.lat + 0.005);
           endPoint = new BMap.Point(startPoint.lng + 0.06, startPoint.lat + 0.005);
         }
-        const polyline = new BMap.Polyline(
-          [startPoint, midPoint, endPoint],
-          { strokeColor: labelColor, strokeWeight: 1 });
+        const polyline = new BMap.Polyline([startPoint, midPoint, endPoint], {
+          strokeColor: labelColor,
+          strokeWeight: 1,
+        });
         map.addOverlay(polyline);
         if (data.label) {
           const labelStartPoint = new BMap.Circle(startPoint, 50, {
@@ -122,10 +125,13 @@ class BaiduMapPolygon extends BaiduMapControlBase {
             labelDom = `${dom.innerHTML}`;
           }
 
-          const label = new BMap.Label(`<div style="position: absolute; bottom: 0">${labelDom}</div>`, {
-            position: midPoint,
-            offset: new BMap.Size(5, 0),
-          });
+          const label = new BMap.Label(
+            `<div style="position: absolute; bottom: 0">${labelDom}</div>`,
+            {
+              position: midPoint,
+              offset: new BMap.Size(5, 0),
+            },
+          );
           label.setStyle({ border: '0', backgroundColor: null, color: labelColor });
           map.addOverlay(labelStartPoint);
           map.addOverlay(label);
@@ -138,18 +144,22 @@ class BaiduMapPolygon extends BaiduMapControlBase {
         const northEastPoint = maxCircle.getBounds().getNorthEast();
         const southEastPoint = new BMap.Point(
           northEastPoint.lng,
-          (point.lat * 2) - northEastPoint.lat);
+          point.lat * 2 - northEastPoint.lat,
+        );
         const outsideStartPoint = new BMap.Point(
-          (((southEastPoint.lng - point.lng) * Math.sqrt(2)) / 4)
-          + (point.lng / 2) + (southEastPoint.lng / 2),
-          (((southEastPoint.lat - point.lat) * Math.sqrt(2)) / 4)
-          + (point.lat / 2) + (southEastPoint.lat / 2),
+          ((southEastPoint.lng - point.lng) * Math.sqrt(2)) / 4 +
+            point.lng / 2 +
+            southEastPoint.lng / 2,
+          ((southEastPoint.lat - point.lat) * Math.sqrt(2)) / 4 +
+            point.lat / 2 +
+            southEastPoint.lat / 2,
         );
         const outsideMidPoint = outsideStartPoint;
         const outsideEndPoint = new BMap.Point(outsideStartPoint.lng + 0.05, outsideStartPoint.lat);
-        const polyline = new BMap.Polyline(
-          [outsideStartPoint, outsideMidPoint, outsideEndPoint],
-          { strokeColor: labelColor, strokeWeight: 1 });
+        const polyline = new BMap.Polyline([outsideStartPoint, outsideMidPoint, outsideEndPoint], {
+          strokeColor: labelColor,
+          strokeWeight: 1,
+        });
         map.addOverlay(polyline);
         const outsideLabelStartPoint = new BMap.Circle(outsideStartPoint, 50, {
           fillColor: labelColor,
@@ -167,19 +177,20 @@ class BaiduMapPolygon extends BaiduMapControlBase {
           outsideLabelDom = `${tempDom.innerHTML}`;
         }
 
-        const outsideMapLabel = new BMap.Label(`<div style="position: absolute; bottom: 0">${outsideLabelDom}</div>`, {
-          position: outsideMidPoint,
-          offset: new BMap.Size(5, 0),
-        });
+        const outsideMapLabel = new BMap.Label(
+          `<div style="position: absolute; bottom: 0">${outsideLabelDom}</div>`,
+          {
+            position: outsideMidPoint,
+            offset: new BMap.Size(5, 0),
+          },
+        );
         outsideMapLabel.setStyle({ border: '0', backgroundColor: null, color: labelColor });
         map.addOverlay(outsideLabelStartPoint);
         map.addOverlay(outsideMapLabel);
       }
     }
 
-    return (
-      <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />
-    );
+    return <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />;
   }
 }
 
@@ -189,10 +200,12 @@ BaiduMapPolygon.propTypes = {
   disableDragging: PropTypes.bool,
   circleColor: PropTypes.string,
   labelColor: PropTypes.string,
-  datas: PropTypes.arrayOf(PropTypes.shape({
-    radius: PropTypes.number.isRequired,
-    label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
-  })).isRequired,
+  datas: PropTypes.arrayOf(
+    PropTypes.shape({
+      radius: PropTypes.number.isRequired,
+      label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+    }),
+  ).isRequired,
   outsideLabel: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   zoomBias: PropTypes.number,
 };

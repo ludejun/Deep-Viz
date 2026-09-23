@@ -88,7 +88,7 @@ export default class ScatterNet extends Basic {
             normal: { color: color && 'normal' in color ? color.normal : '#D7D7D7' },
           },
           symbolSize: (val) => {
-            return minW + (val[2] - minD + 0.1) / (maxD - minD + 0.1) * (maxW - minW);
+            return minW + ((val[2] - minD + 0.1) / (maxD - minD + 0.1)) * (maxW - minW);
           },
           animationDelay: (idx) => {
             return idx * 5;
@@ -101,7 +101,7 @@ export default class ScatterNet extends Basic {
           itemStyle: { normal: { color: color && 'effect' in color ? color.effect : '#108EE9' } },
           z: 10,
           symbolSize: (val) => {
-            return minW + (val[2] - minD + 0.1) / (maxD - minD + 0.1) * (maxW - minW);
+            return minW + ((val[2] - minD + 0.1) / (maxD - minD + 0.1)) * (maxW - minW);
           },
           data: dataE,
           ...styleE,
@@ -125,11 +125,9 @@ export default class ScatterNet extends Basic {
 }
 
 ScatterNet.propTypes = {
-  /* eslint-disable react/no-unused-prop-types */
   config: PropTypes.shape({
     x: PropTypes.object.isRequired,
     y: PropTypes.object.isRequired,
     data: PropTypes.array.isRequired,
   }),
-  /* eslint-enable react/no-unused-prop-types */
 };

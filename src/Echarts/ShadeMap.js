@@ -8,23 +8,25 @@ export default class ShadeMap extends Basic {
   getOption(props) {
     const { mapConfig, dataConfig, onTooltipFormat } = props;
     const option = {
-      series: [{
-        name: '中国',
-        type: 'map',
-        mapType: 'china',
-        zoom: 1.2,
-        selectedMode: false,
-        itemStyle: {},
-        label: {
-          normal: {
-            show: false,
+      series: [
+        {
+          name: '中国',
+          type: 'map',
+          mapType: 'china',
+          zoom: 1.2,
+          selectedMode: false,
+          itemStyle: {},
+          label: {
+            normal: {
+              show: false,
+            },
+            emphasis: {
+              show: false,
+            },
           },
-          emphasis: {
-            show: false,
-          },
+          data: [],
         },
-        data: [],
-      }],
+      ],
     };
     if (dataConfig.visualMap) {
       option.visualMap = {
@@ -96,13 +98,14 @@ export default class ShadeMap extends Basic {
       option.title = {
         text: dataConfig.title.text,
         subtext: dataConfig.title.subtext,
-        textStyle: dataConfig.title.textStyle ||
-        { color: this.titleColor, fontSize: this.titleSize },
+        textStyle: dataConfig.title.textStyle || {
+          color: this.titleColor,
+          fontSize: this.titleSize,
+        },
         x: dataConfig.title.x || 'center',
         y: dataConfig.title.y || 'top',
       };
     }
-
 
     if (dataConfig.tooltip) {
       option.tooltip = {
@@ -111,7 +114,7 @@ export default class ShadeMap extends Basic {
     }
 
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     return option;
   }
@@ -128,7 +131,6 @@ export default class ShadeMap extends Basic {
     );
   }
 }
-
 
 ShadeMap.propTypes = {
   mapConfig: PropTypes.shape({

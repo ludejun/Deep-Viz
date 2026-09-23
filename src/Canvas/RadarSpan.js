@@ -54,12 +54,7 @@ class RadarSpan extends React.Component {
       this.context.lineTo(length - 1, height);
       this.context.stroke();
     };
-    this.RadarScan = function (x,
-      y,
-      radius,
-      color,
-      context,
-      offCanvas) {
+    this.RadarScan = function (x, y, radius, color, context, offCanvas) {
       this.x = x;
       this.y = y;
       this.radius = radius;
@@ -83,15 +78,14 @@ class RadarSpan extends React.Component {
       this.context.restore();
     };
     this.RadarScan.prototype.radarLine = function () {
-      const count = (Math.PI * 1.5 / 4) / 0.006;
+      const count = (Math.PI * 1.5) / 4 / 0.006;
       const span = 1 / count;
-      for (let i = this.angle, j = 0; i <= Math.PI * 1.5 / 4 + this.angle; i += 0.006, j += 1) {
+      for (let i = this.angle, j = 0; i <= (Math.PI * 1.5) / 4 + this.angle; i += 0.006, j += 1) {
         this.context.lineWidth = 4;
         this.context.beginPath();
         this.context.strokeStyle = `${this.color}${1 - span * j})`;
         this.context.moveTo(this.x, this.y);
-        this.context.lineTo(this.x + this.radius * Math.cos(i),
-        this.y + this.radius * Math.sin(i));
+        this.context.lineTo(this.x + this.radius * Math.cos(i), this.y + this.radius * Math.sin(i));
         this.context.stroke();
       }
     };
@@ -120,25 +114,31 @@ class RadarSpan extends React.Component {
     this.offCanvas.height = height * this.scaleRatio;
     this.minLength = Math.min(this.canvas.width, this.canvas.height);
     this.context.translate(0.5, 0.5);
-    this.grids = new this.Grid(this.theme === 'blue' ? 'rgba(34,104,160,0.3)' : 'rgba(48,62,51,0.3)'
-    , this.canvas.width,
-    this.canvas.height, this.context);
+    this.grids = new this.Grid(
+      this.theme === 'blue' ? 'rgba(34,104,160,0.3)' : 'rgba(48,62,51,0.3)',
+      this.canvas.width,
+      this.canvas.height,
+      this.context,
+    );
     this.grids.drawGrid();
-    this.radar = new this.RadarScan(this.canvas.width / 2,
-        this.canvas.height / 2,
-        this.minLength * 0.9 / 2,
-        this.theme === 'blue' ? 'rgba(80,159,198,' :
-        'rgba(108,192,118,',
-         this.context,
-        this.offCanvas);
+    this.radar = new this.RadarScan(
+      this.canvas.width / 2,
+      this.canvas.height / 2,
+      (this.minLength * 0.9) / 2,
+      this.theme === 'blue' ? 'rgba(80,159,198,' : 'rgba(108,192,118,',
+      this.context,
+      this.offCanvas,
+    );
     this.radar.drawPan();
     this.offContext.drawImage(this.canvas, 0, 0);
     this.radar.startA();
   }
   render() {
-    return (<div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <canvas id={this.id}>对不起，您的浏览器不支持canvas</canvas>
-    </div>);
+    return (
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <canvas id={this.id}>对不起，您的浏览器不支持canvas</canvas>
+      </div>
+    );
   }
 }
 export default RadarSpan;

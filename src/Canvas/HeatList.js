@@ -57,7 +57,7 @@ class HotWords extends React.Component {
     const x = this.canvas.width / 2;
     const y = this.canvas.height / 2;
     this.worlds = this.props.words || [];
-    const angle = Math.PI * 2 / this.worlds.length;
+    const angle = (Math.PI * 2) / this.worlds.length;
     const baseSpeed = this.props.speed || 3;
     let currentAngle = 0;
     this.worlds.forEach((it) => {
@@ -65,15 +65,15 @@ class HotWords extends React.Component {
       const vx = baseSpeed * Math.cos(currentAngle);
       const vy = baseSpeed * Math.sin(currentAngle);
       const text = new this.Text(
-            it,
-            x,
-            y,
-            vx,
-            vy,
-            this.colors[Math.floor(Math.random() * 11)],
-            `${Math.floor(Math.random() * 30 + 30)}px serial`,
-            this.context,
-        );
+        it,
+        x,
+        y,
+        vx,
+        vy,
+        this.colors[Math.floor(Math.random() * 11)],
+        `${Math.floor(Math.random() * 30 + 30)}px serial`,
+        this.context,
+      );
       this.textArray.push(text);
     });
     const animation = () => {
@@ -94,9 +94,11 @@ class HotWords extends React.Component {
     animation();
   }
   render() {
-    return (<div style={{ position: 'relative', width: '100%', height: '100%' }}>
-      <canvas id={this.id}>对不起，您的浏览器不支持canvas</canvas>
-    </div>);
+    return (
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <canvas id={this.id}>对不起，您的浏览器不支持canvas</canvas>
+      </div>
+    );
   }
 }
 

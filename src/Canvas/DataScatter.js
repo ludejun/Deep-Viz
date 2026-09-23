@@ -106,15 +106,22 @@ export default class DataScatter extends React.Component {
     if (Array.isArray(this.props.items)) {
       const col = this.props.col || this.props.items.length || 1;
       const row = this.props.row || 1;
-      const perw = Math.floor(width * this.scaleratio / col);
-      const perh = Math.floor(height * this.scaleratio / row);
+      const perw = Math.floor((width * this.scaleratio) / col);
+      const perh = Math.floor((height * this.scaleratio) / row);
       let i;
       let j;
       for (i = 0; i < col; i++) {
         const x = i * perw;
         for (j = 0; j < row; j++) {
           const y = j * perh;
-          const squareInstance = new this.Square(x, y, perw, perh, this.scaleratio, this.canvas.getContext('2d'));
+          const squareInstance = new this.Square(
+            x,
+            y,
+            perw,
+            perh,
+            this.scaleratio,
+            this.canvas.getContext('2d'),
+          );
           squareInstance.caculate();
           this.squareArray.push(squareInstance);
         }
@@ -129,19 +136,19 @@ export default class DataScatter extends React.Component {
           const count = it.content.num;
           const minLength = Math.min(it.width, it.height);
           const color = this.color[Math.floor(Math.random() * 11)];
-          const angle = Math.PI * 2 / count;
+          const angle = (Math.PI * 2) / count;
           const basespeed = 2;
           for (j = 0; j < count; j++) {
             const radius = Math.random() * minLength * 0.02 + minLength * 0.01;
             const circle = new this.Circle(
-                        it.cx,
-                        it.cy,
-                        radius,
-                        color,
-                        basespeed * Math.cos(angle * j),
-                        basespeed * Math.sin(angle * j),
-                        this.context = this.canvas.getContext('2d'),
-                    );
+              it.cx,
+              it.cy,
+              radius,
+              color,
+              basespeed * Math.cos(angle * j),
+              basespeed * Math.sin(angle * j),
+              (this.context = this.canvas.getContext('2d')),
+            );
             it.circlesArray.push(circle);
           }
           it.createToolTip();
@@ -174,7 +181,7 @@ export default class DataScatter extends React.Component {
       }
     });
     window.requestAnimationFrame(this.animate.bind(this));
-  }
+  };
   mousemove = (e) => {
     const rect = this.canvas.getBoundingClientRect();
     const x = (e.clientX - rect.left) * this.scaleratio;
@@ -191,25 +198,27 @@ export default class DataScatter extends React.Component {
         break;
       }
     }
-  }
+  };
   mouseout = () => {
     if (this.currentSqu) {
       this.currentSqu.div.style.opacity = 0;
     }
-  }
+  };
   render() {
-    return (<div
-      onMouseMove={this.mousemove}
-      onMouseOut={this.mouseout}
-      style={{
-        position: 'relative',
-        width: '100%',
-        height: '100%',
-        overflow: 'none',
-        cursor: 'pointer',
-      }}
-    >
-      <canvas id={this.id}>对不起，您的浏览器不支持canvas</canvas>
-    </div>);
+    return (
+      <div
+        onMouseMove={this.mousemove}
+        onMouseOut={this.mouseout}
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '100%',
+          overflow: 'none',
+          cursor: 'pointer',
+        }}
+      >
+        <canvas id={this.id}>对不起，您的浏览器不支持canvas</canvas>
+      </div>
+    );
   }
 }

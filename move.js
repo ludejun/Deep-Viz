@@ -31,7 +31,12 @@ function readFile(readurl, name) {
     files.forEach((filename) => {
       fs.stat(path.join(readurl, filename), (er, stats) => {
         if (er) throw er;
-        if (stats.isFile() && getdir(filename) !== 'js' && getdir(filename) !== 'DS_Store' && getdir(filename) !== 'md') {
+        if (
+          stats.isFile() &&
+          getdir(filename) !== 'js' &&
+          getdir(filename) !== 'DS_Store' &&
+          getdir(filename) !== 'md'
+        ) {
           const newUrl = `${filePath}/${name}/${filename}`;
           const desUrl = newUrl.replace('src', 'lib');
           const desArray = desUrl.split('lib');
@@ -63,7 +68,7 @@ function readFile(readurl, name) {
 function fsExistsSync(paths) {
   try {
     fs.accessSync(paths, fs.F_OK);
-  } catch (e) {
+  } catch {
     return false;
   }
   return true;

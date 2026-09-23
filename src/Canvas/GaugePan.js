@@ -12,7 +12,7 @@ export default class GaugePan extends React.Component {
     this.displayLable = props.displayLable || false;
     this.unite = props.unit || 'km/h';
     this.startAngle = Math.PI / 4;
-    this.endAngle = Math.PI * 3 / 4;
+    this.endAngle = (Math.PI * 3) / 4;
     this.canvas = null;
     this.context = null;
     this.outerCircle = null;
@@ -31,7 +31,8 @@ export default class GaugePan extends React.Component {
     this.realContext = null;
     this.gauge = null;
     this.GaugeConstructor = GaugeConstructor;
-    function GaugeConstructor(outerCircle,
+    function GaugeConstructor(
+      outerCircle,
       innerCircle,
       hand,
       centerCircle,
@@ -43,7 +44,8 @@ export default class GaugePan extends React.Component {
       minLength,
       leftLable,
       rightLable,
-      displayLable) {
+      displayLable,
+    ) {
       this.outerCircle = outerCircle;
       this.innerCircle = innerCircle;
       this.hand = hand;
@@ -70,14 +72,16 @@ export default class GaugePan extends React.Component {
       this.tickMark.draw();
       this.context.drawImage(this.offScreen, 0, 0, this.minLength, this.minLength);
       if (this.displayLable) {
-        const xl = this.outerCircle.x +
-        Math.cos(this.outerCircle.endAngle) * this.minLength / 2 * 1.15;
-        const yl = this.outerCircle.y +
-        Math.sin(this.outerCircle.endAngle) * this.minLength / 2 * 1.15;
-        const xr = this.outerCircle.x +
-        Math.cos(this.outerCircle.startAngle) * this.minLength / 2 * 1.15;
-        const yr = this.outerCircle.y +
-        Math.sin(this.outerCircle.startAngle) * this.minLength / 2 * 1.15;
+        const xl =
+          this.outerCircle.x + ((Math.cos(this.outerCircle.endAngle) * this.minLength) / 2) * 1.15;
+        const yl =
+          this.outerCircle.y + ((Math.sin(this.outerCircle.endAngle) * this.minLength) / 2) * 1.15;
+        const xr =
+          this.outerCircle.x +
+          ((Math.cos(this.outerCircle.startAngle) * this.minLength) / 2) * 1.15;
+        const yr =
+          this.outerCircle.y +
+          ((Math.sin(this.outerCircle.startAngle) * this.minLength) / 2) * 1.15;
         this.context.save();
         this.context.font = `${Math.floor(this.minLength * 0.042)}px serial`;
         this.context.fillText(this.leftLable, xl, yl);
@@ -87,11 +91,13 @@ export default class GaugePan extends React.Component {
     };
     GaugeConstructor.prototype.calNum = function (nam) {
       !this.maxNum &&
-      (this.maxNum = Math.floor(this.tickMark.tickMarkNum / this.tickMark.bigMarkSpan) *
-      this.tickMark.degreeSpan + this.tickMark.degreeStart);
+        (this.maxNum =
+          Math.floor(this.tickMark.tickMarkNum / this.tickMark.bigMarkSpan) *
+            this.tickMark.degreeSpan +
+          this.tickMark.degreeStart);
       !this.numPerDegree &&
-      (this.numPerDegree = (Math.PI * 2 -
-        (this.outerCircle.endAngle - this.outerCircle.startAngle)) / this.maxNum);
+        (this.numPerDegree =
+          (Math.PI * 2 - (this.outerCircle.endAngle - this.outerCircle.startAngle)) / this.maxNum);
       if (nam <= this.maxNum) {
         this.currentDegree = this.outerCircle.endAngle + nam * this.numPerDegree;
         this.hand.angle = this.currentDegree;
@@ -104,12 +110,18 @@ export default class GaugePan extends React.Component {
       this.context.textBaseline = 'middle';
       this.context.fillStyle = this.hand.color;
       this.context.font = `${Math.floor(this.minLength * 0.1)}px serial`;
-      this.context.fillText(this.currentNum,
-      this.minLength / 2,
-      this.minLength - Math.floor(this.minLength * 0.2));
+      this.context.fillText(
+        this.currentNum,
+        this.minLength / 2,
+        this.minLength - Math.floor(this.minLength * 0.2),
+      );
       this.context.fillStyle = 'black';
       this.context.font = `${Math.floor(this.minLength * 0.05)}px serial`;
-      this.context.fillText(`单位：${this.tickMark.unite}`, this.minLength / 2, this.minLength - Math.floor(this.minLength * 0.1));
+      this.context.fillText(
+        `单位：${this.tickMark.unite}`,
+        this.minLength / 2,
+        this.minLength - Math.floor(this.minLength * 0.1),
+      );
       this.context.restore();
     };
     GaugeConstructor.prototype.drawPan = function (nam) {
@@ -121,7 +133,7 @@ export default class GaugePan extends React.Component {
     GaugeConstructor.prototype.animateDrawPan = function () {
       if (this.lastNum !== null) {
         this.animateCount += 1;
-        this.lastNum += (this.animateSpan);
+        this.lastNum += this.animateSpan;
         this.drawPan(this.lastNum);
         // if (Math.abs(this.animateSpan) === 1) {
         //   if (this.realVaule === this.lastNum) {
@@ -130,14 +142,12 @@ export default class GaugePan extends React.Component {
         //     this.animate = window.requestAnimationFrame(this.animateDrawPan.bind(this));
         //   }
         // }
-        if (1) {
-          if (Math.abs(this.realVaule - this.lastNum) <= Math.abs(this.animateSpan)) {
-            this.drawPan(this.realVaule);
-            window.cancelAnimationFrame(this.animate);
-          } else {
-            window.cancelAnimationFrame(this.animate);
-            this.animate = window.requestAnimationFrame(this.animateDrawPan.bind(this));
-          }
+        if (Math.abs(this.realVaule - this.lastNum) <= Math.abs(this.animateSpan)) {
+          this.drawPan(this.realVaule);
+          window.cancelAnimationFrame(this.animate);
+        } else {
+          window.cancelAnimationFrame(this.animate);
+          this.animate = window.requestAnimationFrame(this.animateDrawPan.bind(this));
         }
       } else {
         this.drawPan(this.realVaule);
@@ -148,17 +158,16 @@ export default class GaugePan extends React.Component {
       this.realVaule = nam;
       let span = 2;
       if (this.lastNum !== null) {
-        const direction = Math.abs((this.realVaule - this.lastNum)) /
-        (this.realVaule - this.lastNum);
+        const direction = Math.abs(this.realVaule - this.lastNum) / (this.realVaule - this.lastNum);
         span = 1 * direction;
-        (Math.abs(this.realVaule - this.lastNum) > this.maxNum / 2) &&
-        (span = 6 * direction);
+        Math.abs(this.realVaule - this.lastNum) > this.maxNum / 2 && (span = 6 * direction);
       }
       this.animateSpan = span;
       this.animateCount = 0;
       window.requestAnimationFrame(this.animateDrawPan.bind(this));
     };
-    function Circle(x,
+    function Circle(
+      x,
       y,
       radius,
       strokeStyle,
@@ -167,7 +176,8 @@ export default class GaugePan extends React.Component {
       endAngle,
       lineWidth,
       context,
-      clock) {
+      clock,
+    ) {
       this.x = x;
       this.y = y;
       this.radius = radius;
@@ -198,7 +208,8 @@ export default class GaugePan extends React.Component {
       this.context.fill();
       this.context.restore();
     };
-    function TickMark(tickMarkNum,
+    function TickMark(
+      tickMarkNum,
       bigMarkLength,
       smallMarkLength,
       bigMarkSpan,
@@ -208,7 +219,8 @@ export default class GaugePan extends React.Component {
       minLength,
       startAngle,
       endAngle,
-      unite) {
+      unite,
+    ) {
       this.tickMarkNum = tickMarkNum;
       this.bigMarkLength = bigMarkLength;
       this.smallMarkLength = smallMarkLength;
@@ -224,22 +236,22 @@ export default class GaugePan extends React.Component {
     TickMark.prototype.draw = function () {
       this.centerX = this.minLength / 2;
       this.centerY = this.minLength / 2;
-      const totalAngle = (2 * Math.PI) - (this.endAngle - this.startAngle);
+      const totalAngle = 2 * Math.PI - (this.endAngle - this.startAngle);
       const perAngle = totalAngle / (this.tickMarkNum - 1);
-      for (let i = 0, startA = this.endAngle;
-        i < this.tickMarkNum;
-        i += 1, startA += perAngle) {
-        const x = this.centerX +
-        (this.minLength / 2 - 4 - 0.5 +
-          Math.ceil(this.minLength * 0.004)) * Math.cos(startA);
-        const y = this.centerY +
-        (this.minLength / 2 - 4 - 0.5 +
-          Math.ceil(this.minLength * 0.004)) * Math.sin(startA);
+      for (let i = 0, startA = this.endAngle; i < this.tickMarkNum; i += 1, startA += perAngle) {
+        const x =
+          this.centerX +
+          (this.minLength / 2 - 4 - 0.5 + Math.ceil(this.minLength * 0.004)) * Math.cos(startA);
+        const y =
+          this.centerY +
+          (this.minLength / 2 - 4 - 0.5 + Math.ceil(this.minLength * 0.004)) * Math.sin(startA);
         if (i % 3 === 0) {
           this.context.beginPath();
           this.context.moveTo(x, y);
-          this.context.lineTo(x - this.bigMarkLength * Math.cos(startA),
-          y - this.bigMarkLength * Math.sin(startA));
+          this.context.lineTo(
+            x - this.bigMarkLength * Math.cos(startA),
+            y - this.bigMarkLength * Math.sin(startA),
+          );
           this.context.save();
           this.context.strokeStyle = '#2B92F9';
           this.context.lineWidth = Math.floor(this.minLength * 0.012) - 0.5;
@@ -252,13 +264,15 @@ export default class GaugePan extends React.Component {
           this.context.textAlign = 'center';
           this.context.textBaseline = 'middle';
           this.context.font = `${Math.floor(this.minLength * 0.027)}px serial`;
-          this.context.fillText(this.degreeStart + i / 3 * this.degreeSpan, tX, tY);
+          this.context.fillText(this.degreeStart + (i / 3) * this.degreeSpan, tX, tY);
           this.context.restore();
         } else {
           this.context.beginPath();
           this.context.moveTo(x, y);
-          this.context.lineTo(x - this.smallMarkLength * Math.cos(startA),
-          y - this.smallMarkLength * Math.sin(startA));
+          this.context.lineTo(
+            x - this.smallMarkLength * Math.cos(startA),
+            y - this.smallMarkLength * Math.sin(startA),
+          );
           this.context.save();
           this.context.strokeStyle = '#2B92F9';
           this.context.lineWidth = Math.floor(this.minLength * 0.008) - 0.5;
@@ -283,17 +297,17 @@ export default class GaugePan extends React.Component {
       this.ly = this.centerY + Math.sin(this.angle) * this.lineSpan;
       this.context.beginPath();
       this.context.moveTo(this.lx, this.ly);
-      this.context.lineTo(this.lx + Math.cos(this.angle) * this.lineLength,
-      this.ly + Math.sin(this.angle) * this.lineLength);
+      this.context.lineTo(
+        this.lx + Math.cos(this.angle) * this.lineLength,
+        this.ly + Math.sin(this.angle) * this.lineLength,
+      );
       this.context.stroke();
     };
     Hand.prototype.drawHand = function () {
-      const x1 = this.lx +
-      Math.cos(this.angle) *
-      (this.lineLength + Math.ceil(this.minLength * 0.011));
-      const y1 = this.ly +
-      Math.sin(this.angle) *
-      (this.lineLength + Math.ceil(this.minLength * 0.011));
+      const x1 =
+        this.lx + Math.cos(this.angle) * (this.lineLength + Math.ceil(this.minLength * 0.011));
+      const y1 =
+        this.ly + Math.sin(this.angle) * (this.lineLength + Math.ceil(this.minLength * 0.011));
       const x2 = this.centerX + Math.cos(this.angle) * this.handLength;
       const y2 = this.centerX + Math.sin(this.angle) * this.handLength;
       this.context.save();
@@ -344,60 +358,77 @@ export default class GaugePan extends React.Component {
     linearGradient.addColorStop(0.7, '#5D94F3');
     linearGradient.addColorStop(0.8, '#628FF2');
     linearGradient.addColorStop(1, '#6D83F1');
-    this.outerCircle = new this.Circle(this.centerX,
-                                       this.centerY,
-                                       this.minLength / 2 - 4 + 0.5,
-                                       linearGradient,
-                                       null,
-                                       this.startAngle,
-                                       this.endAngle,
-                                       Math.ceil(this.minLength * 0.0088) - 0.5,
-                                       this.context,
-                                       true);
-    this.innerCircle = new this.Circle(this.centerX,
-                                        this.centerY,
-                                        this.minLength / 2 - 4
-                                         - Math.floor(this.minLength * 0.15) + 0.5,
-                                        linearGradient,
-                                        null,
-                                        this.startAngle,
-                                        this.endAngle,
-                                        Math.floor(this.minLength * 0.0065) + 0.5,
-                                        this.context,
-                                        true);
-    this.centerCircle = new this.Circle(this.centerX,
-                                        this.centerY,
-                                          Math.floor(this.minLength * 0.093) + 0.5,
-                                          null,
-                                          'rgba(43,146,249,0.2)',
-                                          0,
-                                          2 * Math.PI,
-                                          1,
-                                          this.context,
-                                          true);
-    this.clockCircle = new this.Circle(this.centerX,
-                                        this.centerY,
-                                            Math.ceil(this.minLength * 0.031) + 0.5,
-                                            '#2B92F9',
-                                            null,
-                                            0,
-                                            2 * Math.PI,
-                                            Math.floor(this.minLength * 0.031 / 2) + 0.5,
-                                            this.context,
-                                            true);
-    this.tickMark = new this.TickMark(this.tickMarkNum,
-                                      Math.ceil(this.minLength * 0.062),
-                                      Math.ceil(this.minLength * 0.039),
-                                      3,
-                                      this.degreeStart,
-                                      this.degreeSpan,
-                                      this.context,
-                                      this.minLength,
-                                      this.startAngle,
-                                      this.endAngle,
-                                      this.unite);
-    this.hand = new this.Hand(this.centerX, this.centerY, Math.PI * 3 / 4, '#2B92F9', this.minLength, this.context);
-    this.gauge = new this.GaugeConstructor(this.outerCircle,
+    this.outerCircle = new this.Circle(
+      this.centerX,
+      this.centerY,
+      this.minLength / 2 - 4 + 0.5,
+      linearGradient,
+      null,
+      this.startAngle,
+      this.endAngle,
+      Math.ceil(this.minLength * 0.0088) - 0.5,
+      this.context,
+      true,
+    );
+    this.innerCircle = new this.Circle(
+      this.centerX,
+      this.centerY,
+      this.minLength / 2 - 4 - Math.floor(this.minLength * 0.15) + 0.5,
+      linearGradient,
+      null,
+      this.startAngle,
+      this.endAngle,
+      Math.floor(this.minLength * 0.0065) + 0.5,
+      this.context,
+      true,
+    );
+    this.centerCircle = new this.Circle(
+      this.centerX,
+      this.centerY,
+      Math.floor(this.minLength * 0.093) + 0.5,
+      null,
+      'rgba(43,146,249,0.2)',
+      0,
+      2 * Math.PI,
+      1,
+      this.context,
+      true,
+    );
+    this.clockCircle = new this.Circle(
+      this.centerX,
+      this.centerY,
+      Math.ceil(this.minLength * 0.031) + 0.5,
+      '#2B92F9',
+      null,
+      0,
+      2 * Math.PI,
+      Math.floor((this.minLength * 0.031) / 2) + 0.5,
+      this.context,
+      true,
+    );
+    this.tickMark = new this.TickMark(
+      this.tickMarkNum,
+      Math.ceil(this.minLength * 0.062),
+      Math.ceil(this.minLength * 0.039),
+      3,
+      this.degreeStart,
+      this.degreeSpan,
+      this.context,
+      this.minLength,
+      this.startAngle,
+      this.endAngle,
+      this.unite,
+    );
+    this.hand = new this.Hand(
+      this.centerX,
+      this.centerY,
+      (Math.PI * 3) / 4,
+      '#2B92F9',
+      this.minLength,
+      this.context,
+    );
+    this.gauge = new this.GaugeConstructor(
+      this.outerCircle,
       this.innerCircle,
       this.hand,
       this.centerCircle,
@@ -409,14 +440,28 @@ export default class GaugePan extends React.Component {
       this.minLength,
       this.leftLable,
       this.rightLable,
-      this.displayLable);
+      this.displayLable,
+    );
     this.gauge.setValue(this.props.number);
   }
-  componentWillReceiveProps(nextprops) {
+  // React 19 removed componentWillReceiveProps; componentDidUpdate runs at the
+  // same point in the cycle, with this.props already holding the new values.
+  componentDidUpdate(prevProps) {
+    if (prevProps.number === this.props.number) return;
     this.gauge.currentNum && (this.gauge.lastNum = this.gauge.currentNum);
-    nextprops.number && (this.gauge.setValue(nextprops.number));
+    this.props.number && this.gauge.setValue(this.props.number);
   }
   render() {
-    return <div style={{ position: 'relative', width: '100%', height: '100%' }}><canvas ref={(ref) => { this.canvas = ref; }}>对不起，您的浏览器不行，请升级浏览器！</canvas></div>;
+    return (
+      <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+        <canvas
+          ref={(ref) => {
+            this.canvas = ref;
+          }}
+        >
+          对不起，您的浏览器不行，请升级浏览器！
+        </canvas>
+      </div>
+    );
   }
 }

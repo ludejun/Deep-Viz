@@ -1,9 +1,7 @@
 import React, { Component } from 'react';
 import * as THREE from 'three';
-import OBJLoader from 'three-obj-loader';
+import { OBJLoader } from 'three/examples/jsm/loaders/OBJLoader.js';
 import PropTypes from 'prop-types';
-
-OBJLoader(THREE);
 
 export default class ThreeModel extends Component {
   componentDidMount() {
@@ -11,9 +9,19 @@ export default class ThreeModel extends Component {
     const id = `three${Math.random()}`;
     ThreeDom.id = id;
     const {
-      width = 300, height = 300, modelType, modelPath, pointLightColor,
-      pointLightPosition, ambientLightColor, cameraY, cameraZ, isOnMouseMove = false,
+      width = 300,
+      height = 300,
+      modelType,
+      modelPath,
+      pointLightColor,
+      pointLightPosition,
+      ambientLightColor,
+      cameraY,
+      cameraZ,
+      isOnMouseMove = false,
       rotatateY,
+      onProgress: onProgressProp,
+      onError: onErrorProp,
     } = this.props;
     let container;
     let camera;
@@ -24,7 +32,8 @@ export default class ThreeModel extends Component {
     let mouseY = 0;
     const windowHalfX = width / 2;
     const windowHalfY = height / 2;
-    modelType && console.log('modelType已不再支持');
+    modelType &&
+      console.warn('[deep-viz] ThreeModel: `modelType` is no longer supported, use `modelPath`.');
     // const modelConfig = {
     //   male: require('../assets/model/male02.obj'),
     //   female: require('../assets/model/female02.obj'),
@@ -33,8 +42,6 @@ export default class ThreeModel extends Component {
     const modelFile = modelPath;
 
     const init = () => {
-      console.log('init...');
-
       container = document.getElementById(id);
       camera = new THREE.PerspectiveCamera(45, width / height, 1, 2000);
       camera.position.z = cameraZ || 250;
@@ -49,8 +56,11 @@ export default class ThreeModel extends Component {
       // const directionalLight = new THREE.DirectionalLight( 'rgb(0 197 205)' );
       const directionalLight = new THREE.PointLight(pointLightColor || 'rgb(0, 197, 205)', 1, 100);
       if (pointLightPosition) {
-        directionalLight.position.set(pointLightPosition[0], pointLightPosition[1],
-          pointLightPosition[2]);
+        directionalLight.position.set(
+          pointLightPosition[0],
+          pointLightPosition[1],
+          pointLightPosition[2],
+        );
       } else {
         directionalLight.position.set(50, 50, 60);
       }
@@ -59,21 +69,26 @@ export default class ThreeModel extends Component {
       // texture
 
       const manager = new THREE.LoadingManager();
+      // Progress and failures are surfaced through props rather than logged,
+      // so the component stays quiet inside a host application.
       manager.onProgress = function (item, loaded, total) {
-        console.log(item, loaded, total);
+        onProgressProp && onProgressProp(loaded, total, item);
       };
 
       // const texture = new THREE.Texture();
 
       const onProgress = function (xhr) {
-        if (xhr.lengthComputable) {
-          const percentComplete = xhr.loaded / xhr.total * 100;
-          console.log(`${Math.round(percentComplete, 2)}% downloaded`);
+        if (xhr.lengthComputable && onProgressProp) {
+          onProgressProp(xhr.loaded, xhr.total);
         }
       };
 
-      const onError = function (xhr) {
-        console.log(xhr);
+      const onError = function (error) {
+        if (onErrorProp) {
+          onErrorProp(error);
+        } else {
+          console.error('[deep-viz] ThreeModel failed to load the model:', error);
+        }
       };
 
       // 加载皮肤
@@ -85,20 +100,23 @@ export default class ThreeModel extends Component {
 
       // model
 
-      const loader = new THREE.OBJLoader(manager);
-      loader.load(modelFile, (object) => {
-        object.traverse((child) => {
-          if (child instanceof THREE.Mesh) {
+      const loader = new OBJLoader(manager);
+      loader.load(
+        modelFile,
+        (object) => {
+          object.traverse((child) => {
+            if (child instanceof THREE.Mesh) {
+              // child.material.map = texture;
+            }
+          });
 
-            // child.material.map = texture;
-
-          }
-        });
-
-        model = object;
-        model.position.y = cameraY || -80;
-        scene.add(model);
-      }, onProgress, onError);
+          model = object;
+          model.position.y = cameraY || -80;
+          scene.add(model);
+        },
+        onProgress,
+        onError,
+      );
 
       // renderer
 
@@ -153,9 +171,7 @@ export default class ThreeModel extends Component {
   }
 
   render() {
-    return (
-      <div ref={ref => (this.containerId = ref)} style={this.props.style} />
-    );
+    return <div ref={(ref) => (this.containerId = ref)} style={this.props.style} />;
   }
 }
 
@@ -171,4 +187,6 @@ ThreeModel.propTypes = {
   cameraZ: PropTypes.number,
   isOnMouseMove: PropTypes.bool,
   rotatateY: PropTypes.number,
+  onProgress: PropTypes.func,
+  onError: PropTypes.func,
 };

@@ -66,7 +66,8 @@ export default class ShadeMapScatter extends Basic {
             borderWidth: mapConfig && mapConfig.borderWidth ? mapConfig.borderWidth : 1,
           },
           emphasis: {
-            areaColor: mapConfig && mapConfig.hoverColor ? mapConfig.hoverColor : 'rgba(243,243,243,.5)',
+            areaColor:
+              mapConfig && mapConfig.hoverColor ? mapConfig.hoverColor : 'rgba(243,243,243,.5)',
           },
         },
       },
@@ -98,7 +99,7 @@ export default class ShadeMapScatter extends Basic {
     //   };
     // }
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     if (dataConfig.title) {
       option.title = {
@@ -122,8 +123,7 @@ export default class ShadeMapScatter extends Basic {
         symbol: item.symbol,
         symbolSize(val) {
           const newSca = (val[2] * 7) / caculateCha(dataConfig.scatterOptions)[i];
-          return newSca > 15 ? 15 :
-            newSca < 8 ? 8 : newSca;
+          return newSca > 15 ? 15 : newSca < 8 ? 8 : newSca;
         },
         itemStyle: {
           normal: {

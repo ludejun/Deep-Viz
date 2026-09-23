@@ -93,43 +93,48 @@ export default class BarHorizontal extends Basic {
 
     if (config.x.data && Array.isArray(config.x.data)) {
       config.x.data.forEach((barData, index) => {
-        option.series.push(
-          {
-            type: 'bar',
-            name: config.x.legend ? config.x.legend[index] : null,
-            barGap: config.x.barGap || 0,
-            barWidth: config.x.barWidth || null,
-            stack: config.x.stack || null,
-            label: {
-              normal: {
-                formatter: `{c}${(config.dataLable && config.dataLable.unit) || ''}`,
-                show: config.dataLable !== false,
-                position: (config.dataLable && config.dataLable.position) || 'right',
-                color: (config.dataLable && config.dataLable.color) || null,
-              },
+        option.series.push({
+          type: 'bar',
+          name: config.x.legend ? config.x.legend[index] : null,
+          barGap: config.x.barGap || 0,
+          barWidth: config.x.barWidth || null,
+          stack: config.x.stack || null,
+          label: {
+            normal: {
+              formatter: `{c}${(config.dataLable && config.dataLable.unit) || ''}`,
+              show: config.dataLable !== false,
+              position: (config.dataLable && config.dataLable.position) || 'right',
+              color: (config.dataLable && config.dataLable.color) || null,
             },
-            data: barData,
-            itemStyle: config.x.color ? {
-              normal: {
-                color: Array.isArray(config.x.color[index]) ? {
-                  type: 'linear',
-                  x: 0,
-                  y: 0,
-                  x2: 1,
-                  y2: 1,
-                  colorStops: [{
-                    offset: 0,
-                    color: config.x.color[index][0],
-                  }, {
-                    offset: 1,
-                    color: config.x.color[index][1],
-                  }],
-                  globalCoord: false,
-                } : config.x.color[index],
-              },
-            } : null,
           },
-        );
+          data: barData,
+          itemStyle: config.x.color
+            ? {
+                normal: {
+                  color: Array.isArray(config.x.color[index])
+                    ? {
+                        type: 'linear',
+                        x: 0,
+                        y: 0,
+                        x2: 1,
+                        y2: 1,
+                        colorStops: [
+                          {
+                            offset: 0,
+                            color: config.x.color[index][0],
+                          },
+                          {
+                            offset: 1,
+                            color: config.x.color[index][1],
+                          },
+                        ],
+                        globalCoord: false,
+                      }
+                    : config.x.color[index],
+                },
+              }
+            : null,
+        });
       });
     }
     // For shadow 柱子背后的阴影
@@ -142,8 +147,9 @@ export default class BarHorizontal extends Basic {
         barGap: '-100%',
         barWidth: config.x.barWidth || null,
         barCategoryGap: '40%',
-        data: new Array(config.x.data[0].length)
-          .fill(config.shadowBar.value || Math.max.apply(null, config.x.data[0])),
+        data: new Array(config.x.data[0].length).fill(
+          config.shadowBar.value || Math.max.apply(null, config.x.data[0]),
+        ),
         animation: false,
       });
     }

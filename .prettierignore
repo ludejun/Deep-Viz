@@ -1,0 +1,5 @@
+lib
+node_modules
+coverage
+src/assets
+pnpm-lock.yaml

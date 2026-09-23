@@ -27,34 +27,36 @@ export default class GraphChart extends Basic {
       tooltip: {},
       animationDuration: 1000,
       animationEasingUpdate: 'quinticInOut',
-      series: [{
-        name: '关系图',
-        type: 'graph',
-        layout: 'force',
-        force: {
-          repulsion: 100,
-        },
-        data: [],
-        links: [],
-        categories: [],
-        roam: false,
-        label: {
-          normal: {
-            show: true,
-            position: 'right',
-            fontSize: this.fontSize,
-            fontStyle: this.fontStyle,
+      series: [
+        {
+          name: '关系图',
+          type: 'graph',
+          layout: 'force',
+          force: {
+            repulsion: 100,
+          },
+          data: [],
+          links: [],
+          categories: [],
+          roam: false,
+          label: {
+            normal: {
+              show: true,
+              position: 'right',
+              fontSize: this.fontSize,
+              fontStyle: this.fontStyle,
+            },
+          },
+          lineStyle: {
+            normal: {
+              width: 1,
+              color: 'source',
+              curveness: 0,
+              type: 'solid',
+            },
           },
         },
-        lineStyle: {
-          normal: {
-            width: 1,
-            color: 'source',
-            curveness: 0,
-            type: 'solid',
-          },
-        },
-      }],
+      ],
     };
     const arr = [];
     config.data.forEach((v) => {
@@ -63,7 +65,7 @@ export default class GraphChart extends Basic {
     const maxVal = Math.max(...arr);
     const minVal = Math.min(...arr);
     config.data.forEach((v) => {
-      const newVal = 10 + v.value - minVal / (maxVal - minVal) * 30;
+      const newVal = 10 + v.value - (minVal / (maxVal - minVal)) * 30;
       option.series[0].data.push({
         name: v.name,
         category: v.category,
@@ -89,7 +91,7 @@ export default class GraphChart extends Basic {
       option.legend.right = 10;
     }
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     return option;
   }

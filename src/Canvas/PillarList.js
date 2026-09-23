@@ -26,9 +26,9 @@ export default class PillarList extends Component {
       const R = (num >> 16) + amt;
       const G = ((num >> 8) & 0x00ff) + amt;
       const B = (num & 0x0000ff) + amt;
-      return `rgba(${R < 255 ? (R < 1 ? 0 : R) : 255},${G < 255 ? (G < 1 ? 0 : G) : 255},${B < 255
-        ? B < 1 ? 0 : B
-        : 255},0.82)`;
+      return `rgba(${R < 255 ? (R < 1 ? 0 : R) : 255},${G < 255 ? (G < 1 ? 0 : G) : 255},${
+        B < 255 ? (B < 1 ? 0 : B) : 255
+      },0.82)`;
     };
     // Draw a cube to the specified specs
     const drawCube = (x, y, wx, wy, h, color) => {
@@ -70,7 +70,7 @@ export default class PillarList extends Component {
       const fontBSize = Math.floor(wx * 0.5);
       const fontSSize = Math.floor(wx * 0.38);
       const percent = `${(val.percent * 100).toFixed(2)}%`;
-      const offset = val.name.length / 2 * fontSSize;
+      const offset = (val.name.length / 2) * fontSSize;
 
       let point1X = x - wx;
       let point1Y = y - h * 0.7 - wx * 0.5;
@@ -160,11 +160,11 @@ export default class PillarList extends Component {
             ];
 
             xList = [
-              canvas.width / 15 * 8,
-              canvas.width / 15 * 9,
-              canvas.width / 15 * 7,
-              canvas.width / 15 * 8,
-              canvas.width / 15 * 6,
+              (canvas.width / 15) * 8,
+              (canvas.width / 15) * 9,
+              (canvas.width / 15) * 7,
+              (canvas.width / 15) * 8,
+              (canvas.width / 15) * 6,
             ];
             break;
           case 4:
@@ -184,8 +184,8 @@ export default class PillarList extends Component {
 
             xList = [
               canvas.width / 2,
-              canvas.width / 12 * 7,
-              canvas.width / 12 * 5,
+              (canvas.width / 12) * 7,
+              (canvas.width / 12) * 5,
               canvas.width / 2,
             ];
             break;
@@ -202,7 +202,7 @@ export default class PillarList extends Component {
               h * data[2].percent - w / Math.sin(Math.PI / 3) / 2,
             ];
 
-            xList = [canvas.width / 2, canvas.width / 12 * 7, canvas.width / 12 * 5];
+            xList = [canvas.width / 2, (canvas.width / 12) * 7, (canvas.width / 12) * 5];
         }
         for (let i = 0; i < len; i++) {
           drawCube(xList[i], bottomList[i], w, w, heightList[i], colorList[i]);

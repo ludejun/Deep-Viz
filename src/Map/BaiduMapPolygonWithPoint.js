@@ -10,9 +10,10 @@ import BaiduMapControlBase from './BaiduMapControlBase';
 const random = Math.random();
 const messageLabelMask = {};
 class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
-
   showMessage(msg, point, map) {
-    if (!msg) { return; }
+    if (!msg) {
+      return;
+    }
     function MsgShow(mpoint, mmsg, mmap) {
       this._point = mpoint;
       this._msg = mmsg;
@@ -124,8 +125,8 @@ class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
     }
     i = i - 1 < 0 ? 0 : i - 1;
     map.centerAndZoom(center, 18 - i);
-    map.setMinZoom(18 - zoomBias - i < 3 ? 3 : (18 - zoomBias - i));
-    map.setMaxZoom((18 + zoomBias) - i > 18 ? 18 : ((18 + zoomBias) - i));
+    map.setMinZoom(18 - zoomBias - i < 3 ? 3 : 18 - zoomBias - i);
+    map.setMaxZoom(18 + zoomBias - i > 18 ? 18 : 18 + zoomBias - i);
 
     const circleOverlapList = datas.map((data) => {
       const tempCircle = new BMap.Circle(center, data.radius * 1000, circleStyle);
@@ -147,17 +148,20 @@ class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
         // 计算外部圆正东北点坐标((currLng-centerLng) * Math.sqrt(2) / 2)
         // centerLng 和 内部圆正东北点坐标((prevLng-centerLng) * Math.sqrt(2) / 2) +centerLat 的中心位置。
         startPoint = new BMap.Point(
-          (((currNorthEast.lng - prevNorthEast.lng) * Math.sqrt(2)) / 4)
-          + (((prevNorthEast.lng - center.lng) * Math.sqrt(2)) / 2) + center.lng,
-          (((currNorthEast.lat - prevNorthEast.lat) * Math.sqrt(2)) / 4)
-          + (((prevNorthEast.lat - center.lat) * Math.sqrt(2)) / 2) + center.lat,
+          ((currNorthEast.lng - prevNorthEast.lng) * Math.sqrt(2)) / 4 +
+            ((prevNorthEast.lng - center.lng) * Math.sqrt(2)) / 2 +
+            center.lng,
+          ((currNorthEast.lat - prevNorthEast.lat) * Math.sqrt(2)) / 4 +
+            ((prevNorthEast.lat - center.lat) * Math.sqrt(2)) / 2 +
+            center.lat,
         );
         midPoint = new BMap.Point(startPoint.lng + 0.005, startPoint.lat + 0.005);
         endPoint = new BMap.Point(startPoint.lng + 0.06, startPoint.lat + 0.005);
       }
-      const polyline = new BMap.Polyline(
-        [startPoint, midPoint, endPoint],
-        { strokeColor: labelColor, strokeWeight: 1 });
+      const polyline = new BMap.Polyline([startPoint, midPoint, endPoint], {
+        strokeColor: labelColor,
+        strokeWeight: 1,
+      });
       map.addOverlay(polyline);
       if (data.label) {
         const labelStartPoint = new BMap.Circle(startPoint, 50, {
@@ -176,10 +180,13 @@ class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
           labelDom = `${dom.innerHTML}`;
         }
 
-        const label = new BMap.Label(`<div style="position: absolute; bottom: 0">${labelDom}</div>`, {
-          position: midPoint,
-          offset: new BMap.Size(5, 0),
-        });
+        const label = new BMap.Label(
+          `<div style="position: absolute; bottom: 0">${labelDom}</div>`,
+          {
+            position: midPoint,
+            offset: new BMap.Size(5, 0),
+          },
+        );
         label.setStyle({ border: '0', backgroundColor: null, color: labelColor });
         map.addOverlay(labelStartPoint);
         map.addOverlay(label);
@@ -190,20 +197,21 @@ class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
     if (outsideLabel) {
       const maxCircle = circleOverlapList[circleOverlapList.length - 1];
       const northEastPoint = maxCircle.getBounds().getNorthEast();
-      const southEastPoint = new BMap.Point(
-        northEastPoint.lng,
-        (point.lat * 2) - northEastPoint.lat);
+      const southEastPoint = new BMap.Point(northEastPoint.lng, point.lat * 2 - northEastPoint.lat);
       const outsideStartPoint = new BMap.Point(
-        (((southEastPoint.lng - point.lng) * Math.sqrt(2)) / 4)
-        + (point.lng / 2) + (southEastPoint.lng / 2),
-        (((southEastPoint.lat - point.lat) * Math.sqrt(2)) / 4)
-        + (point.lat / 2) + (southEastPoint.lat / 2),
+        ((southEastPoint.lng - point.lng) * Math.sqrt(2)) / 4 +
+          point.lng / 2 +
+          southEastPoint.lng / 2,
+        ((southEastPoint.lat - point.lat) * Math.sqrt(2)) / 4 +
+          point.lat / 2 +
+          southEastPoint.lat / 2,
       );
       const outsideMidPoint = outsideStartPoint;
       const outsideEndPoint = new BMap.Point(outsideStartPoint.lng + 0.05, outsideStartPoint.lat);
-      const polyline = new BMap.Polyline(
-        [outsideStartPoint, outsideMidPoint, outsideEndPoint],
-        { strokeColor: labelColor, strokeWeight: 1 });
+      const polyline = new BMap.Polyline([outsideStartPoint, outsideMidPoint, outsideEndPoint], {
+        strokeColor: labelColor,
+        strokeWeight: 1,
+      });
       map.addOverlay(polyline);
       const outsideLabelStartPoint = new BMap.Circle(outsideStartPoint, 50, {
         fillColor: labelColor,
@@ -221,72 +229,71 @@ class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
         outsideLabelDom = `${tempDom.innerHTML}`;
       }
 
-      const outsideMapLabel = new BMap.Label(`<div style="position: absolute; bottom: 0">${outsideLabelDom}</div>`, {
-        position: outsideMidPoint,
-        offset: new BMap.Size(5, 0),
-      });
+      const outsideMapLabel = new BMap.Label(
+        `<div style="position: absolute; bottom: 0">${outsideLabelDom}</div>`,
+        {
+          position: outsideMidPoint,
+          offset: new BMap.Size(5, 0),
+        },
+      );
       outsideMapLabel.setStyle({ border: '0', backgroundColor: null, color: labelColor });
       map.addOverlay(outsideLabelStartPoint);
       map.addOverlay(outsideMapLabel);
     }
 
-    Array.isArray(points) && (points.length > 0) && points.forEach((val) => {
-      const curPoint = new BMap.Point(val.location.lng, val.location.lat);
-      if (!val.icon) {
-        function Circle(tpoint, color, radius, tmap) {
-          this.map = tmap;
-          this._point = tpoint;
-          this._color = color;
-          this._radius = radius;
+    Array.isArray(points) &&
+      points.length > 0 &&
+      points.forEach((val) => {
+        const curPoint = new BMap.Point(val.location.lng, val.location.lat);
+        if (!val.icon) {
+          function Circle(tpoint, color, radius, tmap) {
+            this.map = tmap;
+            this._point = tpoint;
+            this._color = color;
+            this._radius = radius;
+          }
+          Circle.prototype = new BMap.Overlay();
+          Circle.prototype.initialize = () => {
+            const div = (this._div = document.createElement('div'));
+            div.style.position = 'absolute';
+            div.style.borderRadius = '50%';
+            div.style.width = `${this._radius}px`;
+            div.style.height = `${this._radius}px`;
+            div.style.background = this._color;
+            div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
+            this.map.getPanes().labelPane.appendChild(div);
+            return div;
+          };
+          Circle.prototype.draw = () => {
+            const pixel = this.map.pointToOverlayPixel(this._point);
+            this._div.style.left = `${pixel.x - this._radius / 2}px`;
+            this._div.style.top = `${pixel.y - this._radius / 2}px`;
+          };
+          const circle = new Circle(curPoint, val.color || 'red', val.radius || 12, map);
+          map.addOverlay(circle);
+          circle._div.addEventListener('mouseover', this.showMessage(val.name, curPoint, map));
+          circle._div.addEventListener('mouseout', this.removeMessage(map));
+        } else if (!val.icon.size) {
+          console.log('请输入图片大小！');
+        } else {
+          const myIcon = new BMap.Icon(
+            val.icon.url,
+            new BMap.Size(val.icon.size.width, val.icon.size.height),
+            val.icon.offsetSize && {
+              imageOffset: new BMap.Size(val.icon.offsetSize.width, val.icon.offsetSize.height),
+            },
+          );
+          myIcon.imageSize = new BMap.Size(val.icon.size.width, val.icon.size.height);
+          const marker = new BMap.Marker(curPoint, { icon: myIcon });
+          marker.addEventListener('mouseover', this.showMessage(val.name, curPoint, map));
+          marker.addEventListener('mouseout', this.removeMessage(map));
+          map.addOverlay(marker);
         }
-        Circle.prototype = new BMap.Overlay();
-        Circle.prototype.initialize = () => {
-          const div = (this._div = document.createElement('div'));
-          div.style.position = 'absolute';
-          div.style.borderRadius = '50%';
-          div.style.width = `${this._radius}px`;
-          div.style.height = `${this._radius}px`;
-          div.style.background = this._color;
-          div.style.zIndex = BMap.Overlay.getZIndex(this._point.lat);
-          this.map.getPanes().labelPane.appendChild(div);
-          return div;
-        };
-        Circle.prototype.draw = () => {
-          const pixel = this.map.pointToOverlayPixel(this._point);
-          this._div.style.left = `${pixel.x - this._radius / 2}px`;
-          this._div.style.top = `${pixel.y - this._radius / 2}px`;
-        };
-        const circle = new Circle(
-          curPoint,
-          val.color || 'red',
-          val.radius || 12,
-          map,
-        );
-        map.addOverlay(circle);
-        circle._div.addEventListener('mouseover', this.showMessage(val.name, curPoint, map));
-        circle._div.addEventListener('mouseout', this.removeMessage(map));
-      } else if (!val.icon.size) {
-        console.log('请输入图片大小！');
-      } else {
-        const myIcon = new BMap.Icon(val.icon.url,
-          new BMap.Size(val.icon.size.width, val.icon.size.height),
-          val.icon.offsetSize && {
-            imageOffset: (new BMap.Size(val.icon.offsetSize.width, val.icon.offsetSize.height)),
-          },
-        );
-        myIcon.imageSize = new BMap.Size(val.icon.size.width, val.icon.size.height);
-        const marker = new BMap.Marker(curPoint, { icon: myIcon });
-        marker.addEventListener('mouseover', this.showMessage(val.name, curPoint, map));
-        marker.addEventListener('mouseout', this.removeMessage(map));
-        map.addOverlay(marker);
-      }
-    });
+      });
   }
 
   render() {
-    const {
-      style = {},
-    } = this.props;
+    const { style = {} } = this.props;
     window[`mapload${random.toString().substr(2)}`] = this.mapLoad.bind(this);
     if (typeof window.BMap === 'undefined') {
       loadScript();
@@ -299,9 +306,7 @@ class BaiduMapPolygonWithPoint extends BaiduMapControlBase {
       document.body.appendChild(script);
     }
 
-    return (
-      <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />
-    );
+    return <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />;
   }
 }
 
@@ -311,31 +316,35 @@ BaiduMapPolygonWithPoint.propTypes = {
   disableDragging: PropTypes.bool,
   circleColor: PropTypes.string,
   labelColor: PropTypes.string,
-  datas: PropTypes.arrayOf(PropTypes.shape({
-    radius: PropTypes.number.isRequired,
-    label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
-  })).isRequired,
+  datas: PropTypes.arrayOf(
+    PropTypes.shape({
+      radius: PropTypes.number.isRequired,
+      label: PropTypes.oneOfType([PropTypes.element, PropTypes.string]).isRequired,
+    }),
+  ).isRequired,
   outsideLabel: PropTypes.oneOfType([PropTypes.element, PropTypes.string]),
   zoomBias: PropTypes.number,
-  points: PropTypes.arrayOf(PropTypes.shape({
-    name: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
-    location: PropTypes.shape({
-      lat: PropTypes.number.isRequired,
-      lng: PropTypes.number.isRequired,
-    }).isRequired,
-    icon: PropTypes.shape({
-      url: PropTypes.string.isRequired,
-      size: PropTypes.shape({
-        width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+  points: PropTypes.arrayOf(
+    PropTypes.shape({
+      name: PropTypes.oneOfType([PropTypes.func, PropTypes.string]),
+      location: PropTypes.shape({
+        lat: PropTypes.number.isRequired,
+        lng: PropTypes.number.isRequired,
+      }).isRequired,
+      icon: PropTypes.shape({
+        url: PropTypes.string.isRequired,
+        size: PropTypes.shape({
+          width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+          height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        }),
+        offsetSize: PropTypes.shape({
+          width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+          height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
+        }),
       }),
-      offsetSize: PropTypes.shape({
-        width: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-        height: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
-      }),
+      radius: PropTypes.number,
     }),
-    radius: PropTypes.number,
-  })),
+  ),
 };
 
 export default BaiduMapPolygonWithPoint;

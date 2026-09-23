@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import 'echarts-gl';
 import PropTypes from 'prop-types';
 

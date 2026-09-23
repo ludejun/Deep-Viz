@@ -1,15 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import echarts from 'echarts';
+import * as echarts from 'echarts';
 import 'echarts/extension/bmap/bmap';
 import BaiduMapControlBase from './BaiduMapControlBase';
 
 // BaiduMap zoom
 // {50m,100m,200m,500m,1km,2km,5km,10km,20km,25km,50km,100km,200km,500km,1000km,2000km}
 // index  18 - 3
-const disZoomMap = [[50, 18], [100, 17], [200, 16], [500, 15], [1000, 14], [2000, 13], [5000, 12],
-  [10000, 11], [20000, 10], [25000, 9], [50000, 8], [100000, 7], [200000, 6], [500000, 5],
-  [1000000, 4], [2000000, 3],
+const disZoomMap = [
+  [50, 18],
+  [100, 17],
+  [200, 16],
+  [500, 15],
+  [1000, 14],
+  [2000, 13],
+  [5000, 12],
+  [10000, 11],
+  [20000, 10],
+  [25000, 9],
+  [50000, 8],
+  [100000, 7],
+  [200000, 6],
+  [500000, 5],
+  [1000000, 4],
+  [2000000, 3],
 ];
 
 const random = Math.random();
@@ -53,8 +67,10 @@ class BaiduMapCrossCurve extends BaiduMapControlBase {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    this.mapload(nextProps);
+  // React 19 removed componentWillReceiveProps; componentDidUpdate runs after
+  // the update with this.props already holding the new values.
+  componentDidUpdate() {
+    this.mapload(this.props);
   }
 
   loadScript() {
@@ -66,9 +82,11 @@ class BaiduMapCrossCurve extends BaiduMapControlBase {
   mapload(nextProps) {
     let currentProps = this.props;
     if (nextProps) {
-      if (nextProps.point === this.props.point
-        && nextProps.datas === this.props.datas
-        && nextProps.direction === this.props.direction) {
+      if (
+        nextProps.point === this.props.point &&
+        nextProps.datas === this.props.datas &&
+        nextProps.direction === this.props.direction
+      ) {
         return;
       } else {
         currentProps = nextProps;
@@ -145,8 +163,7 @@ class BaiduMapCrossCurve extends BaiduMapControlBase {
         },
       },
       symbolSize: (val) => {
-        return val[2] && totalValue > 0 ?
-          parseInt((val[2] / totalValue) * 100, 10) / 4 : 10;
+        return val[2] && totalValue > 0 ? parseInt((val[2] / totalValue) * 100, 10) / 4 : 10;
       },
       showEffectOn: 'render',
       itemStyle: {
@@ -154,11 +171,7 @@ class BaiduMapCrossCurve extends BaiduMapControlBase {
       },
       data: datas.map((dataItem, index) => {
         const valeArray = [];
-        valeArray.push(
-          dataItem.lng,
-          dataItem.lat,
-          dataItem.value || null,
-        );
+        valeArray.push(dataItem.lng, dataItem.lat, dataItem.value || null);
         return {
           name: dataItem.name,
           value: valeArray,
@@ -256,24 +269,24 @@ class BaiduMapCrossCurve extends BaiduMapControlBase {
     // 计算最佳中心点和设置初始比例尺
     let distance = 0;
     this.props.datas.forEach((item) => {
-      const newDis = this.EMap.getDistance(new BMap.Point(item.lng, item.lat),
-        new BMap.Point(point.lng, point.lat));
+      const newDis = this.EMap.getDistance(
+        new BMap.Point(item.lng, item.lat),
+        new BMap.Point(point.lng, point.lat),
+      );
       distance = newDis > distance ? newDis : distance;
     });
-    const tempFilter = disZoomMap.filter(item => item[0] > distance);
-    this.EMap.centerAndZoom(new BMap.Point(point.lng, point.lat),
-      tempFilter[0][1] > 16 ? 18 : (tempFilter[0][1] + 2));
+    const tempFilter = disZoomMap.filter((item) => item[0] > distance);
+    this.EMap.centerAndZoom(
+      new BMap.Point(point.lng, point.lat),
+      tempFilter[0][1] > 16 ? 18 : tempFilter[0][1] + 2,
+    );
     this.initMapControl(this.EMap, currentProps);
   }
 
   render() {
-    const {
-      style = {},
-    } = this.props;
+    const { style = {} } = this.props;
 
-    return (
-      <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />
-    );
+    return <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />;
   }
 }
 
@@ -286,13 +299,15 @@ BaiduMapCrossCurve.propTypes = {
   }).isRequired,
   radiusGradients: PropTypes.arrayOf(PropTypes.number),
   radiusColor: PropTypes.string,
-  datas: PropTypes.arrayOf(PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-    name: PropTypes.string,
-    value: PropTypes.number,
-    color: PropTypes.string,
-  })).isRequired,
+  datas: PropTypes.arrayOf(
+    PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+      name: PropTypes.string,
+      value: PropTypes.number,
+      color: PropTypes.string,
+    }),
+  ).isRequired,
   direction: PropTypes.string.isRequired,
   tooltipFormat: PropTypes.func,
   labelFormat: PropTypes.func,

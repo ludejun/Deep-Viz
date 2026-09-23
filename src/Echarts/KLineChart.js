@@ -5,13 +5,13 @@ import Basic from './Basic';
 import { comdify } from '../utils';
 
 export default class KLineChart extends Basic {
-  componentWillReceiveProps(nextProps) {
+  // React 19 removed componentWillReceiveProps; componentDidUpdate runs after
+  // the update with this.props already holding the new values.
+  componentDidUpdate() {
     if (this.chart) {
       const chartInstance = this.chart.getEchartsInstance();
       chartInstance.clear();
-      if (nextProps) {
-        chartInstance.setOption(this.getOption(nextProps));
-      }
+      chartInstance.setOption(this.getOption(this.props));
     }
   }
 
@@ -20,7 +20,7 @@ export default class KLineChart extends Basic {
     const option = {
       color: color || this.color,
       legend: {
-        data: (config.y.legend && config.y.legend.length > 0) ? [config.y.legend[0]] : [],
+        data: config.y.legend && config.y.legend.length > 0 ? [config.y.legend[0]] : [],
         textStyle: { color: this.fontColor, fontSize: this.fontSize },
         top: 15,
         itemHeight: 10,
@@ -34,7 +34,8 @@ export default class KLineChart extends Basic {
         backgroundColor: 'transparent',
         padding: 0,
         textStyle: {
-          fontSize: 12, color: config.tooltipColor || 'black',
+          fontSize: 12,
+          color: config.tooltipColor || 'black',
         },
         axisPointer: {
           type: 'cross',
@@ -75,21 +76,23 @@ export default class KLineChart extends Basic {
       //   right: 15,
       //   top: 0,
       // },
-      series: [{
-        name: (config.y.legend && config.y.legend.length > 0) && config.y.legend[0],
-        type: 'candlestick',
-        hoverAnimation: false,
-        legendHoverLink: false,
-        data: config.y.kData,
-        itemStyle: {
-          normal: {
-            color: config.upColor || '#F04B5B',
-            color0: config.downColor || '#2BBE65',
-            borderColor: null,
-            borderColor0: null,
+      series: [
+        {
+          name: config.y.legend && config.y.legend.length > 0 && config.y.legend[0],
+          type: 'candlestick',
+          hoverAnimation: false,
+          legendHoverLink: false,
+          data: config.y.kData,
+          itemStyle: {
+            normal: {
+              color: config.upColor || '#F04B5B',
+              color0: config.downColor || '#2BBE65',
+              borderColor: null,
+              borderColor0: null,
+            },
           },
         },
-      }],
+      ],
     };
 
     config.y.lineData.forEach((item, index) => {
@@ -117,78 +120,90 @@ export default class KLineChart extends Basic {
         show: false,
         seriesIndex: 1 + config.y.lineData.length,
         dimension: 2,
-        pieces: [{
-          value: 1,
-          color: config.upColor || '#F04B5B',
-        }, {
-          value: -1,
-          color: config.downColor || '#2BBE65',
-        }],
+        pieces: [
+          {
+            value: 1,
+            color: config.upColor || '#F04B5B',
+          },
+          {
+            value: -1,
+            color: config.downColor || '#2BBE65',
+          },
+        ],
       };
-      option.grid = [{
-        show: false,
-        left: (config.grid && config.grid.left) || 80,
-        right: (config.grid && config.grid.right) || 10,
-        top: (config.grid && config.grid.top) || 30,
-        bottom: (config.grid && config.grid.bottom) || 10,
-        height: (config.grid && config.grid.height) || 230,
-        borderColor: this.gridColor,
-      }, {
-        show: false,
-        left: (config.grid && config.grid.barLeft) || 80,
-        right: (config.grid && config.grid.barRight) || 10,
-        top: (config.grid && config.grid.barTop) || 290,
-        bottom: (config.grid && config.grid.barBottom) || 10,
-        height: (config.grid && config.grid.barHeight) || 80,
-        borderColor: this.gridColor,
-      }];
+      option.grid = [
+        {
+          show: false,
+          left: (config.grid && config.grid.left) || 80,
+          right: (config.grid && config.grid.right) || 10,
+          top: (config.grid && config.grid.top) || 30,
+          bottom: (config.grid && config.grid.bottom) || 10,
+          height: (config.grid && config.grid.height) || 230,
+          borderColor: this.gridColor,
+        },
+        {
+          show: false,
+          left: (config.grid && config.grid.barLeft) || 80,
+          right: (config.grid && config.grid.barRight) || 10,
+          top: (config.grid && config.grid.barTop) || 290,
+          bottom: (config.grid && config.grid.barBottom) || 10,
+          height: (config.grid && config.grid.barHeight) || 80,
+          borderColor: this.gridColor,
+        },
+      ];
 
-      option.xAxis = [{
-        type: 'category',
-        data: config.x.data,
-        name: config.x.name,
-        min: 'dataMin',
-        max: 'dataMax',
-        boundaryGap: false,
-        axisLine: { onZero: false, lineStyle: { color: this.fontColor } },
-        axisLabel: { showMaxLabel: null },
-      }, {
-        type: 'category',
-        data: config.x.data,
-        name: config.x.name,
-        gridIndex: 1,
-        min: 'dataMin',
-        max: 'dataMax',
-        scale: true,
-        boundaryGap: false,
-        axisLine: { onZero: false },
-        axisTick: { show: false },
-        splitLine: { show: false },
-        axisLabel: { show: false },
-      }];
+      option.xAxis = [
+        {
+          type: 'category',
+          data: config.x.data,
+          name: config.x.name,
+          min: 'dataMin',
+          max: 'dataMax',
+          boundaryGap: false,
+          axisLine: { onZero: false, lineStyle: { color: this.fontColor } },
+          axisLabel: { showMaxLabel: null },
+        },
+        {
+          type: 'category',
+          data: config.x.data,
+          name: config.x.name,
+          gridIndex: 1,
+          min: 'dataMin',
+          max: 'dataMax',
+          scale: true,
+          boundaryGap: false,
+          axisLine: { onZero: false },
+          axisTick: { show: false },
+          splitLine: { show: false },
+          axisLabel: { show: false },
+        },
+      ];
 
-      option.yAxis = [{
-        name: config.y.name || null,
-        position: config.y.position || 'left',
-        scale: true,
-        axisLine: { lineStyle: { color: this.fontColor } },
-        splitLine: { show: false },
-      }, {
-        name: config.y.name || null,
-        gridIndex: 1,
-        scale: true,
-        axisLabel: { show: false },
-        axisLine: { show: false },
-        axisTick: { show: false },
-        splitLine: { show: false },
-      }];
+      option.yAxis = [
+        {
+          name: config.y.name || null,
+          position: config.y.position || 'left',
+          scale: true,
+          axisLine: { lineStyle: { color: this.fontColor } },
+          splitLine: { show: false },
+        },
+        {
+          name: config.y.name || null,
+          gridIndex: 1,
+          scale: true,
+          axisLabel: { show: false },
+          axisLine: { show: false },
+          axisTick: { show: false },
+          splitLine: { show: false },
+        },
+      ];
 
       if (config.dataZoom) {
         const { start, end } = config.dataZoom;
         option.dataZoom = [
           {
             xAxisIndex: [0, 1],
-            start: (start === null || start === undefined) ? 30 : start,
+            start: start === null || start === undefined ? 30 : start,
             end: end || 100,
             type: 'inside',
           },
@@ -196,7 +211,7 @@ export default class KLineChart extends Basic {
             type: 'slider',
             xAxisIndex: [0, 1],
             show: true,
-            start: (start === null || start === undefined) ? 30 : start,
+            start: start === null || start === undefined ? 30 : start,
             end: end || 100,
           },
         ];
@@ -240,12 +255,12 @@ export default class KLineChart extends Basic {
     }
 
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     if (config.x.xLabelCallback && typeof config.x.xLabelCallback === 'function') {
       if (Array.isArray(option.xAxis)) {
-        option.xAxis[0].axisLabel.formatter =
-          (value, index) => config.x.xLabelCallback(value, index);
+        option.xAxis[0].axisLabel.formatter = (value, index) =>
+          config.x.xLabelCallback(value, index);
       } else {
         option.xAxis.axisLabel.formatter = (value, index) => config.x.xLabelCallback(value, index);
       }

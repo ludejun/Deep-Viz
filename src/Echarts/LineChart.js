@@ -4,13 +4,13 @@ import ReactEcharts from 'echarts-for-react';
 import Basic from './Basic';
 
 export default class LineChart extends Basic {
-  componentWillReceiveProps(nextProps) {
+  // React 19 removed componentWillReceiveProps; componentDidUpdate runs after
+  // the update with this.props already holding the new values.
+  componentDidUpdate() {
     if (this.chart) {
       const chartInstance = this.chart.getEchartsInstance();
       chartInstance.clear();
-      if (nextProps) {
-        chartInstance.setOption(this.getOption(nextProps));
-      }
+      chartInstance.setOption(this.getOption(this.props));
     }
   }
 
@@ -112,7 +112,7 @@ export default class LineChart extends Basic {
       });
     });
     if (onTooltipFormat) {
-      option.tooltip.formatter = params => onTooltipFormat(params);
+      option.tooltip.formatter = (params) => onTooltipFormat(params);
     }
     if (config.dataZoom) {
       const { start } = config.dataZoom;
@@ -120,7 +120,7 @@ export default class LineChart extends Basic {
         {
           show: true,
           realtime: true,
-          start: (start === null || start === undefined) ? 30 : start,
+          start: start === null || start === undefined ? 30 : start,
           end: config.dataZoom.end || 100,
         },
       ];

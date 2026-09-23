@@ -5,9 +5,23 @@ import BaiduMapControlBase from './BaiduMapControlBase';
 // BaiduMap zoom
 // {50m,100m,200m,500m,1km,2km,5km,10km,20km,25km,50km,100km,200km,500km,1000km,2000km}
 // index  18 - 3
-const disZoomMap = [[50, 18], [100, 17], [200, 16], [500, 15], [1000, 14], [2000, 13], [5000, 12],
-  [10000, 11], [20000, 10], [25000, 9], [50000, 8], [100000, 7], [200000, 6], [500000, 5],
-  [1000000, 4], [2000000, 3],
+const disZoomMap = [
+  [50, 18],
+  [100, 17],
+  [200, 16],
+  [500, 15],
+  [1000, 14],
+  [2000, 13],
+  [5000, 12],
+  [10000, 11],
+  [20000, 10],
+  [25000, 9],
+  [50000, 8],
+  [100000, 7],
+  [200000, 6],
+  [500000, 5],
+  [1000000, 4],
+  [2000000, 3],
 ];
 class BaiduMapHeatMap extends BaiduMapControlBase {
   render() {
@@ -55,8 +69,10 @@ class BaiduMapHeatMap extends BaiduMapControlBase {
           let centerLat;
           for (let i = 0; i < datas.length - 1; i++) {
             for (let j = i; j < datas.length; j++) {
-              const newDis = map.getDistance(new BMap.Point(datas[i].lng, datas[i].lat),
-                new BMap.Point(datas[j].lng, datas[j].lat));
+              const newDis = map.getDistance(
+                new BMap.Point(datas[i].lng, datas[i].lat),
+                new BMap.Point(datas[j].lng, datas[j].lat),
+              );
               if (newDis > distance) {
                 centerLng = (datas[i].lng + datas[j].lng) / 2;
                 centerLat = (datas[i].lat + datas[j].lat) / 2;
@@ -65,9 +81,9 @@ class BaiduMapHeatMap extends BaiduMapControlBase {
             }
           }
           center = new BMap.Point(centerLng, centerLat);
-          const tempFilter = disZoomMap.filter(item => item[0] > distance);
+          const tempFilter = disZoomMap.filter((item) => item[0] > distance);
           if (tempFilter.length > 1) {
-            map.centerAndZoom(center, tempFilter[0][1] > 16 ? 18 : (tempFilter[0][1] + 2));
+            map.centerAndZoom(center, tempFilter[0][1] > 16 ? 18 : tempFilter[0][1] + 2);
           }
         }
       } else {
@@ -89,9 +105,7 @@ class BaiduMapHeatMap extends BaiduMapControlBase {
       };
     }
 
-    return (
-      <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />
-    );
+    return <div id={`map${random}`} style={{ height: '100%', width: '100%', ...style }} />;
   }
 }
 
@@ -102,11 +116,13 @@ BaiduMapHeatMap.propTypes = {
     lng: PropTypes.number.isRequired,
   }),
   // disableDragging: PropTypes.bool,
-  datas: PropTypes.arrayOf(PropTypes.shape({
-    lat: PropTypes.number.isRequired,
-    lng: PropTypes.number.isRequired,
-    count: PropTypes.number.isRequired,
-  })).isRequired,
+  datas: PropTypes.arrayOf(
+    PropTypes.shape({
+      lat: PropTypes.number.isRequired,
+      lng: PropTypes.number.isRequired,
+      count: PropTypes.number.isRequired,
+    }),
+  ).isRequired,
   opacity: PropTypes.number,
   radius: PropTypes.number,
   gradient: PropTypes.object,

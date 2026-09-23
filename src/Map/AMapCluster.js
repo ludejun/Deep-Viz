@@ -14,9 +14,11 @@ export default class AMapCluster extends React.Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (typeof window.AMap !== 'undefined' && nextProps) {
-      this.mapRender(nextProps);
+  // React 19 removed componentWillReceiveProps; componentDidUpdate covers the
+  // same case here, since this component holds no state of its own.
+  componentDidUpdate() {
+    if (typeof window.AMap !== 'undefined') {
+      this.mapRender(this.props);
     }
   }
 
@@ -50,11 +52,14 @@ export default class AMapCluster extends React.Component {
     });
 
     point.forEach((value) => {
-      this.markers.push(new window.AMap.Marker({
-        position: value.lnglat,
-        content: '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
-        offset: new window.AMap.Pixel(-15, -15),
-      }));
+      this.markers.push(
+        new window.AMap.Marker({
+          position: value.lnglat,
+          content:
+            '<div style="background-color: hsla(180, 100%, 50%, 0.7); height: 24px; width: 24px; border: 1px solid hsl(180, 100%, 40%); border-radius: 12px; box-shadow: hsl(180, 100%, 50%) 0px 0px 1px;"></div>',
+          offset: new window.AMap.Pixel(-15, -15),
+        }),
+      );
     });
 
     const count = this.markers.length;
@@ -81,11 +86,13 @@ export default class AMapCluster extends React.Component {
     };
 
     const that = this;
-    window.AMap.plugin(['AMap.MarkerClusterer', 'AMap.ToolBar'], () => { // 异步
+    window.AMap.plugin(['AMap.MarkerClusterer', 'AMap.ToolBar'], () => {
+      // 异步
       that.amap.addControl(new window.AMap.ToolBar());
-      that.cluster = new window.AMap.MarkerClusterer(
-        that.amap, that.markers, { gridSize: 80, renderCluserMarker: that._renderCluserMarker },
-      );
+      that.cluster = new window.AMap.MarkerClusterer(that.amap, that.markers, {
+        gridSize: 80,
+        renderCluserMarker: that._renderCluserMarker,
+      });
     });
   }
   render() {

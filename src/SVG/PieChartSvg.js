@@ -66,10 +66,7 @@ export default class PieChartSvg extends Component {
       }, '')
       .trim();
     const innerOffset = innerDashArray.trim().split(' ');
-    innerDashArray = innerOffset
-      .splice(1)
-      .concat(innerOffset)
-      .join(' ');
+    innerDashArray = innerOffset.splice(1).concat(innerOffset).join(' ');
 
     tagsAngle.reverse();
     tagsAngle = tagsAngle.map((v, i) => {
@@ -81,13 +78,13 @@ export default class PieChartSvg extends Component {
   }
 
   /*
-    * Converts an hex color to HSL
-    * Parameters
-    *     hex : string containing the hex values
-    *
-    * Result : 3-element array containing the HSL values
-    *
-    */
+   * Converts an hex color to HSL
+   * Parameters
+   *     hex : string containing the hex values
+   *
+   * Result : 3-element array containing the HSL values
+   *
+   */
   hex2hsl(hex) {
     let sColor = hex.toLowerCase();
     // 十六进制颜色值的正则表达式
@@ -158,30 +155,34 @@ export default class PieChartSvg extends Component {
     let tagPath = `M${startx},${starty} `;
 
     // 先画线
-    if ((alfa >= 0 && alfa < Math.PI / 4) || (alfa >= 7 * Math.PI / 4 && alfa < 2 * Math.PI)) {
+    if ((alfa >= 0 && alfa < Math.PI / 4) || (alfa >= (7 * Math.PI) / 4 && alfa < 2 * Math.PI)) {
       // 往右
       tagPath += `L${startx + straightx},${starty}`;
     } else if (alfa < Math.PI / 2) {
       // alfa >= Math.PI / 4
       // 往右下
-      tagPath += `L${startx + crossx},${starty + crossx} L${startx + crossx + straightx},${starty +
-        crossx}`;
-    } else if (alfa < 3 * Math.PI / 4) {
+      tagPath += `L${startx + crossx},${starty + crossx} L${startx + crossx + straightx},${
+        starty + crossx
+      }`;
+    } else if (alfa < (3 * Math.PI) / 4) {
       // 往左下
-      tagPath += `L${startx - crossx},${starty + crossx} L${startx - crossx - straightx},${starty +
-        crossx}`;
-    } else if (alfa < 5 * Math.PI / 4) {
+      tagPath += `L${startx - crossx},${starty + crossx} L${startx - crossx - straightx},${
+        starty + crossx
+      }`;
+    } else if (alfa < (5 * Math.PI) / 4) {
       // 往左
       tagPath += `L${startx - straightx},${starty}`;
-    } else if (alfa < 3 * Math.PI / 2) {
+    } else if (alfa < (3 * Math.PI) / 2) {
       // 往左上
-      tagPath += `L${startx - crossx},${starty - crossx} L${startx - crossx - straightx},${starty -
-        crossx}`;
+      tagPath += `L${startx - crossx},${starty - crossx} L${startx - crossx - straightx},${
+        starty - crossx
+      }`;
     } else {
       // if (alfa < 7 * Math.PI / 4)
       // 往右上
-      tagPath += `L${startx + crossx},${starty - crossx} L${startx + crossx + straightx},${starty -
-        crossx}`;
+      tagPath += `L${startx + crossx},${starty - crossx} L${startx + crossx + straightx},${
+        starty - crossx
+      }`;
     }
 
     const tagLast = tagPath.substr(tagPath.lastIndexOf('L') + 1).split(',');
@@ -191,7 +192,7 @@ export default class PieChartSvg extends Component {
     let left = false;
 
     // 画长方形
-    if (!(alfa >= 0 && alfa < Math.PI / 2) && !(alfa >= 3 * Math.PI / 2 && alfa < 2 * Math.PI)) {
+    if (!(alfa >= 0 && alfa < Math.PI / 2) && !(alfa >= (3 * Math.PI) / 2 && alfa < 2 * Math.PI)) {
       // 左半边
       // lastLx -= tagW;
       left = true;
@@ -285,7 +286,7 @@ export default class PieChartSvg extends Component {
               <g key={v}>
                 <circle
                   className={`round-circle-line-${v}`}
-                  stroke={`hsl(${color[0]},${color[1]}%,${color[2] + 15}%)` || '#000'}
+                  stroke={color ? `hsl(${color[0]},${color[1]}%,${color[2] + 15}%)` : '#000'}
                   strokeWidth="2"
                   opacity="0.9"
                   strokeDasharray="10"
@@ -301,7 +302,7 @@ export default class PieChartSvg extends Component {
                   cx={this.CENTERX}
                   cy={this.CENTERY}
                   r={i === 0 ? OUTERR : INNERR}
-                  ref={ref => (this[`${v}Ref`] = ref)}
+                  ref={(ref) => (this[`${v}Ref`] = ref)}
                   strokeDasharray={this.state[`${v}DashArray`] || ''}
                   strokeDashoffset={this.state[`${v}Offset`] || ''}
                 />
@@ -314,7 +315,7 @@ export default class PieChartSvg extends Component {
             const tagx = this.CENTERX + r * Math.cos(tagsAngle[i] || 0);
             const tagy = this.CENTERY + r * Math.sin(tagsAngle[i] || 0);
             const color = this.colors[(i % 2) % this.colors.length];
-            const strokeColor = `hsl(${color[0]},${color[1]}%,${color[2] + 15}%)` || '#000';
+            const strokeColor = color ? `hsl(${color[0]},${color[1]}%,${color[2] + 15}%)` : '#000';
 
             return (
               <g id="osuv-tags" key={`tag${i}`} className={`tag-group-${i % 2}`}>
@@ -348,8 +349,9 @@ export default class PieChartSvg extends Component {
                   return (
                     <g>
                       <path
-                        d={`M${lastLx},${lastLy} V${lastLy + tagH} H${lastLx + tagW} V${lastLy -
-                          tagH} H${lastLx} Z`}
+                        d={`M${lastLx},${lastLy} V${lastLy + tagH} H${lastLx + tagW} V${
+                          lastLy - tagH
+                        } H${lastLx} Z`}
                         className="tag-line-line"
                         style={{ animationIterationCount: infinite && 'infinite' }}
                         stroke={strokeColor}
